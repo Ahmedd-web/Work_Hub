@@ -4,12 +4,14 @@ class CustomHeader extends StatelessWidget {
   final String title;
   final Color backgroundColor;
   final Color textColor;
+  final bool showBackButton;
 
   const CustomHeader({
     super.key,
     required this.title,
     this.backgroundColor = Colors.cyan,
     this.textColor = Colors.black,
+    this.showBackButton = true,
   });
 
   @override
@@ -24,14 +26,29 @@ class CustomHeader extends StatelessWidget {
       ),
       width: double.infinity,
       height: 200,
-      alignment: Alignment.center,
-      child: Text(
-        title,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 48,
-          fontWeight: FontWeight.w900,
-        ),
+      child: Stack(
+        children: [
+         if (showBackButton) 
+            Positioned(
+              left: 8,
+              top: 8,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.pop(context),
+                color: textColor,
+              ),
+            ),
+          Center(
+            child: Text(
+              title,
+              style: TextStyle(
+                color: textColor,
+                fontSize: 48,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

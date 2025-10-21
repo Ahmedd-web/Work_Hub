@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/features/auth/screens/register.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class Welcome extends StatelessWidget {
@@ -9,7 +10,7 @@ class Welcome extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const CustomHeader(title: "WorkHub"),
+          const CustomHeader(title: "WorkHub", showBackButton: false),
           const SizedBox(height: 100),
           Column(
             children: [
@@ -29,30 +30,42 @@ class Welcome extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 45),
                 child: Column(
                   children: [
-                    ElevatedButton(
+                    ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
                         backgroundColor: Colors.green,
                       ),
                       onPressed: () {
-                        print("job===============");
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder:
+                                (context) => RegisterPage(initialTabIndex: 1),
+                          ),
+                        );
                       },
-                      child: const Text(
-                        "I am looking for a job",
+                      icon: const Icon(Icons.person, color: Colors.white),
+                      label: const Text(
+                        "I am an Employer",
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                     SizedBox(height: 20),
-                    ElevatedButton(
+                    ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
                         backgroundColor: Colors.cyan,
                       ),
                       onPressed: () {
-                        print("owner============");
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder:
+                                (context) => RegisterPage(initialTabIndex: 0),
+                          ),
+                        );
                       },
-                      child: const Text(
-                        "I am a business owner",
+                      icon: const Icon(Icons.business, color: Colors.white),
+                      label: const Text(
+                        "I am an Employer",
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
