@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "708070688525",
+    "project_id": "workhub-a9727",
+    "storage_bucket": "workhub-a9727.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708070688525:android:0e2896df8f7ad989cf5244",
+        "android_client_info": {
+          "package_name": "com.example.work_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI9_nXKV7bD4eJH18AQUmXkEIR-424DeI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

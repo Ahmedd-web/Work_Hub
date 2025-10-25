@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
-import 'package:work_hub/shared/employer_form.dart';
-import 'package:work_hub/shared/job_seeker_form.dart';
+import 'package:work_hub/shared/register_%20job%20_seeker.dart';
+import 'package:work_hub/shared/register_employer.dart';
 
 class RegisterPage extends StatelessWidget {
   final int initialTabIndex;
