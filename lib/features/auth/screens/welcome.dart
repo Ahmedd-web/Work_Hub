@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/features/auth/screens/login.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
+import 'package:work_hub/features/home_screen/home_page.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class Welcome extends StatelessWidget {
@@ -45,7 +47,7 @@ class Welcome extends StatelessWidget {
                       },
                       icon: const Icon(Icons.person, color: Colors.white),
                       label: const Text(
-                        "I am an Employer",
+                        "I am job Seeker",
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
@@ -81,7 +83,9 @@ class Welcome extends StatelessWidget {
                         backgroundColor: Colors.black,
                       ),
                       onPressed: () {
-                        print("guest==============");
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
                       },
                       child: const Text(
                         "Continue as Guest",
