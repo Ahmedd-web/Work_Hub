@@ -95,7 +95,11 @@ class Welcome extends StatelessWidget {
                     SizedBox(height: 20),
                     InkWell(
                       onTap: () {
-                        print("contact============");
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const Login(),
+                          ),
+                        );
                       },
                       child: const Text.rich(
                         TextSpan(

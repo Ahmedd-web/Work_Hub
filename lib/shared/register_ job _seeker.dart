@@ -191,6 +191,9 @@ class _JobSeekerForm extends State<JobSeekerForm> {
                 } catch (e) {
                   print(e);
                 }
+                setState(() {
+                  isLoading = false;
+                });
               }
             },
 

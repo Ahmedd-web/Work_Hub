@@ -174,6 +174,9 @@ class _EmployerFormState extends State<EmployerForm> {
                 } catch (e) {
                   print(e);
                 }
+                setState(() {
+                  isLoading = false;
+                });
               }
             },
             style: ElevatedButton.styleFrom(
