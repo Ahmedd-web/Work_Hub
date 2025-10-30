@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/shared/custom_heaedr.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,9 +11,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Home Page"),
+    return Scaffold(
+      body: Column(
+        children: [
+          CustomHeader(
+            title: "WorkHub",
+            showBackButton: false,
+            showMenuButton: true,
+            showNotificationButton: true,
+            showSearchBar: true,
+          ),
+        ],
       ),
     );
   }
