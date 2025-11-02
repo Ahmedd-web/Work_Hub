@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomInputField extends StatefulWidget {
-  
   final String hint;
   final TextInputType keyboardType;
   final TextEditingController controller;
@@ -11,7 +10,6 @@ class CustomInputField extends StatefulWidget {
 
   const CustomInputField({
     super.key,
-   
     required this.hint,
     required this.controller,
     this.keyboardType = TextInputType.text,
@@ -38,8 +36,6 @@ class _CustomInputFieldState extends State<CustomInputField> {
           validator: widget.validator,
           decoration: InputDecoration(
             hintText: widget.hint,
-            filled: true,
-            fillColor: Colors.grey[200],
             prefixIcon: Icon(widget.prefixIcon),
             suffixIcon:
                 widget.isPassword
@@ -52,10 +48,6 @@ class _CustomInputFieldState extends State<CustomInputField> {
                       },
                     )
                     : null,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
           ),
         ),
       ],

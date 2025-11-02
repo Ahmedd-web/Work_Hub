@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
 import 'package:work_hub/features/home_screen/home_page.dart';
+import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/customInputfield.dart';
-import 'package:work_hub/shared/register_%20job%20_seeker.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -32,6 +32,10 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -40,29 +44,33 @@ class _LoginState extends State<Login> {
           padding: const EdgeInsets.all(20),
           children: [
             const SizedBox(height: 40),
-            const Text(
-              "Welcome Back!",
+            Text(
+              s.loginTitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.cyan,
+              style: textTheme.headlineSmall?.copyWith(
+                color: colorScheme.primary,
               ),
             ),
             const SizedBox(height: 40),
 
             /// Email Field
-            const Text("Email", style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              s.loginEmail,
+              style: textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
+              ),
+            ),
             const SizedBox(height: 8),
             CustomInputField(
               prefixIcon: Icons.email,
               keyboardType: TextInputType.emailAddress,
-              hint: "Enter your email...",
+              hint: s.loginEmailHint,
 
               controller: emailController,
               validator: (val) {
                 if (val == null || val.trim().isEmpty) {
-                  return "Required";
+                  return s.loginEmailRequired;
                 }
                 return null;
               },
@@ -70,24 +78,27 @@ class _LoginState extends State<Login> {
             const SizedBox(height: 25),
 
             /// Password Field
-            const Text(
-              "Password",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              s.loginPassword,
+              style: textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
+              ),
             ),
             const SizedBox(height: 8),
             CustomInputField(
               prefixIcon: Icons.lock,
               isPassword: true,
               keyboardType: TextInputType.visiblePassword,
-              hint: "Enter your password...",
+              hint: s.loginPasswordHint,
 
               controller: passwordController,
               validator: (val) {
                 if (val == null || val.trim().isEmpty) {
-                  return "Password is required";
+                  return s.loginPasswordRequired;
                 }
                 if (val.length < 6) {
-                  return "Password must be at least 6 characters";
+                  return s.loginPasswordTooShort;
                 }
                 return null;
               },
@@ -114,8 +125,8 @@ class _LoginState extends State<Login> {
                       context: context,
                       dialogType: DialogType.error,
                       animType: AnimType.rightSlide,
-                      title: 'Error',
-                      desc: 'No user found for that email',
+                      title: s.dialogErrorTitle,
+                      desc: s.authErrorUserNotFound,
                     ).show();
                   } else if (e.code == 'wrong-password') {
                     print('Wrong password provided for that user.');
@@ -123,33 +134,25 @@ class _LoginState extends State<Login> {
                       context: context,
                       dialogType: DialogType.error,
                       animType: AnimType.rightSlide,
-                      title: 'Error',
-                      desc: 'Wrong password provided for that user',
+                      title: s.dialogErrorTitle,
+                      desc: s.authErrorWrongPassword,
                     ).show();
                   }
                 }
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.cyan,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
               child:
                   isLoading
-                      ? const SizedBox(
+                      ? SizedBox(
                         width: 24,
                         height: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                      : const Text(
-                        "Login",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            colorScheme.onPrimary,
+                          ),
                         ),
-                      ),
+                      )
+                      : Text(s.loginButton),
             ),
 
             const SizedBox(height: 20),
@@ -160,35 +163,29 @@ class _LoginState extends State<Login> {
                 onTap: () {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const JobSeekerForm(),
+                      builder: (context) => const RegisterPage(),
                     ),
                   );
                 },
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterPage(),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '${s.loginNoAccount} ',
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
+                        ),
                       ),
-                    );
-                  },
-                  child: const Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Don’t have an account? ",
-                          style: TextStyle(color: Colors.purple),
+                      TextSpan(
+                        text: s.loginRegister,
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.primary,
+                          decoration: TextDecoration.underline,
+                          decorationColor: colorScheme.primary,
                         ),
-                        TextSpan(
-                          text: "Register",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

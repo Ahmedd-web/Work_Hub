@@ -31,7 +31,7 @@ class ContactUsPage extends StatelessWidget {
 
             _buildTextField(
               label: 'Name',
-              hintText: 'Eenter your name',
+              hintText: 'Enter your name',
               icon: Icons.person,
             ),
 
@@ -69,7 +69,7 @@ class ContactUsPage extends StatelessWidget {
                     expands: true,
                     textAlignVertical: TextAlignVertical.top,
                     decoration: InputDecoration(
-                      hintText: 'enter your message here...',
+                      hintText: 'Enter your message here...',
                       hintStyle: TextStyle(color: Colors.grey[600]),
                       contentPadding: const EdgeInsets.all(12.0),
                       border: InputBorder.none,
