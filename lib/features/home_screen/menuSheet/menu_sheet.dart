@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/generated/l10n.dart';
 
 /// ألوان قابلة للتعديل سريعًا
 class WorkHubColors {
@@ -28,8 +29,8 @@ class MenuEntry {
 Future<void> showWorkHubMenuSheet(
   BuildContext context, {
   // لغة حالية + تغيير اللغة
-  String currentLanguage = 'English',
-  List<String> languages = const ['English', 'العربية'],
+  String? currentLanguage,
+  List<String>? languages,
   required ValueChanged<String> onLanguageChanged,
 
   // بقية العناصر
@@ -38,6 +39,22 @@ Future<void> showWorkHubMenuSheet(
   // خيارات شكلية
   Color backgroundColor = Colors.white,
 }) {
+  final s = S.of(context);
+  final locale = Localizations.localeOf(context);
+  final defaultLanguages = <String>[s.languageEnglish, s.languageArabic];
+  final options =
+      (languages != null && languages.isNotEmpty)
+          ? List<String>.from(languages)
+          : List<String>.from(defaultLanguages);
+  final fallbackLanguage =
+      locale.languageCode == 'ar' ? s.languageArabic : s.languageEnglish;
+  if (!options.contains(fallbackLanguage)) {
+    options.insert(0, fallbackLanguage);
+  }
+  final resolvedCurrent =
+      currentLanguage != null && options.contains(currentLanguage)
+          ? currentLanguage
+          : fallbackLanguage;
   final media = MediaQuery.of(context);
   return showModalBottomSheet(
     context: context,
@@ -48,10 +65,10 @@ Future<void> showWorkHubMenuSheet(
         child: Container(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           margin: EdgeInsets.only(top: media.size.height * 0.08),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-            boxShadow: [
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            boxShadow: const [
               BoxShadow(
                 color: Color(0x33000000),
                 blurRadius: 18,
@@ -75,8 +92,8 @@ Future<void> showWorkHubMenuSheet(
 
               // عنصر اختيار اللغة (يشبه Dropdown كبير داخل كبسولة)
               _LanguagePill(
-                value: currentLanguage,
-                options: languages,
+                value: resolvedCurrent,
+                options: options,
                 onChanged: onLanguageChanged,
               ),
 
@@ -216,3 +233,5 @@ class _LanguagePill extends StatelessWidget {
     );
   }
 }
+
+

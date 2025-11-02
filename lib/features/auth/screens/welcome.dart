@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:work_hub/features/auth/screens/login.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
 import 'package:work_hub/features/home_screen/home_page.dart';
+import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class Welcome extends StatelessWidget {
@@ -9,24 +10,41 @@ class Welcome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     return Scaffold(
       body: Column(
         children: [
-          const CustomHeader(title: "WorkHub", showBackButton: false),
+          CustomHeader(
+            title: s.appTitle,
+            backgroundColor: colorScheme.primary,
+            showBackButton: false,
+            showMenuButton: false,
+            showNotificationButton: false,
+            showSearchBar: false,
+          ),
           const SizedBox(height: 100),
           Column(
             children: [
-              const Text(
-                "Welcome to WorkHub",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Text(
+                s.welcomeTitle,
+                style: textTheme.headlineSmall,
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Your gateway to seamless work management.",
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+              Text(
+                s.welcomeSubtitle,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurface.withValues(alpha: 0.6),
+                ),
               ),
               const SizedBox(height: 30),
-              Container(width: 280, height: 1, color: Colors.red),
+              Container(
+                width: 280,
+                height: 1,
+                color: colorScheme.primary,
+              ),
               const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 45),
@@ -35,7 +53,7 @@ class Welcome extends StatelessWidget {
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
-                        backgroundColor: Colors.green,
+                        backgroundColor: colorScheme.secondary,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
@@ -45,17 +63,23 @@ class Welcome extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: const Icon(Icons.person, color: Colors.white),
-                      label: const Text(
-                        "I am job Seeker",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      icon: Icon(
+                        Icons.person,
+                        color: colorScheme.onSecondary,
+                      ),
+                      label: Text(
+                        s.welcomeJobSeeker,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: colorScheme.onSecondary,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
-                        backgroundColor: Colors.cyan,
+                        backgroundColor: colorScheme.primary,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
@@ -65,34 +89,45 @@ class Welcome extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: const Icon(Icons.business, color: Colors.white),
-                      label: const Text(
-                        "I am an Employer",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      icon: Icon(
+                        Icons.business,
+                        color: colorScheme.onPrimary,
+                      ),
+                      label: Text(
+                        s.welcomeEmployer,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: colorScheme.onPrimary,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    const Text(
-                      "Or you can browse as a guest",
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    const SizedBox(height: 20),
+                    Text(
+                      s.welcomeBrowseAsGuest,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurface.withValues(alpha: 0.6),
+                      ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
-                        backgroundColor: Colors.black,
+                        backgroundColor: colorScheme.tertiary,
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => HomePage()),
                         );
                       },
-                      child: const Text(
-                        "Continue as Guest",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      child: Text(
+                        s.welcomeContinueGuest,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: colorScheme.onTertiary,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     InkWell(
                       onTap: () {
                         Navigator.of(context).pushReplacement(
@@ -101,19 +136,25 @@ class Welcome extends StatelessWidget {
                           ),
                         );
                       },
-                      child: const Text.rich(
+                      child: Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: "Do you already have an account? ",
-                              style: TextStyle(color: Colors.grey),
+                              text: '${s.welcomeHaveAccount} ',
+                              style: TextStyle(
+                                color:
+                                    colorScheme.onSurface.withValues(
+                                  alpha: 0.7,
+                                ),
+                              ),
                             ),
                             TextSpan(
-                              text: "Login",
+                              text: s.welcomeLogin,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.blue,
+                                color: colorScheme.primary,
                                 decoration: TextDecoration.underline,
+                                decorationColor: colorScheme.primary,
                               ),
                             ),
                           ],

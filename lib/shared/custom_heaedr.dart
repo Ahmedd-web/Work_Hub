@@ -1,16 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/home_screen/menuSheet/about_us.dart';
 import 'package:work_hub/features/home_screen/menuSheet/ads_page.dart';
 import 'package:work_hub/features/home_screen/menuSheet/contact_us.dart';
 import 'package:work_hub/features/home_screen/menuSheet/menu_sheet.dart';
 import 'package:work_hub/features/home_screen/menuSheet/privacy_page.dart';
+import 'package:work_hub/generated/l10n.dart';
+import 'package:work_hub/main.dart';
 
 class CustomHeader extends StatelessWidget {
   final String title;
 
-  final Color backgroundColor;
+  final double? height;
 
-  final Color textColor;
+  final Color? backgroundColor;
+
+  final Color? textColor;
 
   final bool showBackButton;
 
@@ -28,15 +33,16 @@ class CustomHeader extends StatelessWidget {
 
   final ValueChanged<String>? onSearchSubmitted;
 
-  final String searchHint;
+  final String? searchHint;
 
   final TextEditingController? searchController;
 
   const CustomHeader({
     super.key,
     required this.title,
-    this.backgroundColor = Colors.cyan,
-    this.textColor = Colors.black,
+    this.height,
+    this.backgroundColor,
+    this.textColor,
     this.showBackButton = false,
     this.showMenuButton = false,
     this.showNotificationButton = false,
@@ -45,27 +51,33 @@ class CustomHeader extends StatelessWidget {
     this.onMenuPressed,
     this.onNotificationPressed,
     this.onSearchSubmitted,
-    this.searchHint = 'Looking for a job..',
+    this.searchHint,
     this.searchController,
   });
 
   @override
   Widget build(BuildContext context) {
-    const double baseHeight = 200;
-
+    final s = S.of(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final effectiveBackground = backgroundColor ?? colorScheme.primary;
+    final effectiveTextColor = textColor ?? colorScheme.onPrimary;
+    final searchFillColor =
+        theme.inputDecorationTheme.fillColor ?? colorScheme.surface;
     const double searchBarHeight = 56;
-
     final double overlap = showSearchBar ? searchBarHeight / 2 : 0;
+    final double baseHeight = height ?? 200;
+    final double totalHeight = baseHeight + overlap;
 
     return SizedBox(
       width: double.infinity,
-      height: baseHeight + overlap,
+      height: totalHeight,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Positioned.fill(
             child: CustomPaint(
-              painter: _CurvedHeaderPainter(color: backgroundColor),
+              painter: _CurvedHeaderPainter(color: effectiveBackground),
             ),
           ),
 
@@ -76,16 +88,50 @@ class CustomHeader extends StatelessWidget {
               child: IconButton(
                 icon: Icon(
                   showBackButton ? Icons.arrow_back : Icons.menu,
-                  color: textColor,
+                  color: effectiveTextColor,
                 ),
                 onPressed: () {
+                  if (showBackButton) {
+                    if (onBackPressed != null) {
+                      onBackPressed!();
+                    } else {
+                      Navigator.of(context).maybePop();
+                    }
+                    return;
+                  }
+
+                  if (!showMenuButton) {
+                    return;
+                  }
+
+                  if (onMenuPressed != null) {
+                    onMenuPressed!();
+                    return;
+                  }
+
+                  final locale = Localizations.localeOf(context);
+                  final languages = [s.languageEnglish, s.languageArabic];
+                  final currentLanguage =
+                      locale.languageCode == 'ar' ? languages[1] : languages[0];
+
                   showWorkHubMenuSheet(
                     context,
-                    onLanguageChanged: (lang) {},
+                    currentLanguage: currentLanguage,
+                    languages: languages,
+                    onLanguageChanged: (lang) {
+                      final Locale newLocale =
+                          lang == s.languageArabic
+                              ? const Locale('ar')
+                              : const Locale('en');
+                      MyApp.of(context)?.setLocale(newLocale);
+                      if (Navigator.of(context).canPop()) {
+                        Navigator.of(context).pop();
+                      }
+                    },
                     items: [
                       MenuEntry(
                         icon: Icons.help_outline,
-                        title: 'About Us',
+                        title: s.menuAbout,
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -96,7 +142,7 @@ class CustomHeader extends StatelessWidget {
                       ),
                       MenuEntry(
                         icon: Icons.campaign_outlined,
-                        title: 'Services Ads',
+                        title: s.menuServicesAds,
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -107,7 +153,7 @@ class CustomHeader extends StatelessWidget {
                       ),
                       MenuEntry(
                         icon: Icons.phone_in_talk_outlined,
-                        title: 'Contact us',
+                        title: s.menuContact,
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -118,7 +164,7 @@ class CustomHeader extends StatelessWidget {
                       ),
                       MenuEntry(
                         icon: Icons.privacy_tip_outlined,
-                        title: 'Privacy Policy and Terms of Use',
+                        title: s.menuPrivacy,
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -128,10 +174,13 @@ class CustomHeader extends StatelessWidget {
                         },
                       ),
                       MenuEntry(
-                        icon: Icons.login,
-                        title: 'Login',
-                        onTap: () {
-                          /* الذهاب لتسجيل الدخول */
+                        icon: Icons.logout,
+                        title: s.menuLogout,
+                        onTap: () async {
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.of(
+                            context,
+                          ).pushNamedAndRemoveUntil("login", (route) => false);
                         },
 
                         iconColor: WorkHubColors.green,
@@ -139,17 +188,6 @@ class CustomHeader extends StatelessWidget {
                       ),
                     ],
                   );
-                  if (showBackButton) {
-                    if (onBackPressed != null) {
-                      onBackPressed!();
-                    } else {
-                      Navigator.of(context).pop();
-                    }
-                  } else if (showMenuButton) {
-                    if (onMenuPressed != null) {
-                      onMenuPressed!();
-                    }
-                  }
                 },
               ),
             ),
@@ -158,7 +196,7 @@ class CustomHeader extends StatelessWidget {
               right: 8,
               top: 12,
               child: IconButton(
-                icon: Icon(Icons.notifications_none, color: textColor),
+                icon: Icon(Icons.notifications_none, color: effectiveTextColor),
                 onPressed: onNotificationPressed,
               ),
             ),
@@ -172,7 +210,7 @@ class CustomHeader extends StatelessWidget {
                 title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: textColor,
+                  color: effectiveTextColor,
                   fontSize: 42,
                   fontWeight: FontWeight.w900,
                 ),
@@ -191,14 +229,14 @@ class CustomHeader extends StatelessWidget {
                   controller: searchController,
                   onSubmitted: onSearchSubmitted,
                   decoration: InputDecoration(
-                    hintText: searchHint,
+                    hintText: searchHint ?? s.searchHint,
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(28),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: searchFillColor,
                     contentPadding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                 ),
@@ -218,7 +256,6 @@ class _CurvedHeaderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = color;
-    const double dipHeight = 46;
     final double sideY = size.height - 52;
 
     final Path path =
