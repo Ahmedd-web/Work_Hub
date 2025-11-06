@@ -5,41 +5,48 @@ class AdsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Ads Page')),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Services Ads',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Services Ads',
+                style: textTheme.headlineSmall?.copyWith(
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-
-            const SizedBox(height: 30),
-            Container(
-              padding: const EdgeInsets.all(20),
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey),
+              const SizedBox(height: 24),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: theme.dividerColor),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text('إعلانات موجهة للتميز'),
+                    SizedBox(height: 8),
+                    Text('نعرض فرصاً مميزة للوظائف والخدمات'),
+                    SizedBox(height: 8),
+                    Text('تابع تحديثاتنا للمزيد من العروض'),
+                  ],
+                ),
               ),
-              child: const Column(
-                children: [
-                  Text('إعلانات وظائف مُميزة في الصدارة'),
-                  SizedBox(height: 10),
-                  Text('باقات إعلانية متنوعة الأسعار'),
-                  SizedBox(height: 10),
-                  Text('تقارير أداء وتحليلات متقدمة'),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

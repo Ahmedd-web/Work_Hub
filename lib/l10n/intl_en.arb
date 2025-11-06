@@ -98,5 +98,6 @@
     "placeholders": {
       "tab": {}
     }
-  }
+  },
+  "themeDarkModeLabel": "Dark Mode"
 }

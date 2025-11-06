@@ -26,10 +26,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
+  ThemeMode _themeMode = ThemeMode.light;
+
+  ThemeMode get themeMode => _themeMode;
 
   void setLocale(Locale locale) {
     if (!mounted) return;
     setState(() => _locale = locale);
+  }
+
+  void setThemeMode(ThemeMode mode) {
+    if (!mounted) return;
+    setState(() => _themeMode = mode);
   }
 
   @override
@@ -42,6 +50,8 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: _themeMode,
           locale: _locale,
           localizationsDelegates: const [
             S.delegate,

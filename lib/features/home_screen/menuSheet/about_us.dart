@@ -1,123 +1,112 @@
 import 'package:flutter/material.dart';
 
-
-
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('About Us'),
-        backgroundColor: const Color.fromARGB(255, 25, 181, 215),
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 40.0),
-              child: const Text(
-                'عن موقع WoorkHup',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-                textAlign: TextAlign.center,
+            Text(
+              'من نحن؟',
+              textAlign: TextAlign.center,
+              style: textTheme.headlineSmall?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.bold,
               ),
             ),
-
-            _buildQuestionCard(
-              question: 'ما هو الموقع WoorkHup؟',
-              answer:
-                  'منصة إلكترونية متكاملة تهدف إلى ربط الباحثين عن عمل بفرص التوظيف المناسبة، وتسهيل عملية البحث والتقديم للوظائف بمختلف المجالات.',
-              icon: Icons.work,
-              color: Colors.blue,
+            const SizedBox(height: 12),
+            Text(
+              'WoorkHup منصة تربط بين أصحاب الأعمال والباحثين عن فرص العمل بطرق حديثة وسهلة الاستخدام.',
+              textAlign: TextAlign.center,
+              style: textTheme.bodyMedium,
             ),
-
-            const SizedBox(height: 20),
-
-            _buildQuestionCard(
-              question: 'لماذا موقع WoorkHup  ؟',
+            const SizedBox(height: 32),
+            const _QuestionCard(
+              icon: Icons.work_outline,
+              question: 'ما هي رسالتنا؟',
               answer:
-                  'نوفر وقت وجهد الباحثين عن عمل، ونقدم للشركات كفاءات مؤهلة، مع واجهة سهلة الاستخدام وتجربة مستخدم متميزة.',
-              icon: Icons.thumb_up,
-              color: Colors.green,
+                  'نسعى لتمكين الباحثين عن العمل من الوصول إلى الفرص المناسبة، ومساعدة الشركات على إيجاد الكفاءات بسرعة وفعالية.',
             ),
-
-            const SizedBox(height: 20),
-
-            _buildQuestionCard(
-              question: 'ما يميز موقع WoorkHup؟',
+            const SizedBox(height: 16),
+            const _QuestionCard(
+              icon: Icons.thumb_up_alt_outlined,
+              question: 'ما الذي يميز WoorkHup؟',
               answer:
-                  'شبكة واسعة من الشركات، توصيات ذكية للوظائف، تطبيقات متنوعة على جميع الأجهزة، ودعم متواصل للباحثين عن عمل.',
-              icon: Icons.star,
-              color: Colors.orange,
+                  'السرعة في التوظيف، سهولة الاستخدام، ودعم كامل باللغتين العربية والإنجليزية لتجربة سلسة للجميع.',
+            ),
+            const SizedBox(height: 16),
+            const _QuestionCard(
+              icon: Icons.star_outline,
+              question: 'ما هو هدفنا القادم؟',
+              answer:
+                  'نعمل على توسيع شبكة شركائنا وتقديم أدوات ذكية تساعدك على اتخاذ قرارات التوظيف بثقة.',
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _buildQuestionCard({
-    required String question,
-    required String answer,
-    required IconData icon,
-    required Color color,
-  }) {
+class _QuestionCard extends StatelessWidget {
+  const _QuestionCard({
+    required this.icon,
+    required this.question,
+    required this.answer,
+  });
+
+  final IconData icon;
+  final String question;
+  final String answer;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+
     return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color:Colors.grey ,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(icon, color: color, size: 24),
+                CircleAvatar(
+                  radius: 24,
+                  backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
+                  child: Icon(icon, color: colorScheme.primary),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     question,
-                    style: TextStyle(
-                      fontSize: 18,
+                    style: textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: color,
                     ),
                   ),
                 ),
               ],
             ),
-
-            const SizedBox(height: 15),
-
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[50],
-                borderRadius: BorderRadius.circular(10.0),
-                border: Border.all(color: Colors.grey[200]!),
-              ),
-              child: Text(
-                answer,
-                style: const TextStyle(
-                  fontSize: 16,
-                  height: 1.5,
-                  color: Colors.black87,
-                ),
-                textAlign: TextAlign.start,
-              ),
+            const SizedBox(height: 16),
+            Text(
+              answer,
+              style: textTheme.bodyMedium?.copyWith(height: 1.5),
             ),
           ],
         ),

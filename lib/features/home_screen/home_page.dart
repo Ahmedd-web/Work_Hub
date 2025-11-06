@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/featured_offer.dart';
-import 'package:work_hub/features/home_screen/models/home_banner.dart';
 import 'package:work_hub/features/home_screen/models/job_post.dart';
 import 'package:work_hub/features/home_screen/widgets/home_tab.dart';
 import 'package:work_hub/features/home_screen/widgets/jobs_tab.dart';
@@ -15,29 +14,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final PageController _bannerController = PageController(
+  static const List<String> _galleryImages = [
+    'lib/assets/photo_2025-11-06_14-31-56.jpg',
+    'lib/assets/photo_2025-11-06_14-00-46.jpg',
+    'lib/assets/photo_2025-11-06_13-10-55.jpg',
+  ];
+
+  final PageController _galleryController = PageController(
     viewportFraction: 0.9,
   );
   final TextEditingController _homeSearchController = TextEditingController();
   final TextEditingController _jobSearchController = TextEditingController();
-
-  List<HomeBanner> _buildBanners(S s) => [
-    HomeBanner(
-      headline: s.bannerDreamTitle,
-      description: s.bannerDreamSubtitle,
-      badge: s.bannerDreamBadge,
-    ),
-    HomeBanner(
-      headline: s.bannerTopCompaniesTitle,
-      description: s.bannerTopCompaniesSubtitle,
-      badge: s.bannerTopCompaniesBadge,
-    ),
-    HomeBanner(
-      headline: s.bannerRemoteTitle,
-      description: s.bannerRemoteSubtitle,
-      badge: s.bannerRemoteBadge,
-    ),
-  ];
 
   List<String> _buildJobCategories(S s) => [
     s.categoryInternationalOrganizations,
@@ -102,12 +89,12 @@ class _HomePageState extends State<HomePage> {
       icon: Icons.star_outline,
     ),
   ];
-  int _currentBanner = 0;
+  int _currentImage = 0;
   int _selectedTab = 0;
 
   @override
   void dispose() {
-    _bannerController.dispose();
+    _galleryController.dispose();
     _homeSearchController.dispose();
     _jobSearchController.dispose();
     super.dispose();
@@ -116,11 +103,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
-    final banners = _buildBanners(s);
     final jobCategories = _buildJobCategories(s);
     final jobPosts = _buildJobPosts(s);
     final featuredOffers = _buildFeaturedOffers(s);
-    final theme = Theme.of(context);
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -128,13 +113,13 @@ class _HomePageState extends State<HomePage> {
           index: _selectedTab,
           children: [
             HomeTab(
-              bannerController: _bannerController,
-              currentBanner: _currentBanner,
-              onBannerChanged: (index) {
-                setState(() => _currentBanner = index);
+              galleryController: _galleryController,
+              currentImage: _currentImage,
+              onImageChanged: (index) {
+                setState(() => _currentImage = index);
               },
               searchController: _homeSearchController,
-              banners: banners,
+              galleryImages: _galleryImages,
               categories: jobCategories,
               featuredOffers: featuredOffers,
             ),

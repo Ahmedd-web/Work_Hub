@@ -109,10 +109,14 @@ class CustomHeader extends StatelessWidget {
                     return;
                   }
 
+                  final appState = MyApp.of(context);
                   final locale = Localizations.localeOf(context);
                   final languages = [s.languageEnglish, s.languageArabic];
                   final currentLanguage =
                       locale.languageCode == 'ar' ? languages[1] : languages[0];
+                  final isDarkMode =
+                      (appState?.themeMode ?? ThemeMode.light) ==
+                      ThemeMode.dark;
 
                   showWorkHubMenuSheet(
                     context,
@@ -123,7 +127,16 @@ class CustomHeader extends StatelessWidget {
                           lang == s.languageArabic
                               ? const Locale('ar')
                               : const Locale('en');
-                      MyApp.of(context)?.setLocale(newLocale);
+                      appState?.setLocale(newLocale);
+                      if (Navigator.of(context).canPop()) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    isDarkMode: isDarkMode,
+                    onThemeModeChanged: (value) {
+                      appState?.setThemeMode(
+                        value ? ThemeMode.dark : ThemeMode.light,
+                      );
                       if (Navigator.of(context).canPop()) {
                         Navigator.of(context).pop();
                       }
