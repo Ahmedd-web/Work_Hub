@@ -13,7 +13,6 @@ class JobsTab extends StatelessWidget {
     this.onFilterPressed,
     this.onTimeFilterPressed,
     this.onCategoryFilterPressed,
-    this.onLocationPressed,
   });
 
   final TextEditingController searchController;
@@ -21,9 +20,8 @@ class JobsTab extends StatelessWidget {
   final VoidCallback? onFilterPressed;
   final VoidCallback? onTimeFilterPressed;
   final VoidCallback? onCategoryFilterPressed;
-  final VoidCallback? onLocationPressed;
 
-  static const double _headerBaseHeight = 210;
+  static const double _headerBaseHeight = 130;
   static const double _searchOverlap = 28;
   static const double _headerExtent = _headerBaseHeight + _searchOverlap;
 
@@ -61,6 +59,7 @@ class JobsTab extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 32, 20, 0),
             child: Column(
               children: [
+                const SizedBox(height: 12),
                 Row(
                   children: [
                     _IconPillButton(icon: Icons.tune, onTap: onFilterPressed),
@@ -81,11 +80,6 @@ class JobsTab extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-                const SizedBox(height: 12),
-                _LocationPill(
-                  label: s.filterChooseCountry,
-                  onTap: onLocationPressed,
                 ),
                 const SizedBox(height: 24),
                 Column(
@@ -177,59 +171,10 @@ class _FilterDropdownPill extends StatelessWidget {
           ],
         ),
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: colorScheme.primary),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  label,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: textTheme.titleMedium?.color,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Icon(Icons.keyboard_arrow_down, color: AppColors.textSecondary),
-            ],
-          ),
-        ),
-    );
-  }
-}
-
-class _LocationPill extends StatelessWidget {
-  const _LocationPill({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final textTheme = theme.textTheme;
-    return InkWell(
-      borderRadius: BorderRadius.circular(28),
-      onTap: onTap,
-      child: Ink(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: AppColors.border),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.purple.withValues(alpha: 0.08),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.location_on_outlined, color: colorScheme.primary),
-            const SizedBox(width: 10),
+            Icon(icon, color: colorScheme.primary),
+            const SizedBox(width: 8),
             Expanded(
               child: Text(
                 label,
@@ -328,11 +273,7 @@ class _JobCard extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        Icons.star,
-                        color: colorScheme.secondary,
-                        size: 16,
-                      ),
+                      Icon(Icons.star, color: colorScheme.secondary, size: 16),
                       const SizedBox(width: 4),
                       Text(
                         s.jobFeaturedBadge,
@@ -357,27 +298,33 @@ class _JobCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    color: AppColors.purple,
-                    size: 18,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    job.location,
-                    style: textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(
+                      Icons.location_on_outlined,
+                      color: AppColors.purple,
+                      size: 18,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        job.location,
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.share_outlined),
-                color: AppColors.textSecondary,
+                color: colorScheme.primary,
               ),
             ],
           ),

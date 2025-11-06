@@ -98,5 +98,6 @@
       "tab": {}
     }
   },
-  "dialogErrorTitle": "خطأ"
+  "dialogErrorTitle": "خطأ",
+  "themeDarkModeLabel": "الوضع الداكن"
 }

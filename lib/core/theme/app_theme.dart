@@ -14,6 +14,12 @@ class AppColors {
   static const Color textPrimary = Color(0xFF1E1E1E);
   static const Color textSecondary = Color(0xFF6C6C6C);
 
+  static const Color darkSurface = Color(0xFF1E1E1E);
+  static const Color darkBackground = Color(0xFF121212);
+  static const Color darkBorder = Color(0xFF2E2E2E);
+  static const Color darkTextPrimary = Colors.white;
+  static const Color darkTextSecondary = Color(0xFFB0B0B0);
+
   static const Color pillBackground = Color(0xFFF2F3F5);
   static const Color purple = Color(0xFF5C239D);
   static const Color purpleDark = Color(0xFF462282);
@@ -178,6 +184,163 @@ class AppTheme {
         showUnselectedLabels: true,
       ),
       dividerColor: AppColors.border,
+      iconTheme: const IconThemeData(color: AppColors.primary),
+    );
+  }
+
+  static ThemeData get darkTheme {
+    final base = ThemeData(useMaterial3: true, brightness: Brightness.dark);
+
+    const colorScheme = ColorScheme.dark(
+      primary: AppColors.primary,
+      onPrimary: Colors.white,
+      primaryContainer: AppColors.primaryDark,
+      onPrimaryContainer: Colors.white,
+      secondary: AppColors.secondary,
+      onSecondary: Colors.white,
+      tertiary: AppColors.tertiary,
+      onTertiary: Colors.white,
+      surface: AppColors.darkSurface,
+      onSurface: AppColors.darkTextPrimary,
+      outline: AppColors.darkBorder,
+      error: Colors.redAccent,
+      onError: Colors.white,
+    );
+
+    final borderRadius = BorderRadius.circular(24);
+
+    return base.copyWith(
+      colorScheme: colorScheme,
+      scaffoldBackgroundColor: AppColors.darkBackground,
+      primaryColor: AppColors.primary,
+      textTheme: base.textTheme
+          .apply(
+            bodyColor: AppColors.darkTextPrimary,
+            displayColor: AppColors.darkTextPrimary,
+          )
+          .copyWith(
+            headlineSmall: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: AppColors.darkTextPrimary,
+            ),
+            titleLarge: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: AppColors.darkTextPrimary,
+            ),
+            bodyMedium: const TextStyle(
+              fontSize: 16,
+              color: AppColors.darkTextSecondary,
+            ),
+          ),
+      appBarTheme: const AppBarTheme(
+        elevation: 0,
+        color: AppColors.darkSurface,
+        iconTheme: IconThemeData(color: AppColors.darkTextPrimary),
+        titleTextStyle: TextStyle(
+          color: AppColors.darkTextPrimary,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          minimumSize: const Size(double.infinity, 50),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+          shape: RoundedRectangleBorder(borderRadius: borderRadius),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          textStyle: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          side: const BorderSide(color: AppColors.primary),
+          shape: RoundedRectangleBorder(borderRadius: borderRadius),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: AppColors.darkSurface,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        hintStyle: const TextStyle(color: AppColors.darkTextSecondary),
+        prefixIconColor: AppColors.primary,
+        suffixIconColor: AppColors.primary,
+        border: OutlineInputBorder(
+          borderRadius: borderRadius,
+          borderSide: const BorderSide(color: AppColors.darkBorder),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: borderRadius,
+          borderSide: const BorderSide(color: AppColors.darkBorder),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: borderRadius,
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.8),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: borderRadius,
+          borderSide: const BorderSide(color: Colors.redAccent),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: borderRadius,
+          borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
+        ),
+      ),
+      tabBarTheme: const TabBarTheme(
+        indicatorSize: TabBarIndicatorSize.tab,
+        labelStyle: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w600,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w500,
+        ),
+        labelColor: Colors.white,
+        unselectedLabelColor: AppColors.purpleMuted,
+        indicator: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+      ),
+      chipTheme: base.chipTheme.copyWith(
+        backgroundColor: AppColors.darkSurface,
+        selectedColor: AppColors.primary,
+        disabledColor: AppColors.darkSurface,
+        labelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          color: AppColors.darkTextPrimary,
+        ),
+      ),
+      cardTheme: CardTheme(
+        color: AppColors.darkSurface,
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: borderRadius),
+        shadowColor: Colors.black54,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppColors.secondary,
+        unselectedItemColor: AppColors.darkTextSecondary,
+        showUnselectedLabels: true,
+        backgroundColor: AppColors.darkSurface,
+      ),
+      dividerColor: AppColors.darkBorder,
       iconTheme: const IconThemeData(color: AppColors.primary),
     );
   }

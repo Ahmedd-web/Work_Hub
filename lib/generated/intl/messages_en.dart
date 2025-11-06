@@ -173,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sectionJobCategories": MessageLookupByLibrary.simpleMessage(
       "Job Categories",
     ),
+    "themeDarkModeLabel": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "welcomeBrowseAsGuest": MessageLookupByLibrary.simpleMessage(
       "Or you can browse as a guest",
     ),

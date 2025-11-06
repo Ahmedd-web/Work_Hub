@@ -793,6 +793,16 @@ class S {
       args: [days],
     );
   }
+
+  /// `Dark Mode`
+  String get themeDarkModeLabel {
+    return Intl.message(
+      'Dark Mode',
+      name: 'themeDarkModeLabel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

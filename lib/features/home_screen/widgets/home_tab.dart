@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/featured_offer.dart';
-import 'package:work_hub/features/home_screen/models/home_banner.dart';
 import 'package:work_hub/features/home_screen/widgets/header_sliver_delegate.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 import 'package:work_hub/generated/l10n.dart';
@@ -9,30 +8,31 @@ import 'package:work_hub/generated/l10n.dart';
 class HomeTab extends StatelessWidget {
   const HomeTab({
     super.key,
-    required this.bannerController,
-    required this.currentBanner,
-    required this.onBannerChanged,
+    required this.galleryController,
+    required this.currentImage,
+    required this.onImageChanged,
     required this.searchController,
-    required this.banners,
+    required this.galleryImages,
     required this.categories,
     required this.featuredOffers,
   });
 
-  final PageController bannerController;
-  final int currentBanner;
-  final ValueChanged<int> onBannerChanged;
+  final PageController galleryController;
+  final int currentImage;
+  final ValueChanged<int> onImageChanged;
   final TextEditingController searchController;
-  final List<HomeBanner> banners;
+  final List<String> galleryImages;
   final List<String> categories;
   final List<FeaturedOffer> featuredOffers;
 
-  static const double _headerBaseHeight = 220;
+  static const double _headerBaseHeight = 130;
   static const double _searchOverlap = 28;
   static const double _headerExtent = _headerBaseHeight + _searchOverlap;
 
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
+    final displayedImages = galleryImages.take(3).toList();
     return CustomScrollView(
       key: const PageStorageKey('home'),
       physics: const BouncingScrollPhysics(),
@@ -63,43 +63,43 @@ class HomeTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 32),
-              SizedBox(
-                height: 180,
-                child: PageView.builder(
-                  controller: bannerController,
-                  itemCount: banners.length,
-                  onPageChanged: onBannerChanged,
-                  itemBuilder: (context, index) {
-                    final banner = banners[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: _BannerCard(banner: banner),
-                    );
-                  },
+              const SizedBox(height: 65),
+              if (displayedImages.isNotEmpty) ...[
+                SizedBox(
+                  height: 200,
+                  child: PageView.builder(
+                    controller: galleryController,
+                    itemCount: displayedImages.length,
+                    onPageChanged: onImageChanged,
+                    itemBuilder: (context, index) {
+                      final path = displayedImages[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: _GalleryImageCard(imagePath: path),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(banners.length, (index) {
-                  final bool isActive = index == currentBanner;
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    height: 6,
-                    width: isActive ? 28 : 10,
-                    decoration: BoxDecoration(
-                      color:
-                          isActive
-                              ? AppColors.purple
-                              : AppColors.purpleMuted,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  );
-                }),
-              ),
-              const SizedBox(height: 28),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(displayedImages.length, (index) {
+                    final bool isActive = index == currentImage;
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      height: 6,
+                      width: isActive ? 28 : 10,
+                      decoration: BoxDecoration(
+                        color:
+                            isActive ? AppColors.purple : AppColors.purpleMuted,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    );
+                  }),
+                ),
+                const SizedBox(height: 28),
+              ],
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -107,7 +107,10 @@ class HomeTab extends StatelessWidget {
                     _GradientActionButton(
                       label: s.actionCreateResume,
                       icon: Icons.add,
-                      colors: const [AppColors.bannerGreen, AppColors.bannerTeal],
+                      colors: const [
+                        AppColors.bannerGreen,
+                        AppColors.bannerTeal,
+                      ],
                     ),
                     const SizedBox(height: 16),
                     _GradientActionButton(
@@ -130,28 +133,37 @@ class HomeTab extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                            childAspectRatio: 2.9,
+                    Column(
+                      children: [
+                        for (var i = 0; i < categories.length; i += 2) ...[
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _CategoryCard(title: categories[i]),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child:
+                                    i + 1 < categories.length
+                                        ? _CategoryCard(
+                                          title: categories[i + 1],
+                                        )
+                                        : const SizedBox.shrink(),
+                              ),
+                            ],
                           ),
-                      itemCount: categories.length,
-                      itemBuilder:
-                          (context, index) =>
-                              _CategoryCard(title: categories[index]),
+                          if (i + 2 < categories.length)
+                            const SizedBox(height: 12),
+                        ],
+                      ],
                     ),
                     if (featuredOffers.isNotEmpty) ...[
                       const SizedBox(height: 28),
                       Row(
                         children: [
-                        Text(
-                          s.sectionFeaturedOffers,
-                          style: Theme.of(context).textTheme.titleLarge,
+                          Text(
+                            s.sectionFeaturedOffers,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ],
                       ),
@@ -179,61 +191,6 @@ class HomeTab extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _BannerCard extends StatelessWidget {
-  const _BannerCard({required this.banner});
-
-  final HomeBanner banner;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.purple, AppColors.bannerGreen],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            banner.headline,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            banner.description,
-            style: const TextStyle(color: Colors.white70, fontSize: 14),
-          ),
-          const SizedBox(height: 18),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Text(
-              banner.badge,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -286,6 +243,39 @@ class _GradientActionButton extends StatelessWidget {
   }
 }
 
+class _GalleryImageCard extends StatelessWidget {
+  const _GalleryImageCard({required this.imagePath});
+
+  final String imagePath;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(imagePath, fit: BoxFit.cover),
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.05),
+                    Colors.black.withValues(alpha: 0.25),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _CategoryCard extends StatelessWidget {
   const _CategoryCard({required this.title});
 
@@ -302,6 +292,7 @@ class _CategoryCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(18),
       ),
+      constraints: const BoxConstraints(minHeight: 72),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
       child: Center(
         child: Text(
