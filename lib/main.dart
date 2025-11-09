@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:work_hub/core/routes.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/auth/screens/welcome.dart';
@@ -27,12 +28,50 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
   ThemeMode _themeMode = ThemeMode.light;
+  static const _localePrefKey = 'preferred_locale';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadInitialLocale();
+  }
 
   ThemeMode get themeMode => _themeMode;
 
-  void setLocale(Locale locale) {
-    if (!mounted) return;
-    setState(() => _locale = locale);
+  Future<void> _loadInitialLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedCode = prefs.getString(_localePrefKey);
+    Locale? initialLocale;
+
+    if (savedCode != null && savedCode.isNotEmpty) {
+      initialLocale = _resolveSupportedLocale(Locale(savedCode));
+    } else {
+      final deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
+      initialLocale = _resolveSupportedLocale(deviceLocale);
+    }
+
+    if (initialLocale != null && mounted) {
+      setState(() => _locale = initialLocale);
+    }
+  }
+
+  Locale? _resolveSupportedLocale(Locale? locale) {
+    if (locale == null) return null;
+    for (final supported in S.delegate.supportedLocales) {
+      if (supported.languageCode == locale.languageCode) {
+        return Locale(supported.languageCode);
+      }
+    }
+    return null;
+  }
+
+  Future<void> setLocale(Locale locale) async {
+    final normalized = _resolveSupportedLocale(locale);
+    if (!mounted || normalized == null) return;
+    setState(() => _locale = normalized);
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_localePrefKey, normalized.languageCode);
   }
 
   void setThemeMode(ThemeMode mode) {

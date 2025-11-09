@@ -719,6 +719,416 @@ class S {
     );
   }
 
+  /// `Required`
+  String get fieldRequired {
+    return Intl.message('Required', name: 'fieldRequired', desc: '', args: []);
+  }
+
+  /// `First Name`
+  String get registerFirstNameLabel {
+    return Intl.message(
+      'First Name',
+      name: 'registerFirstNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter first name...`
+  String get registerFirstNameHint {
+    return Intl.message(
+      'Enter first name...',
+      name: 'registerFirstNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Name`
+  String get registerLastNameLabel {
+    return Intl.message(
+      'Last Name',
+      name: 'registerLastNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter last name...`
+  String get registerLastNameHint {
+    return Intl.message(
+      'Enter last name...',
+      name: 'registerLastNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone Number`
+  String get registerPhoneLabel {
+    return Intl.message(
+      'Phone Number',
+      name: 'registerPhoneLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter phone number...`
+  String get registerPhoneHint {
+    return Intl.message(
+      'Enter phone number...',
+      name: 'registerPhoneHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get registerEmailLabel {
+    return Intl.message(
+      'Email',
+      name: 'registerEmailLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `example@gmail.com`
+  String get registerEmailHint {
+    return Intl.message(
+      'example@gmail.com',
+      name: 'registerEmailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get registerPasswordLabel {
+    return Intl.message(
+      'Password',
+      name: 'registerPasswordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter password...`
+  String get registerPasswordHint {
+    return Intl.message(
+      'Enter password...',
+      name: 'registerPasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least 6 characters`
+  String get registerPasswordTooShort {
+    return Intl.message(
+      'Password must be at least 6 characters',
+      name: 'registerPasswordTooShort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get registerConfirmPasswordLabel {
+    return Intl.message(
+      'Confirm Password',
+      name: 'registerConfirmPasswordLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-enter password...`
+  String get registerConfirmPasswordHint {
+    return Intl.message(
+      'Re-enter password...',
+      name: 'registerConfirmPasswordHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get registerPasswordMismatch {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'registerPasswordMismatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Employer name`
+  String get registerEmployerNameLabel {
+    return Intl.message(
+      'Employer name',
+      name: 'registerEmployerNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company, organization, restaurant name...`
+  String get registerEmployerNameHint {
+    return Intl.message(
+      'Company, organization, restaurant name...',
+      name: 'registerEmployerNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get registerButton {
+    return Intl.message('Register', name: 'registerButton', desc: '', args: []);
+  }
+
+  /// `Already have an account?`
+  String get registerHaveAccount {
+    return Intl.message(
+      'Already have an account?',
+      name: 'registerHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get registerLoginLink {
+    return Intl.message('Login', name: 'registerLoginLink', desc: '', args: []);
+  }
+
+  /// `The password provided is too weak`
+  String get authErrorWeakPassword {
+    return Intl.message(
+      'The password provided is too weak',
+      name: 'authErrorWeakPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The account already exists for that email`
+  String get authErrorEmailInUse {
+    return Intl.message(
+      'The account already exists for that email',
+      name: 'authErrorEmailInUse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job Info`
+  String get jobInfoTab {
+    return Intl.message('Job Info', name: 'jobInfoTab', desc: '', args: []);
+  }
+
+  /// `Company Info`
+  String get companyInfoTab {
+    return Intl.message(
+      'Company Info',
+      name: 'companyInfoTab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply Now`
+  String get applyNow {
+    return Intl.message('Apply Now', name: 'applyNow', desc: '', args: []);
+  }
+
+  /// `Salary`
+  String get jobDetailSalaryLabel {
+    return Intl.message(
+      'Salary',
+      name: 'jobDetailSalaryLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Experience`
+  String get jobDetailExperienceLabel {
+    return Intl.message(
+      'Experience',
+      name: 'jobDetailExperienceLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location`
+  String get jobDetailLocationLabel {
+    return Intl.message(
+      'Location',
+      name: 'jobDetailLocationLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job Information`
+  String get jobInfoSectionTitle {
+    return Intl.message(
+      'Job Information',
+      name: 'jobInfoSectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Information`
+  String get companyInfoSectionTitle {
+    return Intl.message(
+      'Company Information',
+      name: 'companyInfoSectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job Description`
+  String get jobDescriptionTitle {
+    return Intl.message(
+      'Job Description',
+      name: 'jobDescriptionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job Title`
+  String get jobDetailJobTitle {
+    return Intl.message(
+      'Job Title',
+      name: 'jobDetailJobTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Years of Experience`
+  String get jobDetailExperienceYears {
+    return Intl.message(
+      'Years of Experience',
+      name: 'jobDetailExperienceYears',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Education Level`
+  String get jobDetailEducationLevel {
+    return Intl.message(
+      'Education Level',
+      name: 'jobDetailEducationLevel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department`
+  String get jobDetailDepartment {
+    return Intl.message(
+      'Department',
+      name: 'jobDetailDepartment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nationality`
+  String get jobDetailNationality {
+    return Intl.message(
+      'Nationality',
+      name: 'jobDetailNationality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work Location`
+  String get jobDetailWorkLocation {
+    return Intl.message(
+      'Work Location',
+      name: 'jobDetailWorkLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get jobDetailCity {
+    return Intl.message('City', name: 'jobDetailCity', desc: '', args: []);
+  }
+
+  /// `Apply Before`
+  String get jobDetailDeadline {
+    return Intl.message(
+      'Apply Before',
+      name: 'jobDetailDeadline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Summary`
+  String get jobDetailCompanySummary {
+    return Intl.message(
+      'Company Summary',
+      name: 'jobDetailCompanySummary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company name`
+  String get jobDetailCompanyNameLabel {
+    return Intl.message(
+      'Company name',
+      name: 'jobDetailCompanyNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Present your profile with confidence. Review the requirements, highlight your key achievements, and submit an application tailored to the hiring manager.`
+  String get jobDescriptionDefault {
+    return Intl.message(
+      'Present your profile with confidence. Review the requirements, highlight your key achievements, and submit an application tailored to the hiring manager.',
+      name: 'jobDescriptionDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We invest in continuous learning, transparent leadership, and an inclusive culture so every team member can grow.`
+  String get jobCompanySummaryDefault {
+    return Intl.message(
+      'We invest in continuous learning, transparent leadership, and an inclusive culture so every team member can grow.',
+      name: 'jobCompanySummaryDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven’t saved any jobs yet.`
+  String get savedEmptyMessage {
+    return Intl.message(
+      'You haven’t saved any jobs yet.',
+      name: 'savedEmptyMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Error`
   String get dialogErrorTitle {
     return Intl.message('Error', name: 'dialogErrorTitle', desc: '', args: []);

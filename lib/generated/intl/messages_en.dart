@@ -35,8 +35,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "actionSeeMore": MessageLookupByLibrary.simpleMessage("See more"),
     "appLoading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "appTitle": MessageLookupByLibrary.simpleMessage("Wzfni"),
+    "applyNow": MessageLookupByLibrary.simpleMessage("Apply Now"),
+    "authErrorEmailInUse": MessageLookupByLibrary.simpleMessage(
+      "The account already exists for that email",
+    ),
     "authErrorUserNotFound": MessageLookupByLibrary.simpleMessage(
       "No user found for that email",
+    ),
+    "authErrorWeakPassword": MessageLookupByLibrary.simpleMessage(
+      "The password provided is too weak",
     ),
     "authErrorWrongPassword": MessageLookupByLibrary.simpleMessage(
       "Wrong password provided for that user",
@@ -76,7 +83,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryMarketing": MessageLookupByLibrary.simpleMessage("Marketing"),
     "categoryProgramming": MessageLookupByLibrary.simpleMessage("Programming"),
     "categorySales": MessageLookupByLibrary.simpleMessage("Sales"),
+    "companyInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
+      "Company Information",
+    ),
+    "companyInfoTab": MessageLookupByLibrary.simpleMessage("Company Info"),
     "dialogErrorTitle": MessageLookupByLibrary.simpleMessage("Error"),
+    "fieldRequired": MessageLookupByLibrary.simpleMessage("Required"),
     "filterAnyTime": MessageLookupByLibrary.simpleMessage("Any time"),
     "filterCategory": MessageLookupByLibrary.simpleMessage("Category"),
     "filterChooseCountry": MessageLookupByLibrary.simpleMessage(
@@ -85,7 +97,45 @@ class MessageLookup extends MessageLookupByLibrary {
     "jobCompanyConfidential": MessageLookupByLibrary.simpleMessage(
       "Confidential",
     ),
+    "jobCompanySummaryDefault": MessageLookupByLibrary.simpleMessage(
+      "We invest in continuous learning, transparent leadership, and an inclusive culture so every team member can grow.",
+    ),
+    "jobDescriptionDefault": MessageLookupByLibrary.simpleMessage(
+      "Present your profile with confidence. Review the requirements, highlight your key achievements, and submit an application tailored to the hiring manager.",
+    ),
+    "jobDescriptionTitle": MessageLookupByLibrary.simpleMessage(
+      "Job Description",
+    ),
+    "jobDetailCity": MessageLookupByLibrary.simpleMessage("City"),
+    "jobDetailCompanyNameLabel": MessageLookupByLibrary.simpleMessage(
+      "Company name",
+    ),
+    "jobDetailCompanySummary": MessageLookupByLibrary.simpleMessage(
+      "Company Summary",
+    ),
+    "jobDetailDeadline": MessageLookupByLibrary.simpleMessage("Apply Before"),
+    "jobDetailDepartment": MessageLookupByLibrary.simpleMessage("Department"),
+    "jobDetailEducationLevel": MessageLookupByLibrary.simpleMessage(
+      "Education Level",
+    ),
+    "jobDetailExperienceLabel": MessageLookupByLibrary.simpleMessage(
+      "Experience",
+    ),
+    "jobDetailExperienceYears": MessageLookupByLibrary.simpleMessage(
+      "Years of Experience",
+    ),
+    "jobDetailJobTitle": MessageLookupByLibrary.simpleMessage("Job Title"),
+    "jobDetailLocationLabel": MessageLookupByLibrary.simpleMessage("Location"),
+    "jobDetailNationality": MessageLookupByLibrary.simpleMessage("Nationality"),
+    "jobDetailSalaryLabel": MessageLookupByLibrary.simpleMessage("Salary"),
+    "jobDetailWorkLocation": MessageLookupByLibrary.simpleMessage(
+      "Work Location",
+    ),
     "jobFeaturedBadge": MessageLookupByLibrary.simpleMessage("Featured post"),
+    "jobInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
+      "Job Information",
+    ),
+    "jobInfoTab": MessageLookupByLibrary.simpleMessage("Job Info"),
     "jobLocationJordan": MessageLookupByLibrary.simpleMessage("Jordan"),
     "jobLocationSaudi": MessageLookupByLibrary.simpleMessage("Saudi Arabia"),
     "jobPostedAt": m0,
@@ -159,6 +209,51 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "offerUrgentTitle": MessageLookupByLibrary.simpleMessage("Urgent Hire"),
     "placeholderTab": m1,
+    "registerButton": MessageLookupByLibrary.simpleMessage("Register"),
+    "registerConfirmPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "Re-enter password...",
+    ),
+    "registerConfirmPasswordLabel": MessageLookupByLibrary.simpleMessage(
+      "Confirm Password",
+    ),
+    "registerEmailHint": MessageLookupByLibrary.simpleMessage(
+      "example@gmail.com",
+    ),
+    "registerEmailLabel": MessageLookupByLibrary.simpleMessage("Email"),
+    "registerEmployerNameHint": MessageLookupByLibrary.simpleMessage(
+      "Company, organization, restaurant name...",
+    ),
+    "registerEmployerNameLabel": MessageLookupByLibrary.simpleMessage(
+      "Employer name",
+    ),
+    "registerFirstNameHint": MessageLookupByLibrary.simpleMessage(
+      "Enter first name...",
+    ),
+    "registerFirstNameLabel": MessageLookupByLibrary.simpleMessage(
+      "First Name",
+    ),
+    "registerHaveAccount": MessageLookupByLibrary.simpleMessage(
+      "Already have an account?",
+    ),
+    "registerLastNameHint": MessageLookupByLibrary.simpleMessage(
+      "Enter last name...",
+    ),
+    "registerLastNameLabel": MessageLookupByLibrary.simpleMessage("Last Name"),
+    "registerLoginLink": MessageLookupByLibrary.simpleMessage("Login"),
+    "registerPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "Enter password...",
+    ),
+    "registerPasswordLabel": MessageLookupByLibrary.simpleMessage("Password"),
+    "registerPasswordMismatch": MessageLookupByLibrary.simpleMessage(
+      "Passwords do not match",
+    ),
+    "registerPasswordTooShort": MessageLookupByLibrary.simpleMessage(
+      "Password must be at least 6 characters",
+    ),
+    "registerPhoneHint": MessageLookupByLibrary.simpleMessage(
+      "Enter phone number...",
+    ),
+    "registerPhoneLabel": MessageLookupByLibrary.simpleMessage("Phone Number"),
     "registerTabEmployer": MessageLookupByLibrary.simpleMessage(
       "Register Employer",
     ),
@@ -166,6 +261,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Register Job Seeker",
     ),
     "registerTitle": MessageLookupByLibrary.simpleMessage("Create Account"),
+    "savedEmptyMessage": MessageLookupByLibrary.simpleMessage(
+      "You haven’t saved any jobs yet.",
+    ),
     "searchHint": MessageLookupByLibrary.simpleMessage("Looking for a job.."),
     "sectionFeaturedOffers": MessageLookupByLibrary.simpleMessage(
       "Featured Offers",

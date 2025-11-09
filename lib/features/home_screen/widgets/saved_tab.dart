@@ -22,7 +22,7 @@ class SavedTab extends StatelessWidget {
       children: [
         CustomHeader(
           title: s.appTitle,
-          height: 130,
+          height: 120,
           backgroundColor: AppColors.purple,
           showBackButton: false,
           showMenuButton: true,

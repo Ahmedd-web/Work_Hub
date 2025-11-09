@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/auth/screens/login.dart';
-import 'package:work_hub/features/home_screen/home_page.dart';
+import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/customInputfield.dart';
 
 class JobSeekerForm extends StatefulWidget {
@@ -29,123 +29,124 @@ class _JobSeekerForm extends State<JobSeekerForm> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Form(
       key: _formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          const Text(
-            "First Name",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            s.registerFirstNameLabel,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           CustomInputField(
             prefixIcon: Icons.person,
             keyboardType: TextInputType.name,
-
-            hint: "enter first name...",
+            hint: s.registerFirstNameHint,
             controller: firstNameController,
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
-                return "Required";
+                return s.fieldRequired;
               }
               return null;
             },
           ),
           const SizedBox(height: 30),
-          const Text(
-            "Last Name",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            s.registerLastNameLabel,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           CustomInputField(
             prefixIcon: Icons.person,
             keyboardType: TextInputType.name,
-
-            hint: "enter last name...",
+            hint: s.registerLastNameHint,
             controller: lastNameController,
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
-                return "Required";
+                return s.fieldRequired;
               }
               return null;
             },
           ),
           const SizedBox(height: 30),
-          const Text(
-            "Phone Number",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            s.registerPhoneLabel,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           CustomInputField(
             prefixIcon: Icons.phone,
             keyboardType: TextInputType.phone,
-
-            hint: "enter phone number...",
+            hint: s.registerPhoneHint,
             controller: phoneController,
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
-                return "Required";
+                return s.fieldRequired;
               }
               return null;
             },
           ),
           const SizedBox(height: 30),
-          const Text("Email ", style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+            s.registerEmailLabel,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 8),
           CustomInputField(
             prefixIcon: Icons.email,
             keyboardType: TextInputType.emailAddress,
-
-            hint: "enter email address...",
+            hint: s.registerEmailHint,
             controller: emailController,
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
-                return "Required";
+                return s.fieldRequired;
               }
               return null;
             },
           ),
           const SizedBox(height: 30),
-          const Text("Password", style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+            s.registerPasswordLabel,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 8),
           CustomInputField(
             prefixIcon: Icons.lock,
             isPassword: true,
             keyboardType: TextInputType.visiblePassword,
-
-            hint: "enter password...",
+            hint: s.registerPasswordHint,
             controller: passwordController,
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
-                return "Required";
+                return s.fieldRequired;
               }
               if (val.length < 6) {
-                return "Password must be at least 6 characters";
+                return s.registerPasswordTooShort;
               }
               return null;
             },
           ),
           const SizedBox(height: 30),
-          const Text(
-            "Confirm Password",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            s.registerConfirmPasswordLabel,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           CustomInputField(
             prefixIcon: Icons.lock,
             isPassword: true,
             keyboardType: TextInputType.visiblePassword,
-
-            hint: "re-enter password...",
+            hint: s.registerConfirmPasswordHint,
             controller: confirmPassController,
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
-                return "Required";
+                return s.fieldRequired;
               }
               if (passwordController.text != confirmPassController.text) {
-                return "Passwords do not match";
+                return s.registerPasswordMismatch;
               }
               return null;
             },
@@ -156,44 +157,44 @@ class _JobSeekerForm extends State<JobSeekerForm> {
           ElevatedButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                setState(() {
-                  isLoading = true;
-                });
+                setState(() => isLoading = true);
                 try {
-                  final credential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text,
-                      );
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
+                  if (!mounted) return;
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => const Login()),
                   );
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'weak-password') {
-                    print('The password provided is too weak.');
                     AwesomeDialog(
                       context: context,
                       dialogType: DialogType.warning,
                       animType: AnimType.rightSlide,
-                      title: 'Error',
-                      desc: 'The password provided is too weak',
+                      title: s.dialogErrorTitle,
+                      desc: s.authErrorWeakPassword,
                     ).show();
                   } else if (e.code == 'email-already-in-use') {
-                    print('The account already exists for that email.');
                     AwesomeDialog(
                       context: context,
                       dialogType: DialogType.info,
                       animType: AnimType.rightSlide,
-                      title: 'Error',
-                      desc: 'The account already exists for that email',
+                      title: s.dialogErrorTitle,
+                      desc: s.authErrorEmailInUse,
                     ).show();
                   }
                 } catch (e) {
-                  print(e);
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.error,
+                    animType: AnimType.rightSlide,
+                    title: s.dialogErrorTitle,
+                    desc: e.toString(),
+                  ).show();
                 }
-                setState(() {
-                  isLoading = false;
-                });
+                setState(() => isLoading = false);
               }
             },
 
@@ -211,9 +212,9 @@ class _JobSeekerForm extends State<JobSeekerForm> {
                       height: 24,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                    : const Text(
-                      "Register",
-                      style: TextStyle(
+                    : Text(
+                      s.registerButton,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -228,29 +229,22 @@ class _JobSeekerForm extends State<JobSeekerForm> {
                   MaterialPageRoute(builder: (context) => const Login()),
                 );
               },
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const Login()),
-                  );
-                },
-                child: const Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Already have an account? ",
-                        style: TextStyle(color: Colors.purple),
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '${s.registerHaveAccount} ',
+                      style: const TextStyle(color: Colors.purple),
+                    ),
+                    TextSpan(
+                      text: s.registerLoginLink,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
                       ),
-                      TextSpan(
-                        text: "Login",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

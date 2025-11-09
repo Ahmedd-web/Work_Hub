@@ -10,6 +10,7 @@ class JobsTab extends StatelessWidget {
     super.key,
     required this.searchController,
     required this.jobPosts,
+    required this.onJobSelected,
     this.onFilterPressed,
     this.onTimeFilterPressed,
     this.onCategoryFilterPressed,
@@ -17,6 +18,7 @@ class JobsTab extends StatelessWidget {
 
   final TextEditingController searchController;
   final List<JobPost> jobPosts;
+  final ValueChanged<JobPost> onJobSelected;
   final VoidCallback? onFilterPressed;
   final VoidCallback? onTimeFilterPressed;
   final VoidCallback? onCategoryFilterPressed;
@@ -83,15 +85,17 @@ class JobsTab extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Column(
-                  children:
-                      jobPosts
-                          .map(
-                            (job) => Padding(
-                              padding: const EdgeInsets.only(bottom: 16),
-                              child: _JobCard(job: job),
-                            ),
-                          )
-                          .toList(),
+                  children: jobPosts
+                      .map(
+                        (job) => Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: _JobCard(
+                            job: job,
+                            onTap: () => onJobSelected(job),
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
                 const SizedBox(height: 32),
               ],
@@ -193,9 +197,10 @@ class _FilterDropdownPill extends StatelessWidget {
 }
 
 class _JobCard extends StatelessWidget {
-  const _JobCard({required this.job});
+  const _JobCard({required this.job, required this.onTap});
 
   final JobPost job;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -206,101 +211,102 @@ class _JobCard extends StatelessWidget {
     final badgeFill = colorScheme.secondary.withValues(alpha: 0.14);
     final badgeBorder = colorScheme.secondary.withValues(alpha: 0.3);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.pillBackground),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const _LogoBadge(),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.person_outline,
-                          color: colorScheme.primary,
-                          size: 18,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          job.companyLabel,
-                          style: textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      job.title,
-                      style: textTheme.titleMedium?.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (job.isFeatured)
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: badgeFill,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: badgeBorder),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
+    return InkWell(
+      borderRadius: BorderRadius.circular(22),
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: AppColors.pillBackground),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const _LogoBadge(),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.star, color: colorScheme.secondary, size: 16),
-                      const SizedBox(width: 4),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person_outline,
+                            color: colorScheme.primary,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            job.companyLabel,
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
                       Text(
-                        s.jobFeaturedBadge,
-                        style: textTheme.bodySmall?.copyWith(
-                          color: colorScheme.secondary,
-                          fontWeight: FontWeight.w600,
+                        job.title,
+                        style: textTheme.titleMedium?.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
                   ),
                 ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Text(
-                job.postedAt,
-                style: textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.secondary,
-                  fontWeight: FontWeight.w600,
+                if (job.isFeatured)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: badgeFill,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: badgeBorder),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.star, color: colorScheme.secondary, size: 16),
+                        const SizedBox(width: 4),
+                        Text(
+                          s.jobFeaturedBadge,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colorScheme.secondary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Text(
+                  job.postedAt,
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.secondary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              const Spacer(),
-              Flexible(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                const Spacer(),
+                Row(
                   children: [
                     Icon(
                       Icons.location_on_outlined,
@@ -308,27 +314,24 @@ class _JobCard extends StatelessWidget {
                       size: 18,
                     ),
                     const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        job.location,
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                    Text(
+                      job.location,
+                      style: textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 8),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.share_outlined),
-                color: colorScheme.primary,
-              ),
-            ],
-          ),
-        ],
+                const SizedBox(width: 12),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.share_outlined),
+                  color: colorScheme.primary,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
