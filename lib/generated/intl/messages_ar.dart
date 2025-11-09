@@ -33,8 +33,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "actionSeeMore": MessageLookupByLibrary.simpleMessage("عرض المزيد"),
     "appLoading": MessageLookupByLibrary.simpleMessage("جارٍ التحميل..."),
     "appTitle": MessageLookupByLibrary.simpleMessage("وظفني"),
+    "applyNow": MessageLookupByLibrary.simpleMessage("تقدم الآن"),
+    "authErrorEmailInUse": MessageLookupByLibrary.simpleMessage(
+      "يوجد حساب مسجل بهذا البريد الإلكتروني",
+    ),
     "authErrorUserNotFound": MessageLookupByLibrary.simpleMessage(
       "لا يوجد مستخدم بهذا البريد الإلكتروني",
+    ),
+    "authErrorWeakPassword": MessageLookupByLibrary.simpleMessage(
+      "كلمة المرور المدخلة ضعيفة جدًا",
     ),
     "authErrorWrongPassword": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور غير صحيحة لهذا الحساب",
@@ -72,12 +79,51 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryMarketing": MessageLookupByLibrary.simpleMessage("التسويق"),
     "categoryProgramming": MessageLookupByLibrary.simpleMessage("البرمجة"),
     "categorySales": MessageLookupByLibrary.simpleMessage("المبيعات"),
+    "companyInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
+      "معلومات الشركة",
+    ),
+    "companyInfoTab": MessageLookupByLibrary.simpleMessage("معلومات الشركة"),
     "dialogErrorTitle": MessageLookupByLibrary.simpleMessage("خطأ"),
+    "fieldRequired": MessageLookupByLibrary.simpleMessage("مطلوب"),
     "filterAnyTime": MessageLookupByLibrary.simpleMessage("أي وقت"),
     "filterCategory": MessageLookupByLibrary.simpleMessage("التصنيف"),
     "filterChooseCountry": MessageLookupByLibrary.simpleMessage("اختر الدولة"),
     "jobCompanyConfidential": MessageLookupByLibrary.simpleMessage("سري"),
+    "jobCompanySummaryDefault": MessageLookupByLibrary.simpleMessage(
+      "نستثمر في التعلم المستمر والقيادة الشفافة وبيئة عمل شاملة تمنح كل عضو فرصة حقيقية للنمو.",
+    ),
+    "jobDescriptionDefault": MessageLookupByLibrary.simpleMessage(
+      "قدّم خبراتك بثقة، وراجع متطلبات الوظيفة، وأبرز أهم إنجازاتك ثم أرسل طلباً مصمماً لما يحتاجه صاحب العمل.",
+    ),
+    "jobDescriptionTitle": MessageLookupByLibrary.simpleMessage("وصف الوظيفة"),
+    "jobDetailCity": MessageLookupByLibrary.simpleMessage("المدينة"),
+    "jobDetailCompanyNameLabel": MessageLookupByLibrary.simpleMessage(
+      "اسم الشركة",
+    ),
+    "jobDetailCompanySummary": MessageLookupByLibrary.simpleMessage(
+      "نبذة عن الشركة",
+    ),
+    "jobDetailDeadline": MessageLookupByLibrary.simpleMessage(
+      "آخر موعد للتقديم",
+    ),
+    "jobDetailDepartment": MessageLookupByLibrary.simpleMessage("القسم"),
+    "jobDetailEducationLevel": MessageLookupByLibrary.simpleMessage(
+      "مستوى التعليم",
+    ),
+    "jobDetailExperienceLabel": MessageLookupByLibrary.simpleMessage("الخبرة"),
+    "jobDetailExperienceYears": MessageLookupByLibrary.simpleMessage(
+      "سنوات الخبرة",
+    ),
+    "jobDetailJobTitle": MessageLookupByLibrary.simpleMessage("المسمى الوظيفي"),
+    "jobDetailLocationLabel": MessageLookupByLibrary.simpleMessage("الموقع"),
+    "jobDetailNationality": MessageLookupByLibrary.simpleMessage("الجنسية"),
+    "jobDetailSalaryLabel": MessageLookupByLibrary.simpleMessage("الراتب"),
+    "jobDetailWorkLocation": MessageLookupByLibrary.simpleMessage("مكان العمل"),
     "jobFeaturedBadge": MessageLookupByLibrary.simpleMessage("إعلان مميز"),
+    "jobInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
+      "معلومات الوظيفة",
+    ),
+    "jobInfoTab": MessageLookupByLibrary.simpleMessage("معلومات الوظيفة"),
     "jobLocationJordan": MessageLookupByLibrary.simpleMessage("الأردن"),
     "jobLocationSaudi": MessageLookupByLibrary.simpleMessage("السعودية"),
     "jobPostedAt": m0,
@@ -145,6 +191,57 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "offerUrgentTitle": MessageLookupByLibrary.simpleMessage("توظيف عاجل"),
     "placeholderTab": m1,
+    "registerButton": MessageLookupByLibrary.simpleMessage("تسجيل"),
+    "registerConfirmPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "أعد إدخال كلمة المرور...",
+    ),
+    "registerConfirmPasswordLabel": MessageLookupByLibrary.simpleMessage(
+      "تأكيد كلمة المرور",
+    ),
+    "registerEmailHint": MessageLookupByLibrary.simpleMessage(
+      "example@gmail.com",
+    ),
+    "registerEmailLabel": MessageLookupByLibrary.simpleMessage(
+      "البريد الإلكتروني",
+    ),
+    "registerEmployerNameHint": MessageLookupByLibrary.simpleMessage(
+      "اسم الشركة أو المؤسسة أو المطعم...",
+    ),
+    "registerEmployerNameLabel": MessageLookupByLibrary.simpleMessage(
+      "اسم جهة العمل",
+    ),
+    "registerFirstNameHint": MessageLookupByLibrary.simpleMessage(
+      "أدخل الاسم الأول...",
+    ),
+    "registerFirstNameLabel": MessageLookupByLibrary.simpleMessage(
+      "الاسم الأول",
+    ),
+    "registerHaveAccount": MessageLookupByLibrary.simpleMessage(
+      "لديك حساب بالفعل؟",
+    ),
+    "registerLastNameHint": MessageLookupByLibrary.simpleMessage(
+      "أدخل اسم العائلة...",
+    ),
+    "registerLastNameLabel": MessageLookupByLibrary.simpleMessage(
+      "اسم العائلة",
+    ),
+    "registerLoginLink": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+    "registerPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "أدخل كلمة المرور...",
+    ),
+    "registerPasswordLabel": MessageLookupByLibrary.simpleMessage(
+      "كلمة المرور",
+    ),
+    "registerPasswordMismatch": MessageLookupByLibrary.simpleMessage(
+      "كلمتا المرور غير متطابقتين",
+    ),
+    "registerPasswordTooShort": MessageLookupByLibrary.simpleMessage(
+      "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+    ),
+    "registerPhoneHint": MessageLookupByLibrary.simpleMessage(
+      "أدخل رقم الهاتف...",
+    ),
+    "registerPhoneLabel": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
     "registerTabEmployer": MessageLookupByLibrary.simpleMessage(
       "تسجيل صاحب عمل",
     ),
@@ -152,6 +249,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "تسجيل باحث عن عمل",
     ),
     "registerTitle": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
+    "savedEmptyMessage": MessageLookupByLibrary.simpleMessage(
+      "لا توجد وظائف مفضلة حالياً.",
+    ),
     "searchHint": MessageLookupByLibrary.simpleMessage("ابحث عن وظيفة..."),
     "sectionFeaturedOffers": MessageLookupByLibrary.simpleMessage("عروض مميزة"),
     "sectionJobCategories": MessageLookupByLibrary.simpleMessage(

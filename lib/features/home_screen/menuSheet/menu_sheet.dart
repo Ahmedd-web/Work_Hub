@@ -129,7 +129,10 @@ Future<void> showWorkHubMenuSheet(
                     ),
                     title: e.title,
                     textColor: e.textColor ?? defaultTextColor,
-                    onTap: e.onTap,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      e.onTap();
+                    },
                     backgroundColor: pillColor,
                   ),
                 ),

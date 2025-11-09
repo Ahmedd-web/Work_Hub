@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/features/auth/screens/register.dart';
 import 'package:work_hub/features/home_screen/models/featured_offer.dart';
+import 'package:work_hub/features/home_screen/pages/categories_page.dart';
 import 'package:work_hub/features/home_screen/widgets/header_sliver_delegate.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 import 'package:work_hub/generated/l10n.dart';
@@ -15,6 +17,7 @@ class HomeTab extends StatelessWidget {
     required this.galleryImages,
     required this.categories,
     required this.featuredOffers,
+    this.showCallToActions = true,
   });
 
   final PageController galleryController;
@@ -24,6 +27,7 @@ class HomeTab extends StatelessWidget {
   final List<String> galleryImages;
   final List<String> categories;
   final List<FeaturedOffer> featuredOffers;
+  final bool showCallToActions;
 
   static const double _headerBaseHeight = 130;
   static const double _searchOverlap = 28;
@@ -104,21 +108,39 @@ class HomeTab extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    _GradientActionButton(
-                      label: s.actionCreateResume,
-                      icon: Icons.add,
-                      colors: const [
-                        AppColors.bannerGreen,
-                        AppColors.bannerTeal,
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    _GradientActionButton(
-                      label: s.actionPostJob,
-                      icon: Icons.work_outline,
-                      colors: const [AppColors.purple, AppColors.bannerTeal],
-                    ),
-                    const SizedBox(height: 28),
+                    if (showCallToActions) ...[
+                      _GradientActionButton(
+                        label: s.actionCreateResume,
+                        icon: Icons.add,
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => RegisterPage(initialTabIndex: 1),
+                            ),
+                          );
+                        },
+                        colors: const [
+                          AppColors.bannerGreen,
+                          AppColors.bannerTeal,
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      _GradientActionButton(
+                        label: s.actionPostJob,
+                        icon: Icons.work_outline,
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => RegisterPage(initialTabIndex: 0),
+                            ),
+                          );
+                        },
+                        colors: const [AppColors.purple, AppColors.bannerTeal],
+                      ),
+                      const SizedBox(height: 28),
+                    ],
                     Row(
                       children: [
                         Text(
@@ -127,7 +149,15 @@ class HomeTab extends StatelessWidget {
                         ),
                         const Spacer(),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder:
+                                    (_) =>
+                                        CategoriesPage(categories: categories),
+                              ),
+                            );
+                          },
                           child: Text(s.actionSeeMore),
                         ),
                       ],
@@ -200,17 +230,19 @@ class _GradientActionButton extends StatelessWidget {
     required this.label,
     required this.icon,
     this.colors = const [AppColors.purple, AppColors.bannerGreen],
+    this.onPressed,
   });
 
   final String label;
   final IconData icon;
+  final VoidCallback? onPressed;
   final List<Color> colors;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(32),
-      onTap: () {},
+      onTap: onPressed,
       child: Ink(
         decoration: BoxDecoration(
           gradient: LinearGradient(

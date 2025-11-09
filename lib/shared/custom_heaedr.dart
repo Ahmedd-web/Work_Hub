@@ -60,6 +60,10 @@ class CustomHeader extends StatelessWidget {
     final s = S.of(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final locale = Localizations.localeOf(context);
+    final bool isArabic = locale.languageCode == 'ar';
+    final textDirection = isArabic ? TextDirection.rtl : TextDirection.ltr;
+    final textAlign = isArabic ? TextAlign.right : TextAlign.left;
     final effectiveBackground = backgroundColor ?? colorScheme.primary;
     final effectiveTextColor = textColor ?? colorScheme.onPrimary;
     final searchFillColor =
@@ -241,6 +245,8 @@ class CustomHeader extends StatelessWidget {
                 child: TextField(
                   controller: searchController,
                   onSubmitted: onSearchSubmitted,
+                  textDirection: textDirection,
+                  textAlign: textAlign,
                   decoration: InputDecoration(
                     hintText: searchHint ?? s.searchHint,
                     prefixIcon: const Icon(Icons.search),
