@@ -15,6 +15,8 @@ class JobPost {
     this.deadline,
     this.description,
     this.companySummary,
+    required this.postedDaysAgo,
+    required this.categoryId,
   });
 
   final String id;
@@ -23,6 +25,8 @@ class JobPost {
   final String postedAt;
   final String location;
   final bool isFeatured;
+  final int postedDaysAgo;
+  final String categoryId;
 
   final String? salary;
   final String? experience;

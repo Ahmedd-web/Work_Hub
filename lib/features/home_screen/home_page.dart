@@ -6,6 +6,7 @@ import 'package:work_hub/features/home_screen/models/job_post.dart';
 import 'package:work_hub/features/home_screen/pages/job_detail_page.dart';
 import 'package:work_hub/features/home_screen/widgets/home_tab.dart';
 import 'package:work_hub/features/home_screen/widgets/jobs_tab.dart';
+import 'package:work_hub/features/home_screen/widgets/profile_tab.dart';
 import 'package:work_hub/features/home_screen/widgets/saved_tab.dart';
 import 'package:work_hub/generated/l10n.dart';
 
@@ -30,6 +31,8 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _jobSearchController = TextEditingController();
   String _homeSearchQuery = '';
   String _jobSearchQuery = '';
+  _JobTimeFilter _selectedJobTimeFilter = _JobTimeFilter.anytime;
+  String? _selectedJobCategoryId;
 
   List<_CategoryItem> _buildJobCategories(S s) => [
     _CategoryItem(
@@ -46,76 +49,81 @@ class _HomePageState extends State<HomePage> {
   ];
 
   List<JobPost> _buildJobPosts(S s) {
-    final defaultDescription = s.jobDescriptionDefault;
-    final defaultSummary = s.jobCompanySummaryDefault;
-
     return [
       JobPost(
         id: 'quality_supervisor',
         title: s.jobTitleQualitySupervisor,
         companyLabel: s.jobCompanyConfidential,
         postedAt: s.jobPostedAt(6),
-        location: s.jobLocationJordan,
+        location: 'Tripoli, Libya',
         isFeatured: true,
-        salary: 'Unspecified',
+        salary: '7,500 LYD',
         experience: '1',
-        department: 'Quality',
+        department: s.jobDeptQuality,
         educationLevel: 'Bachelor',
-        nationality: 'Jordanian',
-        city: 'Amman',
+        nationality: 'Libyan',
+        city: 'Tripoli',
         deadline: '2025-11-06',
-        description: defaultDescription,
-        companySummary: defaultSummary,
+        description: 'متابعة معايير الجودة في خطوط إنتاج المواد الغذائية داخل مصنع محلي، والتأكد من مطابقتها للمواصفات الليبية والدولية.',
+        companySummary: 'شركة تصنيع غذائي تعمل في طرابلس وتستقطب الكفاءات الليبية.',
+        postedDaysAgo: 6,
+        categoryId: 'quality',
       ),
       JobPost(
         id: 'admin_officer',
         title: s.jobTitleAdminOfficer,
         companyLabel: s.jobCompanyConfidential,
         postedAt: s.jobPostedAt(9),
-        location: s.jobLocationJordan,
+        location: 'Benghazi, Libya',
         isFeatured: true,
-        salary: '9000 SAR',
+        salary: '8,000 LYD',
         experience: '3',
-        department: 'Administration',
+        department: s.jobDeptAdministration,
         educationLevel: 'Diploma',
         nationality: 'Any',
-        city: 'Aqaba',
+        city: 'Benghazi',
         deadline: '2025-10-12',
-        description: defaultDescription,
-        companySummary: defaultSummary,
+        description: 'تنظيم ملفات الموظفين والمتابعة مع الأقسام المختلفة داخل شركة خدمات لوجستية في مدينة بنغازي.',
+        companySummary: 'مؤسسة لوجستية تقدم خدمات الشحن والتوزيع داخل ليبيا.',
+        postedDaysAgo: 9,
+        categoryId: 'administration',
       ),
       JobPost(
         id: 'internal_auditor',
         title: s.jobTitleInternalAuditor,
         companyLabel: s.jobCompanyConfidential,
         postedAt: s.jobPostedAt(9),
-        location: s.jobLocationJordan,
+        location: 'Misrata, Libya',
         isFeatured: true,
-        salary: 'Unspecified',
+        salary: '6,500 LYD',
         experience: '2',
-        department: 'Finance',
+        department: s.jobDeptFinance,
         educationLevel: 'Bachelor',
         nationality: 'Any',
-        city: 'Amman',
+        city: 'Misrata',
         deadline: '2025-09-01',
-        description: defaultDescription,
-        companySummary: defaultSummary,
+        description: 'مراجعة التقارير المالية وتقديم التوصيات حول تحسين الأنظمة المحاسبية في شركة صناعية بمصراتة.',
+        companySummary: 'شركة صناعية ليبية توسّع عملياتها في الغرب الليبي.',
+        postedDaysAgo: 9,
+        categoryId: 'finance',
       ),
       JobPost(
         id: 'finance_specialist',
         title: s.jobTitleFinanceSpecialist,
         companyLabel: s.jobCompanyConfidential,
         postedAt: s.jobPostedAt(12),
-        location: s.jobLocationSaudi,
-        salary: '12000 SAR',
+        location: 'Sebha, Libya',
+        salary: '10,000 LYD',
         experience: '4',
-        department: 'Finance',
+        department: s.jobDeptFinance,
         educationLevel: 'Master',
         nationality: 'Any',
-        city: 'Riyadh',
+        city: 'Sebha',
         deadline: '2025-08-15',
-        description: defaultDescription,
-        companySummary: defaultSummary,
+        description: 'إعداد الميزانيات والتحليل المالي لمشاريع الطاقة المتجددة في الجنوب الليبي.',
+        companySummary: 'مؤسسة تعمل في مجال الطاقة وتبحث عن خبرات مالية لدعم مشاريعها.',
+        postedDaysAgo: 12,
+        categoryId: 'finance',
       ),
     ];
   }
@@ -176,41 +184,32 @@ class _HomePageState extends State<HomePage> {
       'quality',
       'مشرف جودة',
       'الجودة',
-      'jordan',
-      'الأردن',
-      'amman',
-      'عمان',
+      'tripoli',
+      'طرابلس',
     ],
     'admin_officer': [
       'admin officer',
       'administration officer',
       'مسؤول إداري',
       'إداري',
-      'aqaba',
-      'العقبة',
-      'jordan',
-      'الأردن',
+      'benghazi',
+      'بنغازي',
     ],
     'internal_auditor': [
       'internal auditor',
       'auditor',
       'مدقق داخلي',
       'التدقيق',
-      'amman',
-      'عمان',
-      'jordan',
-      'الأردن',
+      'misrata',
+      'مصراتة',
     ],
     'finance_specialist': [
       'finance specialist',
       'finance',
-      'financial',
       'أخصائي مالي',
       'مالي',
-      'riyadh',
-      'الرياض',
-      'saudi',
-      'السعودية',
+      'sebha',
+      'سبها',
     ],
   };
 
@@ -241,7 +240,10 @@ class _HomePageState extends State<HomePage> {
     final filteredCategories =
         filteredCategoryItems.map((item) => item.title).toList();
     final jobPosts = _buildJobPosts(s);
+    final categoryMap = _jobCategoryOptions(jobPosts);
     final filteredJobPosts = _filterJobs(jobPosts);
+    final timeOptions = _buildTimeOptions(s);
+    final categoryOptions = _buildCategoryOptions(s, categoryMap);
     final featuredOffers = _buildFeaturedOffers(s);
     final isGuest = FirebaseAuth.instance.currentUser == null;
     final favoriteJobs =
@@ -269,9 +271,15 @@ class _HomePageState extends State<HomePage> {
               searchController: _jobSearchController,
               jobPosts: filteredJobPosts,
               onJobSelected: _openJobDetail,
+              timeOptions: timeOptions,
+              selectedTimeValue: _timeFilterValue,
+              onTimeChanged: _handleTimeFilterChanged,
+              categoryOptions: categoryOptions,
+              selectedCategoryValue: _selectedJobCategoryId ?? 'all',
+              onCategoryChanged: _handleCategoryFilterChanged,
             ),
             SavedTab(favoriteJobs: favoriteJobs, onJobSelected: _openJobDetail),
-            _PlaceholderTab(label: s.navProfile),
+            const ProfileTab(),
           ],
         ),
       ),
@@ -354,15 +362,97 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<JobPost> _filterJobs(List<JobPost> jobs) {
-    if (_jobSearchQuery.isEmpty) return jobs;
-    final query = _jobSearchQuery.toLowerCase();
+    final query = _jobSearchQuery.trim().toLowerCase();
     return jobs.where((job) {
-      final keywords = _jobKeywordMap[job.id] ?? const [];
-      return job.title.toLowerCase().contains(query) ||
-          job.companyLabel.toLowerCase().contains(query) ||
-          job.location.toLowerCase().contains(query) ||
-          keywords.any((keyword) => keyword.toLowerCase().contains(query));
+      if (query.isNotEmpty && !_matchesSearch(job, query)) {
+        return false;
+      }
+      if (!_matchesTimeFilter(job)) return false;
+      if (_selectedJobCategoryId != null &&
+          job.categoryId != _selectedJobCategoryId) {
+        return false;
+      }
+      return true;
     }).toList();
+  }
+
+  bool _matchesSearch(JobPost job, String query) {
+    final keywords = _jobKeywordMap[job.id] ?? const [];
+    return job.title.toLowerCase().contains(query) ||
+        job.companyLabel.toLowerCase().contains(query) ||
+        job.location.toLowerCase().contains(query) ||
+        keywords.any((keyword) => keyword.toLowerCase().contains(query));
+  }
+
+  bool _matchesTimeFilter(JobPost job) {
+    switch (_selectedJobTimeFilter) {
+      case _JobTimeFilter.last24h:
+        return job.postedDaysAgo <= 1;
+      case _JobTimeFilter.last7d:
+        return job.postedDaysAgo <= 7;
+      case _JobTimeFilter.last30d:
+        return job.postedDaysAgo <= 30;
+      case _JobTimeFilter.anytime:
+        return true;
+    }
+  }
+
+  Map<String, String> _jobCategoryOptions(List<JobPost> jobs) {
+    final map = <String, String>{};
+    for (final job in jobs) {
+      final label = job.department ?? job.categoryId;
+      map.putIfAbsent(job.categoryId, () => label);
+    }
+    return map;
+  }
+
+  List<FilterOption> _buildTimeOptions(S s) => [
+        FilterOption(value: 'any', label: s.filterAnyTime),
+        FilterOption(value: '24h', label: s.filterLast24h),
+        FilterOption(value: '7d', label: s.filterLast7d),
+        FilterOption(value: '30d', label: s.filterLast30d),
+      ];
+
+  List<FilterOption> _buildCategoryOptions(
+    S s,
+    Map<String, String> categories,
+  ) {
+    return [
+      FilterOption(value: 'all', label: s.filterAllCategories),
+      ...categories.entries.map(
+        (entry) => FilterOption(value: entry.key, label: entry.value),
+      ),
+    ];
+  }
+
+  String get _timeFilterValue {
+    switch (_selectedJobTimeFilter) {
+      case _JobTimeFilter.last24h:
+        return '24h';
+      case _JobTimeFilter.last7d:
+        return '7d';
+      case _JobTimeFilter.last30d:
+        return '30d';
+      case _JobTimeFilter.anytime:
+        return 'any';
+    }
+  }
+
+  void _handleTimeFilterChanged(String value) {
+    setState(() {
+      _selectedJobTimeFilter = switch (value) {
+        '24h' => _JobTimeFilter.last24h,
+        '7d' => _JobTimeFilter.last7d,
+        '30d' => _JobTimeFilter.last30d,
+        _ => _JobTimeFilter.anytime,
+      };
+    });
+  }
+
+  void _handleCategoryFilterChanged(String value) {
+    setState(() {
+      _selectedJobCategoryId = value == 'all' ? null : value;
+    });
   }
 }
 
@@ -373,22 +463,5 @@ class _CategoryItem {
   final String title;
 }
 
-class _PlaceholderTab extends StatelessWidget {
-  const _PlaceholderTab({required this.label});
+enum _JobTimeFilter { last24h, last7d, last30d, anytime }
 
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Center(
-      child: Text(
-        S.of(context).placeholderTab(label),
-        style: textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-          color: textTheme.bodyMedium?.color,
-        ),
-      ),
-    );
-  }
-}

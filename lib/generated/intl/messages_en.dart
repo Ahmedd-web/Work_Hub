@@ -34,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "actionSeeMore": MessageLookupByLibrary.simpleMessage("See more"),
     "appLoading": MessageLookupByLibrary.simpleMessage("Loading..."),
-    "appTitle": MessageLookupByLibrary.simpleMessage("Wzfni"),
+    "appTitle": MessageLookupByLibrary.simpleMessage("Mhnty"),
     "applyNow": MessageLookupByLibrary.simpleMessage("Apply Now"),
     "authErrorEmailInUse": MessageLookupByLibrary.simpleMessage(
       "The account already exists for that email",
@@ -83,23 +83,201 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryMarketing": MessageLookupByLibrary.simpleMessage("Marketing"),
     "categoryProgramming": MessageLookupByLibrary.simpleMessage("Programming"),
     "categorySales": MessageLookupByLibrary.simpleMessage("Sales"),
+    "commonCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "commonOk": MessageLookupByLibrary.simpleMessage("OK"),
     "companyInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
       "Company Information",
     ),
     "companyInfoTab": MessageLookupByLibrary.simpleMessage("Company Info"),
+    "cvAddSkill": MessageLookupByLibrary.simpleMessage("Add skill"),
+    "cvButtonAdd": MessageLookupByLibrary.simpleMessage("Add"),
+    "cvButtonFinish": MessageLookupByLibrary.simpleMessage("Finish"),
+    "cvButtonPrevious": MessageLookupByLibrary.simpleMessage("Previous"),
+    "cvButtonSaveContinue": MessageLookupByLibrary.simpleMessage(
+      "Save & continue",
+    ),
+    "cvButtonStart": MessageLookupByLibrary.simpleMessage("Create your CV"),
+    "cvCourseDate": MessageLookupByLibrary.simpleMessage("Course date"),
+    "cvCourseOrganization": MessageLookupByLibrary.simpleMessage(
+      "Course organizer",
+    ),
+    "cvCourseTitle": MessageLookupByLibrary.simpleMessage("Course title"),
+    "cvCreateCta": MessageLookupByLibrary.simpleMessage(
+      "Start building your CV",
+    ),
+    "cvCreateTitle": MessageLookupByLibrary.simpleMessage("Build your CV"),
+    "cvDownloadButton": MessageLookupByLibrary.simpleMessage("Download"),
+    "cvDownloadComingSoon": MessageLookupByLibrary.simpleMessage("Coming soon"),
+    "cvDownloadCta": MessageLookupByLibrary.simpleMessage("Download my CV"),
+    "cvDownloadFree": MessageLookupByLibrary.simpleMessage("Free CV"),
+    "cvDownloadFreeDesc": MessageLookupByLibrary.simpleMessage(
+      "Standard PDF export.",
+    ),
+    "cvDownloadFreePrice": MessageLookupByLibrary.simpleMessage("\$0"),
+    "cvDownloadGold": MessageLookupByLibrary.simpleMessage("Gold"),
+    "cvDownloadGoldDesc": MessageLookupByLibrary.simpleMessage(
+      "Premium template with advanced styling.",
+    ),
+    "cvDownloadGoldPrice": MessageLookupByLibrary.simpleMessage("\$10"),
+    "cvDownloadPremium": MessageLookupByLibrary.simpleMessage("Premium"),
+    "cvDownloadPremiumDesc": MessageLookupByLibrary.simpleMessage(
+      "Enhanced formatting and layout.",
+    ),
+    "cvDownloadPremiumPrice": MessageLookupByLibrary.simpleMessage("\$5"),
+    "cvDownloadSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Choose how you’d like to export your CV.",
+    ),
+    "cvDownloadTitle": MessageLookupByLibrary.simpleMessage("Download my CV"),
+    "cvDownloadToast": MessageLookupByLibrary.simpleMessage(
+      "Download options will be available soon.",
+    ),
+    "cvEditButton": MessageLookupByLibrary.simpleMessage("Edit my CV"),
+    "cvEducationEndDate": MessageLookupByLibrary.simpleMessage("End date"),
+    "cvEducationInstitution": MessageLookupByLibrary.simpleMessage(
+      "Educational institution",
+    ),
+    "cvEducationMajorAr": MessageLookupByLibrary.simpleMessage(
+      "Major in Arabic",
+    ),
+    "cvEducationMajorEn": MessageLookupByLibrary.simpleMessage(
+      "Major in English",
+    ),
+    "cvEducationStartDate": MessageLookupByLibrary.simpleMessage("Start date"),
+    "cvEmptyMessage": MessageLookupByLibrary.simpleMessage(
+      "You have not created your CV yet.",
+    ),
+    "cvExperienceCompanyAr": MessageLookupByLibrary.simpleMessage(
+      "Company name (Arabic)",
+    ),
+    "cvExperienceCompanyEn": MessageLookupByLibrary.simpleMessage(
+      "Company name (English)",
+    ),
+    "cvExperienceDescription": MessageLookupByLibrary.simpleMessage(
+      "Description",
+    ),
+    "cvExperienceEndDate": MessageLookupByLibrary.simpleMessage("End date"),
+    "cvExperienceRoleAr": MessageLookupByLibrary.simpleMessage(
+      "Job title (Arabic)",
+    ),
+    "cvExperienceRoleEn": MessageLookupByLibrary.simpleMessage(
+      "Job title (English)",
+    ),
+    "cvExperienceStartDate": MessageLookupByLibrary.simpleMessage("Start date"),
+    "cvFieldEducationLevel": MessageLookupByLibrary.simpleMessage(
+      "Education level",
+    ),
+    "cvFieldEmail": MessageLookupByLibrary.simpleMessage("Email"),
+    "cvFieldJobTitleAr": MessageLookupByLibrary.simpleMessage(
+      "Job title (Arabic)",
+    ),
+    "cvFieldJobTitleEn": MessageLookupByLibrary.simpleMessage(
+      "Job title (English)",
+    ),
+    "cvFieldPhone1": MessageLookupByLibrary.simpleMessage("Phone number (1)"),
+    "cvFieldPhone2": MessageLookupByLibrary.simpleMessage("Phone number (2)"),
+    "cvFieldPhone3": MessageLookupByLibrary.simpleMessage("Phone number (3)"),
+    "cvFieldSkillPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "Type a skill then press add",
+    ),
+    "cvFieldSummaryAr": MessageLookupByLibrary.simpleMessage(
+      "Objective in Arabic",
+    ),
+    "cvFieldSummaryEn": MessageLookupByLibrary.simpleMessage(
+      "Objective in English",
+    ),
+    "cvFieldYearsExperience": MessageLookupByLibrary.simpleMessage(
+      "Years of experience",
+    ),
+    "cvNoData": MessageLookupByLibrary.simpleMessage("No data"),
+    "cvSectionContact": MessageLookupByLibrary.simpleMessage(
+      "Contact information",
+    ),
+    "cvSectionContactEmail": MessageLookupByLibrary.simpleMessage(
+      "Email address",
+    ),
+    "cvSectionContactPhones": MessageLookupByLibrary.simpleMessage(
+      "Phone numbers",
+    ),
+    "cvSectionCourses": MessageLookupByLibrary.simpleMessage(
+      "Training courses",
+    ),
+    "cvSectionEducation": MessageLookupByLibrary.simpleMessage("Education"),
+    "cvSectionExperience": MessageLookupByLibrary.simpleMessage(
+      "Work experience",
+    ),
+    "cvSectionMainInfo": MessageLookupByLibrary.simpleMessage(
+      "Main information",
+    ),
+    "cvSectionSkills": MessageLookupByLibrary.simpleMessage("Personal skills"),
+    "cvSectionSummary": MessageLookupByLibrary.simpleMessage("About me"),
+    "cvSkillsEmpty": MessageLookupByLibrary.simpleMessage(
+      "No skills added yet.",
+    ),
+    "cvStepContact": MessageLookupByLibrary.simpleMessage(
+      "Contact information",
+    ),
+    "cvStepCourses": MessageLookupByLibrary.simpleMessage("Training courses"),
+    "cvStepEducation": MessageLookupByLibrary.simpleMessage("Education"),
+    "cvStepExperience": MessageLookupByLibrary.simpleMessage("Work experience"),
+    "cvStepPersonalInfo": MessageLookupByLibrary.simpleMessage(
+      "Personal information",
+    ),
+    "cvStepSkills": MessageLookupByLibrary.simpleMessage("Personal skills"),
+    "cvStepSummary": MessageLookupByLibrary.simpleMessage("About me"),
+    "cvSummaryEmpty": MessageLookupByLibrary.simpleMessage(
+      "No summary provided.",
+    ),
+    "deleteAccountMessage": MessageLookupByLibrary.simpleMessage(
+      "This will permanently remove your account and data. Continue?",
+    ),
+    "deleteAccountReauth": MessageLookupByLibrary.simpleMessage(
+      "Please log in again before deleting your account.",
+    ),
+    "deleteAccountSuccess": MessageLookupByLibrary.simpleMessage(
+      "Your account has been deleted.",
+    ),
+    "deleteAccountTitle": MessageLookupByLibrary.simpleMessage(
+      "Delete account?",
+    ),
     "dialogErrorTitle": MessageLookupByLibrary.simpleMessage("Error"),
+    "editProfileCv": MessageLookupByLibrary.simpleMessage("CV link"),
+    "editProfileEmail": MessageLookupByLibrary.simpleMessage("Email address"),
+    "editProfileFullName": MessageLookupByLibrary.simpleMessage("Full name"),
+    "editProfilePhone": MessageLookupByLibrary.simpleMessage("Phone number"),
+    "editProfileSave": MessageLookupByLibrary.simpleMessage("Save"),
+    "editProfileSuccessMessage": MessageLookupByLibrary.simpleMessage(
+      "Your profile information has been updated.",
+    ),
+    "editProfileSuccessTitle": MessageLookupByLibrary.simpleMessage(
+      "Changes saved",
+    ),
+    "editProfileTitle": MessageLookupByLibrary.simpleMessage(
+      "Personal information",
+    ),
+    "editProfileUpload": MessageLookupByLibrary.simpleMessage("Upload CV"),
     "fieldRequired": MessageLookupByLibrary.simpleMessage("Required"),
+    "filterAllCategories": MessageLookupByLibrary.simpleMessage(
+      "All categories",
+    ),
     "filterAnyTime": MessageLookupByLibrary.simpleMessage("Any time"),
     "filterCategory": MessageLookupByLibrary.simpleMessage("Category"),
     "filterChooseCountry": MessageLookupByLibrary.simpleMessage(
       "Choose country",
     ),
+    "filterLast24h": MessageLookupByLibrary.simpleMessage("Last 24 hours"),
+    "filterLast30d": MessageLookupByLibrary.simpleMessage("Past month"),
+    "filterLast7d": MessageLookupByLibrary.simpleMessage("Past week"),
     "jobCompanyConfidential": MessageLookupByLibrary.simpleMessage(
       "Confidential",
     ),
     "jobCompanySummaryDefault": MessageLookupByLibrary.simpleMessage(
       "We invest in continuous learning, transparent leadership, and an inclusive culture so every team member can grow.",
     ),
+    "jobDeptAdministration": MessageLookupByLibrary.simpleMessage(
+      "Administration",
+    ),
+    "jobDeptFinance": MessageLookupByLibrary.simpleMessage("Finance"),
+    "jobDeptQuality": MessageLookupByLibrary.simpleMessage("Quality"),
     "jobDescriptionDefault": MessageLookupByLibrary.simpleMessage(
       "Present your profile with confidence. Review the requirements, highlight your key achievements, and submit an application tailored to the hiring manager.",
     ),
@@ -136,8 +314,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Job Information",
     ),
     "jobInfoTab": MessageLookupByLibrary.simpleMessage("Job Info"),
-    "jobLocationJordan": MessageLookupByLibrary.simpleMessage("Jordan"),
-    "jobLocationSaudi": MessageLookupByLibrary.simpleMessage("Saudi Arabia"),
+    "jobLocationJordan": MessageLookupByLibrary.simpleMessage("Tripoli"),
+    "jobLocationSaudi": MessageLookupByLibrary.simpleMessage("Benghazi"),
     "jobPostedAt": m0,
     "jobTitleAdminOfficer": MessageLookupByLibrary.simpleMessage(
       "Admin Officer",
@@ -179,6 +357,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "menuAbout": MessageLookupByLibrary.simpleMessage("About Us"),
     "menuContact": MessageLookupByLibrary.simpleMessage("Contact Us"),
+    "menuDeleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
     "menuLogin": MessageLookupByLibrary.simpleMessage("Login"),
     "menuLogout": MessageLookupByLibrary.simpleMessage("Logout"),
     "menuPrivacy": MessageLookupByLibrary.simpleMessage(
@@ -209,6 +388,25 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "offerUrgentTitle": MessageLookupByLibrary.simpleMessage("Urgent Hire"),
     "placeholderTab": m1,
+    "profileAddress": MessageLookupByLibrary.simpleMessage("Address"),
+    "profileCity": MessageLookupByLibrary.simpleMessage("City / Region"),
+    "profileEmail": MessageLookupByLibrary.simpleMessage("Email"),
+    "profileNameArabic": MessageLookupByLibrary.simpleMessage("Name (Arabic)"),
+    "profileNameEnglish": MessageLookupByLibrary.simpleMessage(
+      "Name (English)",
+    ),
+    "profileNameLabel": MessageLookupByLibrary.simpleMessage("Full Name"),
+    "profileNationality": MessageLookupByLibrary.simpleMessage("Nationality"),
+    "profileNoData": MessageLookupByLibrary.simpleMessage(
+      "We couldn’t find your profile data yet. Please complete registration.",
+    ),
+    "profilePersonalTab": MessageLookupByLibrary.simpleMessage("Personal Info"),
+    "profilePhone": MessageLookupByLibrary.simpleMessage("Phone Number"),
+    "profileResumePlaceholder": MessageLookupByLibrary.simpleMessage(
+      "Your CV will appear here when uploaded.",
+    ),
+    "profileResumeTab": MessageLookupByLibrary.simpleMessage("My Resume"),
+    "profileResumeTitle": MessageLookupByLibrary.simpleMessage("Resume"),
     "registerButton": MessageLookupByLibrary.simpleMessage("Register"),
     "registerConfirmPasswordHint": MessageLookupByLibrary.simpleMessage(
       "Re-enter password...",
@@ -287,6 +485,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "welcomeSubtitle": MessageLookupByLibrary.simpleMessage(
       "Your gateway to seamless work management.",
     ),
-    "welcomeTitle": MessageLookupByLibrary.simpleMessage("Welcome to Wzfni"),
+    "welcomeTitle": MessageLookupByLibrary.simpleMessage(
+      "Welcome to Nuqta Wasl",
+    ),
   };
 }

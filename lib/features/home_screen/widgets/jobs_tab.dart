@@ -11,17 +11,25 @@ class JobsTab extends StatelessWidget {
     required this.searchController,
     required this.jobPosts,
     required this.onJobSelected,
+    required this.timeOptions,
+    required this.selectedTimeValue,
+    required this.onTimeChanged,
+    required this.categoryOptions,
+    required this.selectedCategoryValue,
+    required this.onCategoryChanged,
     this.onFilterPressed,
-    this.onTimeFilterPressed,
-    this.onCategoryFilterPressed,
   });
 
   final TextEditingController searchController;
   final List<JobPost> jobPosts;
   final ValueChanged<JobPost> onJobSelected;
+  final List<FilterOption> timeOptions;
+  final String selectedTimeValue;
+  final ValueChanged<String> onTimeChanged;
+  final List<FilterOption> categoryOptions;
+  final String selectedCategoryValue;
+  final ValueChanged<String> onCategoryChanged;
   final VoidCallback? onFilterPressed;
-  final VoidCallback? onTimeFilterPressed;
-  final VoidCallback? onCategoryFilterPressed;
 
   static const double _headerBaseHeight = 130;
   static const double _searchOverlap = 28;
@@ -69,16 +77,18 @@ class JobsTab extends StatelessWidget {
                     Expanded(
                       child: _FilterDropdownPill(
                         icon: Icons.access_time,
-                        label: s.filterAnyTime,
-                        onTap: onTimeFilterPressed,
+                        value: selectedTimeValue,
+                        options: timeOptions,
+                        onChanged: onTimeChanged,
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: _FilterDropdownPill(
                         icon: Icons.work_outline,
-                        label: s.filterCategory,
-                        onTap: onCategoryFilterPressed,
+                        value: selectedCategoryValue,
+                        options: categoryOptions,
+                        onChanged: onCategoryChanged,
                       ),
                     ),
                   ],
@@ -144,56 +154,74 @@ class _IconPillButton extends StatelessWidget {
 class _FilterDropdownPill extends StatelessWidget {
   const _FilterDropdownPill({
     required this.icon,
-    required this.label,
-    required this.onTap,
+    required this.value,
+    required this.options,
+    required this.onChanged,
   });
 
   final IconData icon;
-  final String label;
-  final VoidCallback? onTap;
+  final String value;
+  final List<FilterOption> options;
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    return InkWell(
-      borderRadius: BorderRadius.circular(28),
-      onTap: onTap,
-      child: Ink(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        decoration: BoxDecoration(
-          color: colorScheme.surface,
-          borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: AppColors.border),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.purple.withValues(alpha: 0.08),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: colorScheme.primary),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                label,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: AppColors.border),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.purple.withValues(alpha: 0.08),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: colorScheme.primary),
+          const SizedBox(width: 8),
+          Expanded(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: value,
+                isExpanded: true,
+                icon: const Icon(Icons.keyboard_arrow_down, color: AppColors.textSecondary),
                 style: textTheme.bodyMedium?.copyWith(
                   color: textTheme.titleMedium?.color,
                   fontWeight: FontWeight.w600,
                 ),
+                items: options
+                    .map(
+                      (option) => DropdownMenuItem<String>(
+                        value: option.value,
+                        child: Text(option.label),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (val) {
+                  if (val != null) onChanged(val);
+                },
               ),
             ),
-            Icon(Icons.keyboard_arrow_down, color: AppColors.textSecondary),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+}
+
+class FilterOption {
+  const FilterOption({required this.value, required this.label});
+
+  final String value;
+  final String label;
 }
 
 class _JobCard extends StatelessWidget {
@@ -305,24 +333,32 @@ class _JobCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const Spacer(),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.location_on_outlined,
-                      color: AppColors.purple,
-                      size: 18,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      job.location,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
                 const SizedBox(width: 12),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Icon(
+                        Icons.location_on_outlined,
+                        color: AppColors.purple,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          job.location,
+                          style: textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.share_outlined),

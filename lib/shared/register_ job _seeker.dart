@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/auth/screens/login.dart';
@@ -15,8 +16,7 @@ class JobSeekerForm extends StatefulWidget {
 class _JobSeekerForm extends State<JobSeekerForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
+  final fullNameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -37,7 +37,7 @@ class _JobSeekerForm extends State<JobSeekerForm> {
         padding: const EdgeInsets.all(20),
         children: [
           Text(
-            s.registerFirstNameLabel,
+            s.profileNameLabel,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
@@ -45,25 +45,7 @@ class _JobSeekerForm extends State<JobSeekerForm> {
             prefixIcon: Icons.person,
             keyboardType: TextInputType.name,
             hint: s.registerFirstNameHint,
-            controller: firstNameController,
-            validator: (val) {
-              if (val == null || val.trim().isEmpty) {
-                return s.fieldRequired;
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 30),
-          Text(
-            s.registerLastNameLabel,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          CustomInputField(
-            prefixIcon: Icons.person,
-            keyboardType: TextInputType.name,
-            hint: s.registerLastNameHint,
-            controller: lastNameController,
+            controller: fullNameController,
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
                 return s.fieldRequired;
@@ -151,50 +133,76 @@ class _JobSeekerForm extends State<JobSeekerForm> {
               return null;
             },
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 50),
 
-          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                setState(() => isLoading = true);
-                try {
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
-                  if (!mounted) return;
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const Login()),
-                  );
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.warning,
-                      animType: AnimType.rightSlide,
-                      title: s.dialogErrorTitle,
-                      desc: s.authErrorWeakPassword,
-                    ).show();
-                  } else if (e.code == 'email-already-in-use') {
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.info,
-                      animType: AnimType.rightSlide,
-                      title: s.dialogErrorTitle,
-                      desc: s.authErrorEmailInUse,
-                    ).show();
-                  }
-                } catch (e) {
-                  AwesomeDialog(
-                    context: context,
-                    dialogType: DialogType.error,
-                    animType: AnimType.rightSlide,
-                    title: s.dialogErrorTitle,
-                    desc: e.toString(),
-                  ).show();
+              final navigator = Navigator.of(context);
+              final dialogContext = context;
+              if (!_formKey.currentState!.validate()) return;
+              setState(() => isLoading = true);
+              bool registrationSucceeded = false;
+              String? errorMessage;
+              try {
+                final credential = await FirebaseAuth.instance
+                    .createUserWithEmailAndPassword(
+                      email: emailController.text.trim(),
+                      password: passwordController.text,
+                    );
+                final uid = credential.user!.uid;
+                final fullName = fullNameController.text.trim();
+                await FirebaseFirestore.instance
+                    .collection('Profile')
+                    .doc(uid)
+                    .set({
+                      'full_name': fullName,
+                      'first_name': fullName,
+                      'last_name': '',
+                      'phone': phoneController.text.trim(),
+                      'email': emailController.text.trim(),
+                      'photo_url': '',
+                    });
+                registrationSucceeded = true;
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'weak-password') {
+                  errorMessage = s.authErrorWeakPassword;
+                } else if (e.code == 'email-already-in-use') {
+                  errorMessage = s.authErrorEmailInUse;
+                } else {
+                  errorMessage = s.dialogErrorTitle;
                 }
-                setState(() => isLoading = false);
+              } catch (e) {
+                errorMessage = e.toString();
+              } finally {
+                if (mounted) {
+                  setState(() => isLoading = false);
+                }
+              }
+
+              if (!context.mounted) return;
+              if (registrationSucceeded) {
+                await AwesomeDialog(
+                  context: dialogContext,
+                  dialogType: DialogType.success,
+                  animType: AnimType.rightSlide,
+                  title: s.dialogErrorTitle,
+                  desc: s.registerButton,
+                  btnOkText: s.loginButton,
+                  btnOkOnPress: () {},
+                ).show();
+                if (!context.mounted) return;
+                navigator.pushReplacement(
+                  MaterialPageRoute(builder: (_) => const Login()),
+                );
+              } else if (errorMessage != null) {
+                if (!context.mounted) return;
+                AwesomeDialog(
+                  context: dialogContext,
+                  dialogType: DialogType.error,
+                  animType: AnimType.rightSlide,
+                  title: s.dialogErrorTitle,
+                  desc: errorMessage,
+                ).show();
               }
             },
 

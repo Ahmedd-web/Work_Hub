@@ -54,9 +54,9 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Wzfni`
+  /// `Mhnty`
   String get appTitle {
-    return Intl.message('Wzfni', name: 'appTitle', desc: '', args: []);
+    return Intl.message('Mhnty', name: 'appTitle', desc: '', args: []);
   }
 
   /// `Looking for a job..`
@@ -107,6 +107,16 @@ class S {
   /// `Logout`
   String get menuLogout {
     return Intl.message('Logout', name: 'menuLogout', desc: '', args: []);
+  }
+
+  /// `Delete Account`
+  String get menuDeleteAccount {
+    return Intl.message(
+      'Delete Account',
+      name: 'menuDeleteAccount',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Create your resume`
@@ -319,6 +329,26 @@ class S {
     );
   }
 
+  /// `Quality`
+  String get jobDeptQuality {
+    return Intl.message('Quality', name: 'jobDeptQuality', desc: '', args: []);
+  }
+
+  /// `Administration`
+  String get jobDeptAdministration {
+    return Intl.message(
+      'Administration',
+      name: 'jobDeptAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finance`
+  String get jobDeptFinance {
+    return Intl.message('Finance', name: 'jobDeptFinance', desc: '', args: []);
+  }
+
   /// `Boosted Listing`
   String get offerBoostedTitle {
     return Intl.message(
@@ -419,6 +449,41 @@ class S {
     return Intl.message('Category', name: 'filterCategory', desc: '', args: []);
   }
 
+  /// `Last 24 hours`
+  String get filterLast24h {
+    return Intl.message(
+      'Last 24 hours',
+      name: 'filterLast24h',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Past week`
+  String get filterLast7d {
+    return Intl.message('Past week', name: 'filterLast7d', desc: '', args: []);
+  }
+
+  /// `Past month`
+  String get filterLast30d {
+    return Intl.message(
+      'Past month',
+      name: 'filterLast30d',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All categories`
+  String get filterAllCategories {
+    return Intl.message(
+      'All categories',
+      name: 'filterAllCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Choose country`
   String get filterChooseCountry {
     return Intl.message(
@@ -439,20 +504,20 @@ class S {
     );
   }
 
-  /// `Jordan`
+  /// `Tripoli`
   String get jobLocationJordan {
     return Intl.message(
-      'Jordan',
+      'Tripoli',
       name: 'jobLocationJordan',
       desc: '',
       args: [],
     );
   }
 
-  /// `Saudi Arabia`
+  /// `Benghazi`
   String get jobLocationSaudi {
     return Intl.message(
-      'Saudi Arabia',
+      'Benghazi',
       name: 'jobLocationSaudi',
       desc: '',
       args: [],
@@ -524,10 +589,10 @@ class S {
     return Intl.message('Loading...', name: 'appLoading', desc: '', args: []);
   }
 
-  /// `Welcome to Wzfni`
+  /// `Welcome to Nuqta Wasl`
   String get welcomeTitle {
     return Intl.message(
-      'Welcome to Wzfni',
+      'Welcome to Nuqta Wasl',
       name: 'welcomeTitle',
       desc: '',
       args: [],
@@ -1129,6 +1194,211 @@ class S {
     );
   }
 
+  /// `Personal Info`
+  String get profilePersonalTab {
+    return Intl.message(
+      'Personal Info',
+      name: 'profilePersonalTab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Resume`
+  String get profileResumeTab {
+    return Intl.message(
+      'My Resume',
+      name: 'profileResumeTab',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name (Arabic)`
+  String get profileNameArabic {
+    return Intl.message(
+      'Name (Arabic)',
+      name: 'profileNameArabic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name (English)`
+  String get profileNameEnglish {
+    return Intl.message(
+      'Name (English)',
+      name: 'profileNameEnglish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get profileAddress {
+    return Intl.message('Address', name: 'profileAddress', desc: '', args: []);
+  }
+
+  /// `Nationality`
+  String get profileNationality {
+    return Intl.message(
+      'Nationality',
+      name: 'profileNationality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City / Region`
+  String get profileCity {
+    return Intl.message(
+      'City / Region',
+      name: 'profileCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone Number`
+  String get profilePhone {
+    return Intl.message(
+      'Phone Number',
+      name: 'profilePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get profileEmail {
+    return Intl.message('Email', name: 'profileEmail', desc: '', args: []);
+  }
+
+  /// `Resume`
+  String get profileResumeTitle {
+    return Intl.message(
+      'Resume',
+      name: 'profileResumeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal information`
+  String get editProfileTitle {
+    return Intl.message(
+      'Personal information',
+      name: 'editProfileTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full name`
+  String get editProfileFullName {
+    return Intl.message(
+      'Full name',
+      name: 'editProfileFullName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get editProfilePhone {
+    return Intl.message(
+      'Phone number',
+      name: 'editProfilePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email address`
+  String get editProfileEmail {
+    return Intl.message(
+      'Email address',
+      name: 'editProfileEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CV link`
+  String get editProfileCv {
+    return Intl.message('CV link', name: 'editProfileCv', desc: '', args: []);
+  }
+
+  /// `Upload CV`
+  String get editProfileUpload {
+    return Intl.message(
+      'Upload CV',
+      name: 'editProfileUpload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get editProfileSave {
+    return Intl.message('Save', name: 'editProfileSave', desc: '', args: []);
+  }
+
+  /// `Changes saved`
+  String get editProfileSuccessTitle {
+    return Intl.message(
+      'Changes saved',
+      name: 'editProfileSuccessTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your profile information has been updated.`
+  String get editProfileSuccessMessage {
+    return Intl.message(
+      'Your profile information has been updated.',
+      name: 'editProfileSuccessMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get commonOk {
+    return Intl.message('OK', name: 'commonOk', desc: '', args: []);
+  }
+
+  /// `Your CV will appear here when uploaded.`
+  String get profileResumePlaceholder {
+    return Intl.message(
+      'Your CV will appear here when uploaded.',
+      name: 'profileResumePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We couldn’t find your profile data yet. Please complete registration.`
+  String get profileNoData {
+    return Intl.message(
+      'We couldn’t find your profile data yet. Please complete registration.',
+      name: 'profileNoData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full Name`
+  String get profileNameLabel {
+    return Intl.message(
+      'Full Name',
+      name: 'profileNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Error`
   String get dialogErrorTitle {
     return Intl.message('Error', name: 'dialogErrorTitle', desc: '', args: []);
@@ -1212,6 +1482,701 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Delete account?`
+  String get deleteAccountTitle {
+    return Intl.message(
+      'Delete account?',
+      name: 'deleteAccountTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This will permanently remove your account and data. Continue?`
+  String get deleteAccountMessage {
+    return Intl.message(
+      'This will permanently remove your account and data. Continue?',
+      name: 'deleteAccountMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account has been deleted.`
+  String get deleteAccountSuccess {
+    return Intl.message(
+      'Your account has been deleted.',
+      name: 'deleteAccountSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please log in again before deleting your account.`
+  String get deleteAccountReauth {
+    return Intl.message(
+      'Please log in again before deleting your account.',
+      name: 'deleteAccountReauth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get commonCancel {
+    return Intl.message('Cancel', name: 'commonCancel', desc: '', args: []);
+  }
+
+  /// `Build your CV`
+  String get cvCreateTitle {
+    return Intl.message(
+      'Build your CV',
+      name: 'cvCreateTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal information`
+  String get cvStepPersonalInfo {
+    return Intl.message(
+      'Personal information',
+      name: 'cvStepPersonalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact information`
+  String get cvStepContact {
+    return Intl.message(
+      'Contact information',
+      name: 'cvStepContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal skills`
+  String get cvStepSkills {
+    return Intl.message(
+      'Personal skills',
+      name: 'cvStepSkills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About me`
+  String get cvStepSummary {
+    return Intl.message('About me', name: 'cvStepSummary', desc: '', args: []);
+  }
+
+  /// `Education`
+  String get cvStepEducation {
+    return Intl.message(
+      'Education',
+      name: 'cvStepEducation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Training courses`
+  String get cvStepCourses {
+    return Intl.message(
+      'Training courses',
+      name: 'cvStepCourses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work experience`
+  String get cvStepExperience {
+    return Intl.message(
+      'Work experience',
+      name: 'cvStepExperience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job title (Arabic)`
+  String get cvFieldJobTitleAr {
+    return Intl.message(
+      'Job title (Arabic)',
+      name: 'cvFieldJobTitleAr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job title (English)`
+  String get cvFieldJobTitleEn {
+    return Intl.message(
+      'Job title (English)',
+      name: 'cvFieldJobTitleEn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Education level`
+  String get cvFieldEducationLevel {
+    return Intl.message(
+      'Education level',
+      name: 'cvFieldEducationLevel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Years of experience`
+  String get cvFieldYearsExperience {
+    return Intl.message(
+      'Years of experience',
+      name: 'cvFieldYearsExperience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number (1)`
+  String get cvFieldPhone1 {
+    return Intl.message(
+      'Phone number (1)',
+      name: 'cvFieldPhone1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number (2)`
+  String get cvFieldPhone2 {
+    return Intl.message(
+      'Phone number (2)',
+      name: 'cvFieldPhone2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number (3)`
+  String get cvFieldPhone3 {
+    return Intl.message(
+      'Phone number (3)',
+      name: 'cvFieldPhone3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get cvFieldEmail {
+    return Intl.message('Email', name: 'cvFieldEmail', desc: '', args: []);
+  }
+
+  /// `Type a skill then press add`
+  String get cvFieldSkillPlaceholder {
+    return Intl.message(
+      'Type a skill then press add',
+      name: 'cvFieldSkillPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Objective in Arabic`
+  String get cvFieldSummaryAr {
+    return Intl.message(
+      'Objective in Arabic',
+      name: 'cvFieldSummaryAr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Objective in English`
+  String get cvFieldSummaryEn {
+    return Intl.message(
+      'Objective in English',
+      name: 'cvFieldSummaryEn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Educational institution`
+  String get cvEducationInstitution {
+    return Intl.message(
+      'Educational institution',
+      name: 'cvEducationInstitution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Major in Arabic`
+  String get cvEducationMajorAr {
+    return Intl.message(
+      'Major in Arabic',
+      name: 'cvEducationMajorAr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Major in English`
+  String get cvEducationMajorEn {
+    return Intl.message(
+      'Major in English',
+      name: 'cvEducationMajorEn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start date`
+  String get cvEducationStartDate {
+    return Intl.message(
+      'Start date',
+      name: 'cvEducationStartDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End date`
+  String get cvEducationEndDate {
+    return Intl.message(
+      'End date',
+      name: 'cvEducationEndDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company name (Arabic)`
+  String get cvExperienceCompanyAr {
+    return Intl.message(
+      'Company name (Arabic)',
+      name: 'cvExperienceCompanyAr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company name (English)`
+  String get cvExperienceCompanyEn {
+    return Intl.message(
+      'Company name (English)',
+      name: 'cvExperienceCompanyEn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job title (Arabic)`
+  String get cvExperienceRoleAr {
+    return Intl.message(
+      'Job title (Arabic)',
+      name: 'cvExperienceRoleAr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job title (English)`
+  String get cvExperienceRoleEn {
+    return Intl.message(
+      'Job title (English)',
+      name: 'cvExperienceRoleEn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get cvExperienceDescription {
+    return Intl.message(
+      'Description',
+      name: 'cvExperienceDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start date`
+  String get cvExperienceStartDate {
+    return Intl.message(
+      'Start date',
+      name: 'cvExperienceStartDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End date`
+  String get cvExperienceEndDate {
+    return Intl.message(
+      'End date',
+      name: 'cvExperienceEndDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Course organizer`
+  String get cvCourseOrganization {
+    return Intl.message(
+      'Course organizer',
+      name: 'cvCourseOrganization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Course title`
+  String get cvCourseTitle {
+    return Intl.message(
+      'Course title',
+      name: 'cvCourseTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Course date`
+  String get cvCourseDate {
+    return Intl.message(
+      'Course date',
+      name: 'cvCourseDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get cvButtonAdd {
+    return Intl.message('Add', name: 'cvButtonAdd', desc: '', args: []);
+  }
+
+  /// `Save & continue`
+  String get cvButtonSaveContinue {
+    return Intl.message(
+      'Save & continue',
+      name: 'cvButtonSaveContinue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Previous`
+  String get cvButtonPrevious {
+    return Intl.message(
+      'Previous',
+      name: 'cvButtonPrevious',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finish`
+  String get cvButtonFinish {
+    return Intl.message('Finish', name: 'cvButtonFinish', desc: '', args: []);
+  }
+
+  /// `Create your CV`
+  String get cvButtonStart {
+    return Intl.message(
+      'Create your CV',
+      name: 'cvButtonStart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have not created your CV yet.`
+  String get cvEmptyMessage {
+    return Intl.message(
+      'You have not created your CV yet.',
+      name: 'cvEmptyMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download my CV`
+  String get cvDownloadTitle {
+    return Intl.message(
+      'Download my CV',
+      name: 'cvDownloadTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Free CV`
+  String get cvDownloadFree {
+    return Intl.message('Free CV', name: 'cvDownloadFree', desc: '', args: []);
+  }
+
+  /// `Premium`
+  String get cvDownloadPremium {
+    return Intl.message(
+      'Premium',
+      name: 'cvDownloadPremium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gold`
+  String get cvDownloadGold {
+    return Intl.message('Gold', name: 'cvDownloadGold', desc: '', args: []);
+  }
+
+  /// `Download`
+  String get cvDownloadButton {
+    return Intl.message(
+      'Download',
+      name: 'cvDownloadButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download my CV`
+  String get cvDownloadCta {
+    return Intl.message(
+      'Download my CV',
+      name: 'cvDownloadCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose how you’d like to export your CV.`
+  String get cvDownloadSubtitle {
+    return Intl.message(
+      'Choose how you’d like to export your CV.',
+      name: 'cvDownloadSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `$0`
+  String get cvDownloadFreePrice {
+    return Intl.message('\$0', name: 'cvDownloadFreePrice', desc: '', args: []);
+  }
+
+  /// `$5`
+  String get cvDownloadPremiumPrice {
+    return Intl.message(
+      '\$5',
+      name: 'cvDownloadPremiumPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `$10`
+  String get cvDownloadGoldPrice {
+    return Intl.message(
+      '\$10',
+      name: 'cvDownloadGoldPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Standard PDF export.`
+  String get cvDownloadFreeDesc {
+    return Intl.message(
+      'Standard PDF export.',
+      name: 'cvDownloadFreeDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enhanced formatting and layout.`
+  String get cvDownloadPremiumDesc {
+    return Intl.message(
+      'Enhanced formatting and layout.',
+      name: 'cvDownloadPremiumDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Premium template with advanced styling.`
+  String get cvDownloadGoldDesc {
+    return Intl.message(
+      'Premium template with advanced styling.',
+      name: 'cvDownloadGoldDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coming soon`
+  String get cvDownloadComingSoon {
+    return Intl.message(
+      'Coming soon',
+      name: 'cvDownloadComingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download options will be available soon.`
+  String get cvDownloadToast {
+    return Intl.message(
+      'Download options will be available soon.',
+      name: 'cvDownloadToast',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Main information`
+  String get cvSectionMainInfo {
+    return Intl.message(
+      'Main information',
+      name: 'cvSectionMainInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact information`
+  String get cvSectionContact {
+    return Intl.message(
+      'Contact information',
+      name: 'cvSectionContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone numbers`
+  String get cvSectionContactPhones {
+    return Intl.message(
+      'Phone numbers',
+      name: 'cvSectionContactPhones',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email address`
+  String get cvSectionContactEmail {
+    return Intl.message(
+      'Email address',
+      name: 'cvSectionContactEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal skills`
+  String get cvSectionSkills {
+    return Intl.message(
+      'Personal skills',
+      name: 'cvSectionSkills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About me`
+  String get cvSectionSummary {
+    return Intl.message(
+      'About me',
+      name: 'cvSectionSummary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Education`
+  String get cvSectionEducation {
+    return Intl.message(
+      'Education',
+      name: 'cvSectionEducation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Training courses`
+  String get cvSectionCourses {
+    return Intl.message(
+      'Training courses',
+      name: 'cvSectionCourses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work experience`
+  String get cvSectionExperience {
+    return Intl.message(
+      'Work experience',
+      name: 'cvSectionExperience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No data`
+  String get cvNoData {
+    return Intl.message('No data', name: 'cvNoData', desc: '', args: []);
+  }
+
+  /// `Add skill`
+  String get cvAddSkill {
+    return Intl.message('Add skill', name: 'cvAddSkill', desc: '', args: []);
+  }
+
+  /// `No skills added yet.`
+  String get cvSkillsEmpty {
+    return Intl.message(
+      'No skills added yet.',
+      name: 'cvSkillsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No summary provided.`
+  String get cvSummaryEmpty {
+    return Intl.message(
+      'No summary provided.',
+      name: 'cvSummaryEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start building your CV`
+  String get cvCreateCta {
+    return Intl.message(
+      'Start building your CV',
+      name: 'cvCreateCta',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit my CV`
+  String get cvEditButton {
+    return Intl.message('Edit my CV', name: 'cvEditButton', desc: '', args: []);
   }
 }
 
