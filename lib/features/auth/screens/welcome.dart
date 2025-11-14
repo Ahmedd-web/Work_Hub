@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/auth/screens/login.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
 import 'package:work_hub/features/home_screen/home_page.dart';
@@ -19,7 +20,7 @@ class Welcome extends StatelessWidget {
         children: [
           CustomHeader(
             title: s.appTitle,
-            backgroundColor: colorScheme.primary,
+            backgroundColor: AppColors.purple,
             showBackButton: false,
             showMenuButton: false,
             showNotificationButton: false,
@@ -28,10 +29,7 @@ class Welcome extends StatelessWidget {
           const SizedBox(height: 100),
           Column(
             children: [
-              Text(
-                s.welcomeTitle,
-                style: textTheme.headlineSmall,
-              ),
+              Text(s.welcomeTitle, style: textTheme.headlineSmall),
               const SizedBox(height: 10),
               Text(
                 s.welcomeSubtitle,
@@ -40,11 +38,7 @@ class Welcome extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              Container(
-                width: 280,
-                height: 1,
-                color: colorScheme.primary,
-              ),
+              Container(width: 280, height: 1, color: colorScheme.primary),
               const SizedBox(height: 40),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 45),
@@ -63,10 +57,7 @@ class Welcome extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: Icon(
-                        Icons.person,
-                        color: colorScheme.onSecondary,
-                      ),
+                      icon: Icon(Icons.person, color: colorScheme.onSecondary),
                       label: Text(
                         s.welcomeJobSeeker,
                         style: TextStyle(
@@ -89,10 +80,7 @@ class Welcome extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: Icon(
-                        Icons.business,
-                        color: colorScheme.onPrimary,
-                      ),
+                      icon: Icon(Icons.business, color: colorScheme.onPrimary),
                       label: Text(
                         s.welcomeEmployer,
                         style: TextStyle(
@@ -142,8 +130,7 @@ class Welcome extends StatelessWidget {
                             TextSpan(
                               text: '${s.welcomeHaveAccount} ',
                               style: TextStyle(
-                                color:
-                                    colorScheme.onSurface.withValues(
+                                color: colorScheme.onSurface.withValues(
                                   alpha: 0.7,
                                 ),
                               ),

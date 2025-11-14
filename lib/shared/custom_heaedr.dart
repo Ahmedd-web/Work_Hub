@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/home_screen/menuSheet/about_us.dart';
@@ -36,6 +38,8 @@ class CustomHeader extends StatelessWidget {
   final String? searchHint;
 
   final TextEditingController? searchController;
+  final Widget? overlayChild;
+  final double? overlayHeight;
 
   const CustomHeader({
     super.key,
@@ -53,6 +57,8 @@ class CustomHeader extends StatelessWidget {
     this.onSearchSubmitted,
     this.searchHint,
     this.searchController,
+    this.overlayChild,
+    this.overlayHeight,
   });
 
   @override
@@ -68,8 +74,13 @@ class CustomHeader extends StatelessWidget {
     final effectiveTextColor = textColor ?? colorScheme.onPrimary;
     final searchFillColor =
         theme.inputDecorationTheme.fillColor ?? colorScheme.surface;
-    const double searchBarHeight = 56;
-    final double overlap = showSearchBar ? searchBarHeight / 2 : 0;
+    const double defaultSearchBarHeight = 56;
+    final bool hasOverlayChild = overlayChild != null || showSearchBar;
+    final double overlayChildHeight =
+        overlayChild != null
+            ? (overlayHeight ?? 120)
+            : defaultSearchBarHeight;
+    final double overlap = hasOverlayChild ? overlayChildHeight / 2 : 0;
     final double baseHeight = height ?? 200;
     final double totalHeight = baseHeight + overlap;
 
@@ -90,10 +101,12 @@ class CustomHeader extends StatelessWidget {
               left: 8,
               top: 12,
               child: IconButton(
-                icon: Icon(
-                  showBackButton ? Icons.arrow_back : Icons.menu,
-                  color: effectiveTextColor,
-                ),
+                icon: showBackButton
+                    ? IconTheme(
+                        data: IconThemeData(color: effectiveTextColor),
+                        child: const BackButtonIcon(),
+                      )
+                    : Icon(Icons.menu, color: effectiveTextColor),
                 onPressed: () {
                   if (showBackButton) {
                     if (onBackPressed != null) {
@@ -191,13 +204,22 @@ class CustomHeader extends StatelessWidget {
                         },
                       ),
                       MenuEntry(
+                        icon: Icons.delete_forever,
+                        title: s.menuDeleteAccount,
+                        onTap: () => _handleDeleteAccount(context),
+                        iconColor: Colors.redAccent,
+                        textColor: Colors.redAccent,
+                      ),
+                      MenuEntry(
                         icon: Icons.logout,
                         title: s.menuLogout,
                         onTap: () async {
+                          final navigator = Navigator.of(context);
                           await FirebaseAuth.instance.signOut();
-                          Navigator.of(
-                            context,
-                          ).pushNamedAndRemoveUntil("login", (route) => false);
+                          navigator.pushNamedAndRemoveUntil(
+                            "login",
+                            (route) => false,
+                          );
                         },
 
                         iconColor: WorkHubColors.green,
@@ -221,7 +243,7 @@ class CustomHeader extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(
                 top: 40,
-                bottom: showSearchBar ? searchBarHeight / 2 : 0,
+                bottom: hasOverlayChild ? overlayChildHeight / 2 : 0,
               ),
               child: Text(
                 title,
@@ -234,37 +256,121 @@ class CustomHeader extends StatelessWidget {
               ),
             ),
           ),
-          if (showSearchBar)
+          if (hasOverlayChild)
             Positioned(
               left: 24,
               right: 24,
-              bottom: -searchBarHeight / 2,
-              child: Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(28),
-                child: TextField(
-                  controller: searchController,
-                  onSubmitted: onSearchSubmitted,
-                  textDirection: textDirection,
-                  textAlign: textAlign,
-                  decoration: InputDecoration(
-                    hintText: searchHint ?? s.searchHint,
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(28),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: searchFillColor,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                  ),
-                ),
-              ),
+              bottom: -overlayChildHeight / 2,
+              child:
+                  overlayChild != null
+                      ? SizedBox(
+                        height: overlayChildHeight,
+                        child: overlayChild,
+                      )
+                      : Material(
+                        elevation: 4,
+                        borderRadius: BorderRadius.circular(28),
+                        child: SizedBox(
+                          height: overlayChildHeight,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(28),
+                            child: TextField(
+                              controller: searchController,
+                              onSubmitted: onSearchSubmitted,
+                              textDirection: textDirection,
+                              textAlign: textAlign,
+                              decoration: InputDecoration(
+                                hintText: searchHint ?? s.searchHint,
+                                prefixIcon: const Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(28),
+                                  borderSide: BorderSide.none,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(28),
+                                  borderSide: BorderSide.none,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(28),
+                                  borderSide: BorderSide.none,
+                                ),
+                                filled: true,
+                                fillColor: searchFillColor,
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 14),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
             ),
         ],
       ),
     );
   }
+}
+
+Future<void> _handleDeleteAccount(BuildContext context) async {
+  final s = S.of(context);
+  final messenger = ScaffoldMessenger.of(context);
+  final navigator = Navigator.of(context);
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) {
+    messenger.showSnackBar(
+      SnackBar(content: Text(s.profileNoData)),
+    );
+    return;
+  }
+
+  bool confirmed = false;
+  await AwesomeDialog(
+    context: context,
+    dialogType: DialogType.warning,
+    animType: AnimType.bottomSlide,
+    title: s.deleteAccountTitle,
+    desc: s.deleteAccountMessage,
+    btnCancelText: s.commonCancel,
+    btnCancelOnPress: () => confirmed = false,
+    btnOkText: s.commonOk,
+    btnOkOnPress: () => confirmed = true,
+  ).show();
+  if (!confirmed) return;
+
+  if (!context.mounted) return;
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => const Center(child: CircularProgressIndicator()),
+  );
+
+  try {
+    await FirebaseFirestore.instance.collection('Profile').doc(user.uid).delete().catchError((_) {});
+    await user.delete();
+  } on FirebaseAuthException catch (e) {
+    navigator.pop();
+    final message =
+        e.code == 'requires-recent-login'
+            ? s.deleteAccountReauth
+            : (e.message ?? s.dialogErrorTitle);
+    messenger.showSnackBar(SnackBar(content: Text(message)));
+    return;
+  } catch (e) {
+    navigator.pop();
+    messenger.showSnackBar(SnackBar(content: Text(e.toString())));
+    return;
+  }
+
+  navigator.pop();
+  if (!context.mounted) return;
+  await AwesomeDialog(
+    context: context,
+    dialogType: DialogType.success,
+    title: s.deleteAccountTitle,
+    desc: s.deleteAccountSuccess,
+    btnOkText: s.commonOk,
+    btnOkOnPress: () {},
+  ).show();
+  navigator.pushNamedAndRemoveUntil("login", (route) => false);
 }
 
 class _CurvedHeaderPainter extends CustomPainter {

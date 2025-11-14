@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
 import 'package:work_hub/features/home_screen/home_page.dart';
 import 'package:work_hub/generated/l10n.dart';
@@ -37,21 +38,26 @@ class _LoginState extends State<Login> {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.purple,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          s.loginTitle,
+          style: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+        leading: IconButton(
+          icon: const BackButtonIcon(),
+          onPressed: () => Navigator.of(context).maybePop(),
+        ),
+      ),
       body: Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            const SizedBox(height: 40),
-            Text(
-              s.loginTitle,
-              textAlign: TextAlign.center,
-              style: textTheme.headlineSmall?.copyWith(
-                color: colorScheme.primary,
-              ),
-            ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 12),
 
             /// Email Field
             Text(

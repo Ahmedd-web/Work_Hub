@@ -44,6 +44,7 @@ dependencies:
   awesome_dialog: ^3.3.0
   flutter_localization: ^0.3.3
   shared_preferences: ^2.3.2
+  file_picker: ^10.3.6
 
 dev_dependencies:
   flutter_test:

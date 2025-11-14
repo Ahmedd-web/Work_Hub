@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 import 'package:work_hub/shared/register_%20job%20_seeker.dart';
@@ -23,34 +24,42 @@ class RegisterPage extends StatelessWidget {
             CustomHeader(
               title: s.appTitle,
               showBackButton: true,
-              searchHint: s.searchHint,
+              backgroundColor: AppColors.purple,
+              textColor: Colors.white,
+              showSearchBar: false,
             ),
-            const SizedBox(height: 25),
-
+            const SizedBox(height: 16),
             Card(
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: TabBar(
-                tabs: [
-                  Tab(
-                    child: Text(
-                      s.registerTabEmployer,
-                      style: textTheme.titleMedium,
-                    ),
+                  indicator: BoxDecoration(
+                    color: AppColors.bannerGreen,
+                    borderRadius: BorderRadius.circular(26),
                   ),
-                  Tab(
-                    child: Text(
-                      s.registerTabJobSeeker,
-                      style: textTheme.titleMedium,
+                  dividerColor: Colors.transparent,
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        s.registerTabEmployer,
+                        style: textTheme.titleMedium,
+                      ),
                     ),
-                  ),
-                ],
+                    Tab(
+                      child: Text(
+                        s.registerTabJobSeeker,
+                        style: textTheme.titleMedium,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            )),
-
+            ),
             Expanded(
-              child: TabBarView(children: [EmployerForm(), JobSeekerForm()]),
+              child: TabBarView(
+                children: [const EmployerForm(), const JobSeekerForm()],
+              ),
             ),
           ],
         ),
