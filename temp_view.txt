@@ -1,0 +1,287 @@
+import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
+import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/features/employer/screens/employer_dashboard_page.dart';
+import 'package:work_hub/features/employer/screens/employer_jobs_page.dart';
+import 'package:work_hub/features/employer/screens/employer_resumes_page.dart';
+import 'package:work_hub/features/employer/widgets/employer_bottom_nav.dart';
+import 'package:work_hub/shared/custom_heaedr.dart';
+
+class EmployerAccountPage extends StatefulWidget {
+  const EmployerAccountPage({super.key});
+
+  @override
+  State<EmployerAccountPage> createState() => _EmployerAccountPageState();
+}
+
+class _EmployerAccountPageState extends State<EmployerAccountPage> {
+  bool _showInfo = true;
+  final Map<String, dynamic> _companyData = {
+    'name': 'شركة القمر',
+    'city': 'طرابلس - ليبيا',
+    'website': 'www.moon.ly',
+    'industry': 'تقنية المعلومات',
+    'phones': ['+218945236782', '+218925552233'],
+    'email': 'info@moon.ly',
+    'about': 'شركة تقدم حلول رقمية للشركات في ليبيا وشمال أفريقيا.',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF7F7F7),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              CustomHeader(
+                title: '',
+                titleWidget: const SizedBox.shrink(),
+                backgroundColor: AppColors.purple,
+                backgroundImage: AppAssets.headerLogo,
+                showMenuButton: true,
+                showNotificationButton: true,
+                showSearchBar: false,
+                overlayChild: _CompanyCard(name: _companyData['name'] as String),
+                overlayHeight: 80,
+                height: 160,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 50, 20, 100),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(32),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.08),
+                              blurRadius: 8,
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: _TabButton(
+                                label: 'معلومات الحساب',
+                                active: _showInfo,
+                                onTap: () => setState(() => _showInfo = true),
+                              ),
+                            ),
+                            Expanded(
+                              child: _TabButton(
+                                label: 'نبذة عن الشركة',
+                                active: !_showInfo,
+                                onTap: () => setState(() => _showInfo = false),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Expanded(
+                        child: _showInfo
+                            ? _CompanyInfoSection(data: _companyData)
+                            : _CompanyAboutSection(about: _companyData['about'] as String),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            left: 24,
+            bottom: 130,
+            child: _EditButton(onTap: () {}),
+          ),
+        ],
+      ),
+      bottomNavigationBar: EmployerBottomNav(
+        currentIndex: 3,
+        onChanged: (index) {
+          if (index == 0) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const EmployerDashboardPage()),
+            );
+          } else if (index == 1) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const EmployerJobsPage()),
+            );
+          } else if (index == 2) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const EmployerResumesPage()),
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _CompanyCard extends StatelessWidget {
+  const _CompanyCard({required this.name});
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(36),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 12,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              name,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+          ),
+          CircleAvatar(
+            radius: 28,
+            backgroundColor: AppColors.pillBackground,
+            child: const Icon(Icons.business, color: AppColors.purple),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TabButton extends StatelessWidget {
+  const _TabButton({required this.label, required this.active, required this.onTap});
+
+  final String label;
+  final bool active;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 46,
+        decoration: BoxDecoration(
+          color: active ? AppColors.bannerGreen : Colors.transparent,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          label,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: active ? Colors.white : AppColors.purple,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CompanyInfoSection extends StatelessWidget {
+  const _CompanyInfoSection({required this.data});
+
+  final Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        _InfoRow(label: 'اسم الشركة', value: data['name'] as String),
+        _InfoRow(label: 'المدينة / العنوان', value: data['city'] as String),
+        _InfoRow(label: 'الموقع الإلكتروني', value: data['website'] as String),
+        _InfoRow(label: 'مجال عمل الشركة', value: data['industry'] as String),
+        _InfoRow(label: 'رقم الهاتف 1', value: (data['phones'] as List<String>)[0]),
+        _InfoRow(label: 'رقم الهاتف 2', value: (data['phones'] as List<String>)[1]),
+        _InfoRow(label: 'البريد الإلكتروني', value: data['email'] as String),
+      ],
+    );
+  }
+}
+
+class _CompanyAboutSection extends StatelessWidget {
+  const _CompanyAboutSection({required this.about});
+
+  final String about;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+      ),
+      padding: const EdgeInsets.all(20),
+      child: Text(
+        about,
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
+    );
+  }
+}
+
+class _InfoRow extends StatelessWidget {
+  const _InfoRow({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              '$label:',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Text(
+              value.isEmpty ? '-' : value,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EditButton extends StatelessWidget {
+  const _EditButton({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: Colors.white,
+      onPressed: onTap,
+      child: const Icon(Icons.edit, color: AppColors.purple),
+    );
+  }
+}
+

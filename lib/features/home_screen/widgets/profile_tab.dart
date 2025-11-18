@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/cv_data.dart';
 import 'package:work_hub/features/home_screen/models/profile_data.dart';
@@ -141,8 +142,10 @@ class _ProfileScaffold extends StatelessWidget {
     return Column(
       children: [
         CustomHeader(
-          title: s.appTitle,
+          title: '',
+          titleWidget: const SizedBox.shrink(),
           backgroundColor: AppColors.purple,
+          backgroundImage: AppAssets.headerLogo,
           showMenuButton: true,
           showNotificationButton: true,
           showSearchBar: false,

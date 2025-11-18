@@ -7,6 +7,7 @@ class CustomInputField extends StatefulWidget {
   final bool isPassword;
   final IconData prefixIcon;
   final String? Function(String?)? validator;
+  final TextDirection? textDirection;
 
   const CustomInputField({
     super.key,
@@ -16,6 +17,7 @@ class CustomInputField extends StatefulWidget {
     this.isPassword = false,
     required this.prefixIcon,
     this.validator,
+    this.textDirection,
   });
 
   @override
@@ -34,6 +36,11 @@ class _CustomInputFieldState extends State<CustomInputField> {
           keyboardType: widget.keyboardType,
           obscureText: widget.isPassword ? _hideText : false,
           validator: widget.validator,
+          textDirection: widget.textDirection,
+          textAlign:
+              widget.textDirection == TextDirection.rtl
+                  ? TextAlign.right
+                  : TextAlign.left,
           decoration: InputDecoration(
             hintText: widget.hint,
             prefixIcon: Icon(widget.prefixIcon),

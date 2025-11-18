@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/job_post.dart';
 import 'package:work_hub/features/home_screen/widgets/header_sliver_delegate.dart';
@@ -50,13 +51,15 @@ class JobsTab extends StatelessWidget {
             builder: (context, shrinkOffset, overlapsContent) {
               return SizedBox.expand(
                 child: CustomHeader(
-                  title: s.appTitle,
+                  title: '',
+                  titleWidget: const SizedBox.shrink(),
                   showBackButton: false,
                   showMenuButton: true,
                   showNotificationButton: true,
                   showSearchBar: true,
                   searchHint: s.searchHint,
                   backgroundColor: AppColors.purple,
+                  backgroundImage: AppAssets.headerLogo,
                   searchController: searchController,
                   height: _headerBaseHeight,
                 ),

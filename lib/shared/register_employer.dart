@@ -1,7 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/auth/screens/login.dart';
+import 'package:work_hub/features/employer/screens/employer_login_page.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/customInputfield.dart';
 
@@ -22,6 +24,91 @@ class _EmployerFormState extends State<EmployerForm> {
   final confirmPassController = TextEditingController();
 
   bool isLoading = false;
+
+  @override
+  void dispose() {
+    companyNameController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPassController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _registerEmployer(BuildContext context) async {
+    final s = S.of(context);
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => isLoading = true);
+    try {
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text,
+          );
+      final uid = credential.user?.uid;
+      if (uid != null) {
+        await FirebaseFirestore.instance.collection('employers').doc(uid).set({
+          'company_name': companyNameController.text.trim(),
+          'company_name_en': '',
+          'city': '',
+          'address': '',
+          'website': '',
+          'industry': '',
+          'industry_en': '',
+          'advertiser_role': '',
+          'phone_primary': phoneController.text.trim(),
+          'phone_secondary': '',
+          'phone_country': 'LY (+218)',
+          'email': emailController.text.trim(),
+          'about': '',
+          'about_en': '',
+          'created_at': FieldValue.serverTimestamp(),
+        });
+      }
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const EmployerLoginPage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+      if (e.code == 'weak-password') {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.warning,
+          animType: AnimType.rightSlide,
+          title: s.dialogErrorTitle,
+          desc: s.authErrorWeakPassword,
+        ).show();
+      } else if (e.code == 'email-already-in-use') {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.info,
+          animType: AnimType.rightSlide,
+          title: s.dialogErrorTitle,
+          desc: s.authErrorEmailInUse,
+        ).show();
+      } else {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.rightSlide,
+          title: s.dialogErrorTitle,
+          desc: e.message ?? s.dialogErrorTitle,
+        ).show();
+      }
+    } catch (e) {
+      if (!mounted) return;
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        title: s.dialogErrorTitle,
+        desc: e.toString(),
+      ).show();
+    } finally {
+      if (mounted) setState(() => isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,48 +206,7 @@ class _EmployerFormState extends State<EmployerForm> {
           ),
           const SizedBox(height: 30),
           ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                setState(() => isLoading = true);
-                try {
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
-                  if (!mounted) return;
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const Login()),
-                  );
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.warning,
-                      animType: AnimType.rightSlide,
-                      title: s.dialogErrorTitle,
-                      desc: s.authErrorWeakPassword,
-                    ).show();
-                  } else if (e.code == 'email-already-in-use') {
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.info,
-                      animType: AnimType.rightSlide,
-                      title: s.dialogErrorTitle,
-                      desc: s.authErrorEmailInUse,
-                    ).show();
-                  }
-                } catch (e) {
-                  AwesomeDialog(
-                    context: context,
-                    dialogType: DialogType.error,
-                    animType: AnimType.rightSlide,
-                    title: s.dialogErrorTitle,
-                    desc: e.toString(),
-                  ).show();
-                }
-                setState(() => isLoading = false);
-              }
-            },
+            onPressed: () => _registerEmployer(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.cyan,
               padding: const EdgeInsets.symmetric(vertical: 14),

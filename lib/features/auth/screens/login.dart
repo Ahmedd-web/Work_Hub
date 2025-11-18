@@ -1,8 +1,10 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/employer_session.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
+import 'package:work_hub/features/employer/screens/employer_login_page.dart';
 import 'package:work_hub/features/home_screen/home_page.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/customInputfield.dart';
@@ -121,6 +123,7 @@ class _LoginState extends State<Login> {
                         email: emailController.text,
                         password: passwordController.text,
                       );
+                  await EmployerSession.setMode(false);
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => const HomePage()),
                   );
@@ -195,6 +198,15 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const EmployerLoginPage()),
+                );
+              },
+              child: const Text('تسجيل دخول الشركات'),
             ),
           ],
         ),

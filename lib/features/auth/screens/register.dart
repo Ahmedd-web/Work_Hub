@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
@@ -22,9 +23,11 @@ class RegisterPage extends StatelessWidget {
         body: Column(
           children: [
             CustomHeader(
-              title: s.appTitle,
+              title: '',
+              titleWidget: const SizedBox.shrink(),
               showBackButton: true,
               backgroundColor: AppColors.purple,
+              backgroundImage: AppAssets.headerLogo,
               textColor: Colors.white,
               showSearchBar: false,
             ),

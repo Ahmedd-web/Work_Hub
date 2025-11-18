@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/job_post.dart';
 import 'package:work_hub/generated/l10n.dart';
@@ -21,9 +22,11 @@ class SavedTab extends StatelessWidget {
     return Column(
       children: [
         CustomHeader(
-          title: s.appTitle,
+          title: '',
+          titleWidget: const SizedBox.shrink(),
           height: 120,
           backgroundColor: AppColors.purple,
+          backgroundImage: AppAssets.headerLogo,
           showBackButton: false,
           showMenuButton: true,
           showNotificationButton: true,

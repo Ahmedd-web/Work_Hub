@@ -40,6 +40,9 @@ class CustomHeader extends StatelessWidget {
   final TextEditingController? searchController;
   final Widget? overlayChild;
   final double? overlayHeight;
+  final String? backgroundImage;
+  final BoxFit backgroundImageFit;
+  final Widget? titleWidget;
 
   const CustomHeader({
     super.key,
@@ -59,6 +62,9 @@ class CustomHeader extends StatelessWidget {
     this.searchController,
     this.overlayChild,
     this.overlayHeight,
+    this.backgroundImage,
+    this.backgroundImageFit = BoxFit.cover,
+    this.titleWidget,
   });
 
   @override
@@ -76,6 +82,8 @@ class CustomHeader extends StatelessWidget {
         theme.inputDecorationTheme.fillColor ?? colorScheme.surface;
     const double defaultSearchBarHeight = 56;
     final bool hasOverlayChild = overlayChild != null || showSearchBar;
+    final bool useImageBackground =
+        backgroundImage != null && backgroundImage!.isNotEmpty;
     final double overlayChildHeight =
         overlayChild != null
             ? (overlayHeight ?? 120)
@@ -90,17 +98,37 @@ class CustomHeader extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          Positioned.fill(
-            child: CustomPaint(
-              painter: _CurvedHeaderPainter(color: effectiveBackground),
+          if (useImageBackground)
+            Positioned.fill(
+              child: ClipPath(
+                clipper: _CurvedHeaderClipper(),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      backgroundImage!,
+                      fit: backgroundImageFit,
+                    ),
+                    Container(
+                      color: effectiveBackground.withValues(alpha: 0.25),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          else
+            Positioned.fill(
+              child: CustomPaint(
+                painter: _CurvedHeaderPainter(color: effectiveBackground),
+              ),
             ),
-          ),
 
           if (showBackButton || showMenuButton)
             Positioned(
               left: 8,
               top: 12,
               child: IconButton(
+                iconSize: 30,
                 icon: showBackButton
                     ? IconTheme(
                         data: IconThemeData(color: effectiveTextColor),
@@ -235,6 +263,7 @@ class CustomHeader extends StatelessWidget {
               right: 8,
               top: 12,
               child: IconButton(
+                iconSize: 30,
                 icon: Icon(Icons.notifications_none, color: effectiveTextColor),
                 onPressed: onNotificationPressed,
               ),
@@ -245,15 +274,17 @@ class CustomHeader extends StatelessWidget {
                 top: 40,
                 bottom: hasOverlayChild ? overlayChildHeight / 2 : 0,
               ),
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: effectiveTextColor,
-                  fontSize: 42,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
+              child:
+                  titleWidget ??
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: effectiveTextColor,
+                      fontSize: 42,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
             ),
           ),
           if (hasOverlayChild)
@@ -403,4 +434,26 @@ class _CurvedHeaderPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _CurvedHeaderPainter oldDelegate) =>
       oldDelegate.color != color;
+}
+
+class _CurvedHeaderClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final double sideY = size.height - 52;
+    return Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width, sideY)
+      ..quadraticBezierTo(
+        size.width,
+        size.height,
+        size.width * 0.5,
+        size.height,
+      )
+      ..quadraticBezierTo(0, size.height, 0, sideY)
+      ..close();
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }

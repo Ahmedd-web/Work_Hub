@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/profile_data.dart';
 import 'package:work_hub/generated/l10n.dart';
@@ -183,8 +184,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body: Column(
         children: [
           CustomHeader(
-            title: s.appTitle,
+            title: '',
+            titleWidget: const SizedBox.shrink(),
             backgroundColor: AppColors.purple,
+            backgroundImage: AppAssets.headerLogo,
             textColor: Colors.white,
             showBackButton: true,
             showMenuButton: false,
