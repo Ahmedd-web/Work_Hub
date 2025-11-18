@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/auth/screens/login.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
@@ -19,8 +20,10 @@ class Welcome extends StatelessWidget {
       body: Column(
         children: [
           CustomHeader(
-            title: s.appTitle,
+            title: '',
+            titleWidget: const SizedBox.shrink(),
             backgroundColor: AppColors.purple,
+            backgroundImage: AppAssets.headerLogo,
             showBackButton: false,
             showMenuButton: false,
             showNotificationButton: false,

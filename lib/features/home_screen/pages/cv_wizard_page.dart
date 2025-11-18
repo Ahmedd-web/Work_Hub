@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/cv_data.dart';
 import 'package:work_hub/features/home_screen/services/cv_repository.dart';
@@ -19,8 +20,10 @@ class CvWizardPage extends StatelessWidget {
       body: Column(
         children: [
           CustomHeader(
-            title: s.cvCreateTitle,
+            title: '',
+            titleWidget: const SizedBox.shrink(),
             backgroundColor: AppColors.purple,
+            backgroundImage: AppAssets.headerLogo,
             showBackButton: true,
             showMenuButton: false,
           ),

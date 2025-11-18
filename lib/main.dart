@@ -3,9 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:work_hub/core/employer_session.dart';
 import 'package:work_hub/core/routes.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/auth/screens/welcome.dart';
+import 'package:work_hub/features/employer/screens/employer_dashboard_page.dart';
 import 'package:work_hub/features/home_screen/home_page.dart';
 import 'package:work_hub/generated/l10n.dart';
 
@@ -28,6 +30,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
   ThemeMode _themeMode = ThemeMode.light;
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   static const _localePrefKey = 'preferred_locale';
 
   @override
@@ -81,31 +84,55 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: _themeMode,
+      navigatorKey: _navigatorKey,
+      locale: _locale,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      routes: Approutes.routes,
+      home: const AuthGate(),
+    );
+  }
+}
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        final bool isAuthenticated = snapshot.data != null;
-
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: _themeMode,
-          locale: _locale,
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          routes: Approutes.routes,
-          home:
-              snapshot.connectionState == ConnectionState.waiting
-                  ? const Scaffold(
-                    body: Center(child: CircularProgressIndicator()),
-                  )
-                  : (isAuthenticated ? const HomePage() : const Welcome()),
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        final isAuthenticated = snapshot.data != null;
+        if (!isAuthenticated) {
+          return const Welcome();
+        }
+        return FutureBuilder<bool>(
+          future: EmployerSession.isEmployer(),
+          builder: (context, employerSnapshot) {
+            if (!employerSnapshot.hasData) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+            return employerSnapshot.data == true
+                ? const EmployerDashboardPage()
+                : const HomePage();
+          },
         );
       },
     );

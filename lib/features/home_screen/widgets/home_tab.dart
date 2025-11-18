@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
 import 'package:work_hub/features/home_screen/models/featured_offer.dart';
@@ -49,13 +50,15 @@ class HomeTab extends StatelessWidget {
             builder: (context, shrinkOffset, overlapsContent) {
               return SizedBox.expand(
                 child: CustomHeader(
-                  title: s.appTitle,
+                  title: '',
+                  titleWidget: const SizedBox.shrink(),
                   showBackButton: false,
                   showMenuButton: true,
                   showNotificationButton: true,
                   showSearchBar: true,
                   searchController: searchController,
                   backgroundColor: AppColors.purple,
+                  backgroundImage: AppAssets.headerLogo,
                   searchHint: s.searchHint,
                   height: _headerBaseHeight,
                 ),
