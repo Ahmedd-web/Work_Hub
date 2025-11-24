@@ -249,5 +249,194 @@
   "cvSkillsEmpty": "لم تتم إضافة مهارات.",
   "cvSummaryEmpty": "لا توجد نبذة حتى الآن.",
   "cvCreateCta": "ابدأ إنشاء سيرتك الذاتية",
-  "cvEditButton": "تعديل سيرتي الذاتية"
+  "cvEditButton": "تعديل سيرتي الذاتية",
+  "employerPremiumHeaderLabel": "الباقة المميزة",
+  "employerPremiumOverviewTitle": "عمل",
+  "employerPremiumOverviewBody": "خطط نشر مرنة مصممة لتناسب احتياجات التوظيف\nرؤية محسّنة من خلال الإعلانات المميزة\nتوظيف فعال من حيث التكلفة مع خيارات قابلة للتوسع.",
+  "employerPremiumChooseDuration": "اختر مدة الاشتراك",
+  "employerPremiumSubscribeNow": "اشترك الآن ({price}\\$)",
+  "employerPremiumPopularBadge": "الأكثر شيوعاً 🔥",
+  "employerPlanLabelWeek": "خطة أسبوع واحد",
+  "employerPlanLabelMonth": "خطة شهر واحد",
+  "employerPlanLabelThreeMonths": "خطة ثلاثة أشهر",
+  "employerPlanLabelSixMonths": "خطة ستة أشهر",
+  "employerPlanLabelYear": "خطة سنة كاملة",
+  "employerPlanBenefitJobPosts": "{count} إعلان وظيفة",
+  "employerPlanBenefitVisibilityDays": "مدة ظهور الإعلان {days} يوم",
+  "employerPlanBenefitResumeViews": "{count} عرض سيرة ذاتية",
+  "employerPlanBenefitFeaturedAds": "{count} تعزيز مميز",
+  "employerPlanBenefitEdits": "{count} تعديل إعلان",
+  "employerPlanBenefitEditsUnlimited": "عدد غير محدود من تعديلات الإعلان",
+  "@employerPremiumSubscribeNow": {
+    "placeholders": {
+      "price": {
+        "type": "num"
+      }
+    }
+  },
+  "@employerPlanBenefitJobPosts": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "@employerPlanBenefitVisibilityDays": {
+    "placeholders": {
+      "days": {
+        "type": "num"
+      }
+    }
+  },
+  "@employerPlanBenefitResumeViews": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "@employerPlanBenefitFeaturedAds": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "@employerPlanBenefitEdits": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "employerJobsStatusActive": "فعالة",
+  "employerJobsStatusArchived": "مؤرشفة",
+  "employerJobsStatusDeleted": "محذوفة",
+  "employerJobsLoginPrompt": "يرجى تسجيل الدخول لعرض الوظائف.",
+  "employerJobsLoadError": "تعذر تحميل الوظائف: {error}",
+  "@employerJobsLoadError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "employerJobsEmpty": "لا توجد وظائف.",
+  "employerJobsSearchHint": "ابحث في الوظائف",
+  "employerJobsDefaultTitle": "وظيفة",
+  "employerJobsExperienceLabel": "سنوات الخبرة: {value}",
+  "@employerJobsExperienceLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "employerJobsEducationLabel": "مستوى التعليم: {value}",
+  "@employerJobsEducationLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "employerJobsActionLabel": "فعالة",
+  "employerResumesSearchHint": "ابحث في السير الذاتية..",
+  "employerAccountDefaultCompanyName": "حساب الشركة",
+  "employerAccountLoginRequired": "يرجى تسجيل الدخول كصاحب عمل لعرض هذه الصفحة.",
+  "employerAccountLoadError": "حدث خطأ أثناء تحميل البيانات: {error}",
+  "@employerAccountLoadError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "employerAccountTitle": "الحساب",
+  "employerAccountIndustryPlaceholder": "اختر مجال عمل الشركة",
+  "employerAccountTabInfo": "معلومات الحساب",
+  "employerAccountTabAbout": "نبذة عن الشركة",
+  "employerAccountFieldCompanyName": "اسم الشركة",
+  "employerAccountFieldIndustry": "مجال عمل الشركة",
+  "employerAccountFieldWebsite": "موقع الشركة",
+  "employerAccountFieldPhone1": "رقم الشركة 1",
+  "employerAccountFieldPhone2": "رقم الشركة 2",
+  "employerAccountFieldEmail": "بريد الشركة",
+  "employerAccountSectionInfoTitle": "معلومات الشركة",
+  "employerAccountSectionContactTitle": "وسائل التواصل",
+  "employerAccountAboutArabic": "نبذة عن الشركة (بالعربية)",
+  "employerAccountAboutEnglish": "نبذة عن الشركة (بالإنجليزية)",
+  "employerEditInfoSuccess": "تم حفظ معلومات الشركة بنجاح.",
+  "employerEditInfoFailure": "فشل الحفظ: {error}",
+  "@employerEditInfoFailure": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "employerEditInfoHeader": "معلومات الشركة",
+  "employerEditInfoLabelCompanyName": "اسم الشركة (بالعربية)",
+  "employerEditInfoLabelIndustry": "مجال الشركة (بالعربية)",
+  "employerEditInfoLabelAdvertiserRole": "دور المعلن",
+  "employerEditInfoLabelAddress": "المدينة / العنوان",
+  "employerEditInfoLabelWebsite": "موقع الشركة",
+  "employerEditInfoSectionPhones": "بيانات الاتصال",
+  "employerEditInfoPhoneHint": "945236782",
+  "employerEditInfoLabelPhoneSecondary": "رقم الشركة 2 (اختياري)",
+  "employerEditInfoLabelEmail": "البريد الإلكتروني للشركة",
+  "employerEditInfoSaveButton": "حفظ",
+  "employerEditInfoValidationRequired": "هذا الحقل مطلوب",
+  "employerEditInfoRoleOwner": "مالك الشركة",
+  "employerEditInfoRoleAgency": "وكالة توظيف",
+  "employerEditInfoRoleHR": "مندوب الموارد البشرية",
+  "employerEditInfoSelectRoleTitle": "اختر دور المعلن",
+  "employerEditInfoAddressTripoli": "طرابلس",
+  "employerEditInfoAddressBenghazi": "بنغازي",
+  "employerEditInfoAddressMisrata": "مصراتة",
+  "employerEditInfoAddressSabha": "سبها",
+  "employerEditInfoAddressDerna": "درنة",
+  "employerEditInfoAddressGharyan": "غريان",
+  "employerEditInfoSelectAddressTitle": "اختر المدينة",
+  "employerEditInfoLabelPhonePrimary": "رقم الشركة 1",
+  "employerEditAboutSuccess": "تم تحديث نبذة الشركة بنجاح.",
+  "employerEditAboutFailure": "تعذر حفظ النبذة: {error}",
+  "@employerEditAboutFailure": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "employerEditAboutHeader": "نبذة عن الشركة",
+  "employerEditAboutLabelArabic": "نبذة عن الشركة (بالعربية)",
+  "employerEditAboutLabelEnglish": "نبذة عن الشركة (بالإنجليزية)",
+  "employerEditAboutSaveButton": "حفظ",
+  "employerEditAboutValidationRequired": "هذا الحقل مطلوب",
+  "employerNavAccount": "الحساب",
+  "employerNavJobs": "الوظائف",
+  "employerNavResumes": "السير الذاتية",
+  "employerNavHome": "الرئيسية",
+  "menuMembershipTitle": "عضويتك الحالية",
+  "menuMembershipStatusFree": "مجانية",
+  "employerResumesTitle": "استكشف السير الذاتية",
+"employerResumesSubtitle": "اختر المرشح المثالي لفرصتك من خلال تصفية السير الذاتية حسب الوقت والتخصص.",
+"employerResumesTimeLabel": "التوقيت",
+"employerResumesCategoryLabel": "التخصص",
+"employerResumesTime24h": "آخر 24 ساعة",
+"employerResumesTime7d": "آخر أسبوع",
+"employerResumesTime30d": "آخر شهر",
+"employerResumesTimeAny": "أي وقت",
+"employerResumesCatAll": "جميع التخصصات",
+"employerResumesCatTech": "التقنية",
+"employerResumesCatMarketing": "التسويق",
+"employerResumesCatAdmin": "الإدارة",
+"employerResumesCatEngineering": "الهندسة",
+"employerDashboardLatestResumes": "أحدث السير الذاتية",
+"employerDashboardSeeMore": "شاهد المزيد",
+"employerDashboardNoData": "لا يوجد بيانات",
+"employerPostJobCta": "أعلن وظيفتك مجاناً",
+"registerSuccessTitle": "تم إنشاء الحساب",
+"registerSuccessDesc": "يمكنك الآن تسجيل الدخول"
+
 }

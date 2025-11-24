@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/generated/l10n.dart';
 
 class EmployerBottomNav extends StatelessWidget {
   const EmployerBottomNav({
@@ -13,18 +14,32 @@ class EmployerBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final s = S.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final backgroundColor =
+        theme.bottomNavigationBarTheme.backgroundColor ??
+        (isDark ? colorScheme.surface : Colors.white);
+    final shadowColor = Colors.transparent;
+    final homeHighlight =
+        isDark
+            ? const Color(0x332DAB4D)
+            : const Color(0xFFE4F8E8);
+
     return Container(
       padding: const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgroundColor,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: shadowColor,
             blurRadius: 18,
+            offset: const Offset(0, -4),
           ),
         ],
       ),
@@ -33,31 +48,35 @@ class EmployerBottomNav extends StatelessWidget {
         children: [
           _BottomNavIcon(
             icon: Icons.person_outline,
-            label: 'الحساب',
+            label: s.employerNavAccount,
             active: currentIndex == 3,
-            activeColor: AppColors.purple,
+            activeColor: AppColors.bannerGreen,
+            isDark: isDark,
             onTap: () => onChanged(3),
           ),
           _BottomNavIcon(
             icon: Icons.work_outline,
-            label: 'وظائف',
+            label: s.employerNavJobs,
             active: currentIndex == 1,
-            activeColor: AppColors.purple,
+            activeColor: AppColors.bannerGreen,
+            isDark: isDark,
             onTap: () => onChanged(1),
           ),
           _BottomNavIcon(
             icon: Icons.receipt_long_outlined,
-            label: 'سير ذاتية',
+            label: s.employerNavResumes,
             active: currentIndex == 2,
-            activeColor: AppColors.purple,
+            activeColor: AppColors.bannerGreen,
+            isDark: isDark,
             onTap: () => onChanged(2),
           ),
           _BottomNavIcon(
             icon: Icons.home_outlined,
-            label: 'الرئيسية',
+            label: s.employerNavHome,
             active: currentIndex == 0,
-            activeColor: const Color(0xFF2DAB4D),
-            highlightColor: const Color(0xFFE4F8E8),
+            activeColor: AppColors.bannerGreen,
+            highlightColor: homeHighlight,
+            isDark: isDark,
             onTap: () => onChanged(0),
           ),
         ],
@@ -73,6 +92,7 @@ class _BottomNavIcon extends StatelessWidget {
     required this.active,
     required this.activeColor,
     this.highlightColor,
+    required this.isDark,
     required this.onTap,
   });
 
@@ -81,21 +101,30 @@ class _BottomNavIcon extends StatelessWidget {
   final bool active;
   final Color activeColor;
   final Color? highlightColor;
+  final bool isDark;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final color = active ? activeColor : const Color(0xFF3F1F61);
+    final inactiveColor =
+        isDark
+            ? Colors.white.withValues(alpha: 0.85)
+            : const Color(0xFF3F1F61);
+    final color = active ? activeColor : inactiveColor;
+    final backgroundColor =
+        active
+            ? (highlightColor ??
+                activeColor.withValues(alpha: isDark ? 0.25 : 0.12))
+            : Colors.transparent;
+
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(18),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color:
-              active
-                  ? (highlightColor ?? activeColor.withValues(alpha: 0.12))
-                  : Colors.transparent,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(18),
         ),
         child: Column(
@@ -116,4 +145,3 @@ class _BottomNavIcon extends StatelessWidget {
     );
   }
 }
-

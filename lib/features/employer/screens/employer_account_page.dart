@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/employer/screens/employer_dashboard_page.dart';
@@ -9,6 +10,7 @@ import 'package:work_hub/features/employer/screens/employer_resumes_page.dart';
 import 'package:work_hub/features/employer/screens/employer_edit_info_page.dart';
 import 'package:work_hub/features/employer/screens/employer_edit_about_page.dart';
 import 'package:work_hub/features/employer/widgets/employer_bottom_nav.dart';
+import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class EmployerAccountPage extends StatefulWidget {
@@ -41,10 +43,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
       source?['phone_secondary']?.toString() ?? '',
     ];
     return {
-      'company_name':
-          (source?['company_name'] as String?)?.trim().isNotEmpty == true
-              ? source!['company_name'] as String
-              : 'حساب الشركة',
+      'company_name': (source?['company_name'] as String?)?.trim() ?? '',
       'company_name_en': source?['company_name_en'] as String? ?? '',
       'city': source?['city'] as String? ?? '',
       'address': source?['address'] as String? ?? '',
@@ -78,23 +77,34 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
+    final theme = Theme.of(context);
+    final background = theme.scaffoldBackgroundColor;
     if (_profileStream == null) {
-      return const Scaffold(
-        backgroundColor: Color(0xFFF7F7F7),
+      return Scaffold(
+        backgroundColor: background,
         body: Center(
-          child: Text('يرجى تسجيل الدخول كصاحب عمل لعرض هذه الصفحة.'),
+          child: Text(
+            s.employerAccountLoginRequired,
+            style: theme.textTheme.bodyLarge,
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
+      backgroundColor: background,
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: _profileStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(
-              child: Text('حدث خطأ أثناء تحميل البيانات: ${snapshot.error}'),
+              child: Text(
+                s.employerAccountLoadError('${snapshot.error ?? ''}'),
+                style: theme.textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
             );
           }
           final rawData = snapshot.data?.data() ?? {};
@@ -102,10 +112,22 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
           final isLoading =
               snapshot.connectionState == ConnectionState.waiting &&
               !snapshot.hasData;
+          final companyName =
+              (profile['company_name'] as String?)?.trim() ?? '';
+          final displayCompanyName =
+              companyName.isEmpty
+                  ? s.employerAccountDefaultCompanyName
+                  : companyName;
+          final rawIndustry = (profile['industry'] as String?)?.trim() ?? '';
+          final displayIndustry =
+              rawIndustry.isEmpty
+                  ? s.employerAccountIndustryPlaceholder
+                  : rawIndustry;
+
           return Column(
             children: [
               CustomHeader(
-                title: 'الحساب',
+                title: s.employerAccountTitle,
                 titleWidget: const SizedBox.shrink(),
                 backgroundColor: AppColors.purple,
                 backgroundImage: AppAssets.headerLogo,
@@ -113,8 +135,8 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
                 showNotificationButton: true,
                 showSearchBar: false,
                 overlayChild: _EmployerIdentityCard(
-                  name: profile['company_name'] as String,
-                  subtitle: profile['industry'] as String,
+                  name: displayCompanyName,
+                  subtitle: displayIndustry,
                 ),
                 overlayHeight: 90,
                 height: 190,
@@ -139,9 +161,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
                             physics: const ClampingScrollPhysics(),
                             child:
                                 isLoading
-                                    ? const Center(
-                                      child: CircularProgressIndicator(),
-                                    )
+                                    ? const _AccountShimmer()
                                     : AnimatedSwitcher(
                                       duration: const Duration(
                                         milliseconds: 250,
@@ -212,17 +232,22 @@ class _EmployerIdentityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: AppColors.purple.withValues(alpha: 0.25)),
+        border: Border.all(
+          color: colorScheme.outline.withValues(alpha: isDark ? 0.4 : 0.2),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -230,12 +255,8 @@ class _EmployerIdentityCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 32,
-            backgroundColor: AppColors.pillBackground,
-            child: const Icon(
-              Icons.apartment,
-              color: AppColors.purple,
-              size: 30,
-            ),
+            backgroundColor: colorScheme.primary.withValues(alpha: 0.15),
+            child: Icon(Icons.apartment, color: colorScheme.primary, size: 30),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -244,7 +265,7 @@ class _EmployerIdentityCard extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                   maxLines: 1,
@@ -252,10 +273,12 @@ class _EmployerIdentityCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  subtitle.isEmpty ? 'حدد مجال عمل شركتك' : subtitle,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(color: Colors.grey.shade600),
+                  subtitle,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.textTheme.bodyMedium?.color?.withValues(
+                      alpha: 0.7,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -283,16 +306,22 @@ class _EmployerTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: AppColors.purple.withValues(alpha: 0.2)),
+        border: Border.all(
+          color: colorScheme.outline.withValues(alpha: isDark ? 0.35 : 0.2),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -300,14 +329,14 @@ class _EmployerTabs extends StatelessWidget {
         children: [
           Expanded(
             child: _TabButton(
-              label: 'معلومات الحساب',
+              label: s.employerAccountTabInfo,
               active: showInfo,
               onTap: () => onChanged(true),
             ),
           ),
           Expanded(
             child: _TabButton(
-              label: 'نبذة عن الشركة',
+              label: s.employerAccountTabAbout,
               active: !showInfo,
               onTap: () => onChanged(false),
             ),
@@ -331,12 +360,14 @@ class _TabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
         height: 46,
         decoration: BoxDecoration(
-          color: active ? AppColors.bannerGreen : Colors.transparent,
+          color: active ? colorScheme.primary : Colors.transparent,
           borderRadius: BorderRadius.circular(30),
         ),
         alignment: Alignment.center,
@@ -344,7 +375,7 @@ class _TabButton extends StatelessWidget {
           label,
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            color: active ? Colors.white : AppColors.purple,
+            color: active ? Colors.white : colorScheme.primary,
           ),
         ),
       ),
@@ -359,37 +390,38 @@ class _CompanyInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     final phones = List<String>.from(data['phones'] as List);
     final companyFields = [
       _FieldTileData(
-        label: 'اسم الشركة',
+        label: s.employerAccountFieldCompanyName,
         value: data['company_name'] as String,
         icon: Icons.storefront_outlined,
       ),
       _FieldTileData(
-        label: 'مجال عمل الشركة',
+        label: s.employerAccountFieldIndustry,
         value: data['industry'] as String,
         icon: Icons.category_outlined,
       ),
     ];
     final contactFields = [
       _FieldTileData(
-        label: 'موقع الشركة',
+        label: s.employerAccountFieldWebsite,
         value: data['website'] as String,
         icon: Icons.public,
       ),
       _FieldTileData(
-        label: 'رقم الشركة 1',
+        label: s.employerAccountFieldPhone1,
         value: phones.isNotEmpty ? phones[0] : '',
         icon: Icons.phone_outlined,
       ),
       _FieldTileData(
-        label: 'رقم الشركة 2',
+        label: s.employerAccountFieldPhone2,
         value: phones.length > 1 ? phones[1] : '',
         icon: Icons.phone_outlined,
       ),
       _FieldTileData(
-        label: 'بريد الشركة',
+        label: s.employerAccountFieldEmail,
         value: data['email'] as String,
         icon: Icons.mail_outline,
       ),
@@ -398,13 +430,13 @@ class _CompanyInfoSection extends StatelessWidget {
     return Column(
       children: [
         _SectionCard(
-          title: 'معلومات الشركة',
+          title: s.employerAccountSectionInfoTitle,
           icon: Icons.badge_outlined,
           fields: companyFields,
         ),
         const SizedBox(height: 8),
         _SectionCard(
-          title: 'وسائل التواصل',
+          title: s.employerAccountSectionContactTitle,
           icon: Icons.contact_phone_outlined,
           fields: contactFields,
         ),
@@ -422,11 +454,12 @@ class _CompanyAboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final aboutAr = data['about'] as String? ?? '';
     final aboutEn = data['about_en'] as String? ?? '';
+    final s = S.of(context);
     return Column(
       children: [
-        _AboutSummaryTile(label: 'نبذة عن الشركة بالعربية', value: aboutAr),
+        _AboutSummaryTile(label: s.employerAccountAboutArabic, value: aboutAr),
         const SizedBox(height: 14),
-        _AboutSummaryTile(label: 'نبذة عن الشركة بالإنجليزية', value: aboutEn),
+        _AboutSummaryTile(label: s.employerAccountAboutEnglish, value: aboutEn),
       ],
     );
   }
@@ -451,17 +484,21 @@ class _SectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.15)),
+        border: Border.all(
+          color: colorScheme.outline.withValues(alpha: isDark ? 0.35 : 0.18),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -470,8 +507,8 @@ class _SectionCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 26,
-            backgroundColor: AppColors.pillBackground,
-            child: Icon(icon, color: AppColors.purple),
+            backgroundColor: colorScheme.primary.withValues(alpha: 0.12),
+            child: Icon(icon, color: colorScheme.primary),
           ),
           const SizedBox(height: 12),
           Text(
@@ -479,7 +516,6 @@ class _SectionCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w800,
-              color: const Color(0xFF2B1F4D),
             ),
           ),
           const SizedBox(height: 20),
@@ -528,16 +564,17 @@ class _FieldTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           decoration: BoxDecoration(
-            color: AppColors.purple.withValues(alpha: 0.08),
+            color: colorScheme.primary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(16),
           ),
           padding: const EdgeInsets.all(8),
-          child: Icon(data.icon, color: AppColors.purple, size: 18),
+          child: Icon(data.icon, color: colorScheme.primary, size: 18),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -547,7 +584,9 @@ class _FieldTile extends StatelessWidget {
               Text(
                 data.label,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: Colors.grey.shade600,
+                  color: theme.textTheme.bodySmall?.color?.withValues(
+                    alpha: 0.7,
+                  ),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -556,13 +595,91 @@ class _FieldTile extends StatelessWidget {
                 data.value.isEmpty ? '-' : data.value,
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFF241637),
                 ),
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _AccountShimmer extends StatelessWidget {
+  const _AccountShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final bool isDark = theme.brightness == Brightness.dark;
+    final baseColor =
+        isDark ? Colors.white.withValues(alpha: 0.08) : Colors.grey.shade300;
+    final highlightColor =
+        isDark ? Colors.white.withValues(alpha: 0.18) : Colors.grey.shade100;
+
+    Widget shimmerBlock({double height = 20, double? width}) {
+      return Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          color: baseColor,
+          borderRadius: BorderRadius.circular(16),
+        ),
+      );
+    }
+
+    return Shimmer.fromColors(
+      baseColor: baseColor,
+      highlightColor: highlightColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 230,
+            decoration: BoxDecoration(
+              color: baseColor,
+              borderRadius: BorderRadius.circular(32),
+            ),
+          ),
+          const SizedBox(height: 24),
+          shimmerBlock(height: 18, width: 160),
+          const SizedBox(height: 16),
+          ...List.generate(
+            3,
+            (index) => Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Row(
+                children: [
+                  shimmerBlock(height: 38, width: 38),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        shimmerBlock(height: 14, width: 120),
+                        const SizedBox(height: 8),
+                        shimmerBlock(height: 16, width: double.infinity),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          shimmerBlock(height: 18, width: 140),
+          const SizedBox(height: 16),
+          Container(
+            height: 140,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: baseColor,
+              borderRadius: BorderRadius.circular(28),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -576,13 +693,14 @@ class _AboutSummaryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: theme.textTheme.bodyMedium?.copyWith(
-            color: Colors.grey.shade600,
+            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -592,13 +710,12 @@ class _AboutSummaryTile extends StatelessWidget {
           constraints: const BoxConstraints(minHeight: 80),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: const Color(0xFFEFEFF2),
+            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.8),
             borderRadius: BorderRadius.circular(28),
           ),
           child: Text(
             value.isEmpty ? '-' : value,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFF402A62),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -615,10 +732,13 @@ class _EditButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return FloatingActionButton(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.cardColor,
+      foregroundColor: colorScheme.primary,
       onPressed: onTap,
-      child: const Icon(Icons.edit, color: AppColors.purple),
+      child: Icon(Icons.edit, color: colorScheme.primary),
     );
   }
 }

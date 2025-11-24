@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,8 +57,9 @@ class _EmployerPostJobPageState extends State<EmployerPostJobPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
           CustomHeader(
@@ -91,11 +93,14 @@ class _EmployerPostJobPageState extends State<EmployerPostJobPage> {
                 const SizedBox(height: 24),
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF3F1FB),
+                    color: theme.cardColor,
                     borderRadius: BorderRadius.circular(32),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
+                        color: Colors.black.withValues(
+                          alpha:
+                              theme.brightness == Brightness.dark ? 0.18 : 0.05,
+                        ),
                         blurRadius: 12,
                         offset: const Offset(0, 6),
                       ),
@@ -438,7 +443,7 @@ class _EmployerPostJobPageState extends State<EmployerPostJobPage> {
             Container(
               height: 110,
               decoration: BoxDecoration(
-                color: const Color(0xFFF0E9FF),
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(24),
               ),
               child: const Center(
@@ -589,12 +594,23 @@ class _EmployerPostJobPageState extends State<EmployerPostJobPage> {
         break;
     }
     if (error != null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error)));
+      _showErrorDialog(error);
       return false;
     }
     return true;
+  }
+
+  void _showErrorDialog(String message) {
+    if (!mounted) return;
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.warning,
+      animType: AnimType.bottomSlide,
+      title: 'تنبيه',
+      desc: message,
+      btnOkText: 'حسناً',
+      btnOkOnPress: () {},
+    ).show();
   }
 
   Future<void> _submitJob() async {
@@ -702,18 +718,22 @@ class _FormFieldCard extends StatelessWidget {
           label,
           textAlign: TextAlign.right,
           style: theme.textTheme.bodyMedium?.copyWith(
-            color: Colors.grey.shade700,
+            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
             fontWeight: FontWeight.w700,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFE9E8F4),
+            color: theme.colorScheme.surfaceVariant.withValues(
+              alpha: theme.brightness == Brightness.dark ? 0.25 : 0.6,
+            ),
             borderRadius: BorderRadius.circular(34),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: Colors.black.withValues(
+                  alpha: theme.brightness == Brightness.dark ? 0.2 : 0.05,
+                ),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -722,7 +742,7 @@ class _FormFieldCard extends StatelessWidget {
           padding: const EdgeInsets.all(4),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: theme.cardColor,
               borderRadius: BorderRadius.circular(28),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
@@ -796,18 +816,22 @@ class _DropdownCard extends StatelessWidget {
           label,
           textAlign: TextAlign.right,
           style: theme.textTheme.bodyMedium?.copyWith(
-            color: Colors.grey.shade700,
+            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
             fontWeight: FontWeight.w700,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFE9E8F4),
+            color: theme.colorScheme.surfaceVariant.withValues(
+              alpha: theme.brightness == Brightness.dark ? 0.25 : 0.6,
+            ),
             borderRadius: BorderRadius.circular(34),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: Colors.black.withValues(
+                  alpha: theme.brightness == Brightness.dark ? 0.2 : 0.05,
+                ),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -816,7 +840,7 @@ class _DropdownCard extends StatelessWidget {
           padding: const EdgeInsets.all(4),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: theme.cardColor,
               borderRadius: BorderRadius.circular(28),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 12),

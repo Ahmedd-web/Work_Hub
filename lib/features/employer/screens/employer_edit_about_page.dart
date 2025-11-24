@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class EmployerEditAboutPage extends StatefulWidget {
@@ -42,6 +43,7 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
     if (!_formKey.currentState!.validate()) return;
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
+    final s = S.of(context);
     setState(() => _isSaving = true);
     try {
       await FirebaseFirestore.instance
@@ -54,14 +56,16 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
           });
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('تم تحديث نبذة الشركة بنجاح')),
+        SnackBar(content: Text(s.employerEditAboutSuccess)),
       );
       Navigator.of(context).pop();
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('حدث خطأ أثناء الحفظ: $e')));
+      ).showSnackBar(
+        SnackBar(content: Text(s.employerEditAboutFailure('$e'))),
+      );
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
@@ -69,8 +73,11 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final s = S.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
           CustomHeader(
@@ -79,7 +86,7 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
             backgroundColor: AppColors.purple,
             backgroundImage: AppAssets.headerLogo,
             showBackButton: true,
-            overlayChild: const _AboutHeader(),
+            overlayChild: _AboutHeader(title: s.employerEditAboutHeader),
             overlayHeight: 80,
             height: 190,
           ),
@@ -92,13 +99,13 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _DescriptionField(
-                      label: 'نبذة عن الشركة بالعربية',
+                      label: s.employerEditAboutLabelArabic,
                       controller: _aboutArController,
                       textDirection: TextDirection.rtl,
                     ),
                     const SizedBox(height: 24),
                     _DescriptionField(
-                      label: 'نبذة عن الشركة بالإنجليزية',
+                      label: s.employerEditAboutLabelEnglish,
                       controller: _aboutEnController,
                       textDirection: TextDirection.ltr,
                     ),
@@ -108,8 +115,8 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
                       child: ElevatedButton(
                         onPressed: _isSaving ? null : _save,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.purple,
-                          foregroundColor: Colors.white,
+                          backgroundColor: colorScheme.primary,
+                          foregroundColor: colorScheme.onPrimary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(28),
                           ),
@@ -124,9 +131,9 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
                                     color: Colors.white,
                                   ),
                                 )
-                                : const Text(
-                                  'حفظ',
-                                  style: TextStyle(
+                                : Text(
+                                  s.employerEditAboutSaveButton,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
@@ -145,28 +152,32 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
 }
 
 class _AboutHeader extends StatelessWidget {
-  const _AboutHeader();
+  const _AboutHeader({required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(40),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 12,
+            color: Colors.black.withValues(
+              alpha: theme.brightness == Brightness.dark ? 0.45 : 0.1,
+            ),
+            blurRadius: 14,
           ),
         ],
       ),
       child: Center(
         child: Text(
-          'نبذة عن الشركة',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          title,
+          style: theme.textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w800,
-            color: const Color(0xFF2C1F4F),
           ),
         ),
       ),
@@ -188,13 +199,17 @@ class _DescriptionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final borderColor = colorScheme.outline.withValues(
+      alpha: theme.brightness == Brightness.dark ? 0.5 : 0.25,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: theme.textTheme.bodyMedium?.copyWith(
-            color: Colors.grey.shade600,
+            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -210,23 +225,25 @@ class _DescriptionField extends StatelessWidget {
                   : TextAlign.left,
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.white,
+            fillColor: theme.cardColor,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 16,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: Colors.grey.shade300),
+              borderSide: BorderSide(color: borderColor),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: Colors.grey.shade300),
+              borderSide: BorderSide(color: borderColor),
             ),
           ),
           validator:
               (value) =>
-                  (value ?? '').trim().isEmpty ? 'هذا الحقل مطلوب' : null,
+                  (value ?? '').trim().isEmpty
+                      ? S.of(context).employerEditAboutValidationRequired
+                      : null,
         ),
       ],
     );

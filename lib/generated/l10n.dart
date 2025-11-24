@@ -119,6 +119,26 @@ class S {
     );
   }
 
+  /// `Your current membership`
+  String get menuMembershipTitle {
+    return Intl.message(
+      'Your current membership',
+      name: 'menuMembershipTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Free`
+  String get menuMembershipStatusFree {
+    return Intl.message(
+      'Free',
+      name: 'menuMembershipStatusFree',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create your resume`
   String get actionCreateResume {
     return Intl.message(
@@ -249,6 +269,176 @@ class S {
     return Intl.message(
       'See all roles',
       name: 'bannerRemoteBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Explore CVs`
+  String get employerResumesTitle {
+    return Intl.message(
+      'Explore CVs',
+      name: 'employerResumesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter resumes by time and specialty to pick the best fit.`
+  String get employerResumesSubtitle {
+    return Intl.message(
+      'Filter resumes by time and specialty to pick the best fit.',
+      name: 'employerResumesSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get employerResumesTimeLabel {
+    return Intl.message(
+      'Time',
+      name: 'employerResumesTimeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get employerResumesCategoryLabel {
+    return Intl.message(
+      'Category',
+      name: 'employerResumesCategoryLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 24h`
+  String get employerResumesTime24h {
+    return Intl.message(
+      'Last 24h',
+      name: 'employerResumesTime24h',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 7 days`
+  String get employerResumesTime7d {
+    return Intl.message(
+      'Last 7 days',
+      name: 'employerResumesTime7d',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 30 days`
+  String get employerResumesTime30d {
+    return Intl.message(
+      'Last 30 days',
+      name: 'employerResumesTime30d',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Anytime`
+  String get employerResumesTimeAny {
+    return Intl.message(
+      'Anytime',
+      name: 'employerResumesTimeAny',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All categories`
+  String get employerResumesCatAll {
+    return Intl.message(
+      'All categories',
+      name: 'employerResumesCatAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tech`
+  String get employerResumesCatTech {
+    return Intl.message(
+      'Tech',
+      name: 'employerResumesCatTech',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Marketing`
+  String get employerResumesCatMarketing {
+    return Intl.message(
+      'Marketing',
+      name: 'employerResumesCatMarketing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Administration`
+  String get employerResumesCatAdmin {
+    return Intl.message(
+      'Administration',
+      name: 'employerResumesCatAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Engineering`
+  String get employerResumesCatEngineering {
+    return Intl.message(
+      'Engineering',
+      name: 'employerResumesCatEngineering',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latest resumes`
+  String get employerDashboardLatestResumes {
+    return Intl.message(
+      'Latest resumes',
+      name: 'employerDashboardLatestResumes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See more`
+  String get employerDashboardSeeMore {
+    return Intl.message(
+      'See more',
+      name: 'employerDashboardSeeMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No data`
+  String get employerDashboardNoData {
+    return Intl.message(
+      'No data',
+      name: 'employerDashboardNoData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post your job for free`
+  String get employerPostJobCta {
+    return Intl.message(
+      'Post your job for free',
+      name: 'employerPostJobCta',
       desc: '',
       args: [],
     );
@@ -1444,6 +1634,126 @@ class S {
     return Intl.message('Jobs', name: 'navJobs', desc: '', args: []);
   }
 
+  /// `Active`
+  String get employerJobsStatusActive {
+    return Intl.message(
+      'Active',
+      name: 'employerJobsStatusActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Archived`
+  String get employerJobsStatusArchived {
+    return Intl.message(
+      'Archived',
+      name: 'employerJobsStatusArchived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deleted`
+  String get employerJobsStatusDeleted {
+    return Intl.message(
+      'Deleted',
+      name: 'employerJobsStatusDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please sign in to view your jobs.`
+  String get employerJobsLoginPrompt {
+    return Intl.message(
+      'Please sign in to view your jobs.',
+      name: 'employerJobsLoginPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't load jobs: {error}`
+  String employerJobsLoadError(String error) {
+    return Intl.message(
+      'Couldn\'t load jobs: $error',
+      name: 'employerJobsLoadError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `No jobs found.`
+  String get employerJobsEmpty {
+    return Intl.message(
+      'No jobs found.',
+      name: 'employerJobsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search jobs`
+  String get employerJobsSearchHint {
+    return Intl.message(
+      'Search jobs',
+      name: 'employerJobsSearchHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search resumes...`
+  String get employerResumesSearchHint {
+    return Intl.message(
+      'Search resumes...',
+      name: 'employerResumesSearchHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job`
+  String get employerJobsDefaultTitle {
+    return Intl.message(
+      'Job',
+      name: 'employerJobsDefaultTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Experience: {value}`
+  String employerJobsExperienceLabel(String value) {
+    return Intl.message(
+      'Experience: $value',
+      name: 'employerJobsExperienceLabel',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Education level: {value}`
+  String employerJobsEducationLabel(String value) {
+    return Intl.message(
+      'Education level: $value',
+      name: 'employerJobsEducationLabel',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Active`
+  String get employerJobsActionLabel {
+    return Intl.message(
+      'Active',
+      name: 'employerJobsActionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Saved`
   String get navSaved {
     return Intl.message('Saved', name: 'navSaved', desc: '', args: []);
@@ -2177,6 +2487,726 @@ class S {
   /// `Edit my CV`
   String get cvEditButton {
     return Intl.message('Edit my CV', name: 'cvEditButton', desc: '', args: []);
+  }
+
+  /// `Premium`
+  String get employerPremiumHeaderLabel {
+    return Intl.message(
+      'Premium',
+      name: 'employerPremiumHeaderLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work`
+  String get employerPremiumOverviewTitle {
+    return Intl.message(
+      'Work',
+      name: 'employerPremiumOverviewTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flexible posting plans tailored to your hiring needs\nImproved visibility through featured ads\nCost-effective hiring with scalable options.`
+  String get employerPremiumOverviewBody {
+    return Intl.message(
+      'Flexible posting plans tailored to your hiring needs\nImproved visibility through featured ads\nCost-effective hiring with scalable options.',
+      name: 'employerPremiumOverviewBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose subscription duration`
+  String get employerPremiumChooseDuration {
+    return Intl.message(
+      'Choose subscription duration',
+      name: 'employerPremiumChooseDuration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscribe now ({price}\$)`
+  String employerPremiumSubscribeNow(num price) {
+    return Intl.message(
+      'Subscribe now ($price\\\$)',
+      name: 'employerPremiumSubscribeNow',
+      desc: '',
+      args: [price],
+    );
+  }
+
+  /// `Most popular 🔥`
+  String get employerPremiumPopularBadge {
+    return Intl.message(
+      'Most popular 🔥',
+      name: 'employerPremiumPopularBadge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duration 1 week`
+  String get employerPlanLabelWeek {
+    return Intl.message(
+      'Duration 1 week',
+      name: 'employerPlanLabelWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duration 1 month`
+  String get employerPlanLabelMonth {
+    return Intl.message(
+      'Duration 1 month',
+      name: 'employerPlanLabelMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duration 3 months`
+  String get employerPlanLabelThreeMonths {
+    return Intl.message(
+      'Duration 3 months',
+      name: 'employerPlanLabelThreeMonths',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duration 6 months`
+  String get employerPlanLabelSixMonths {
+    return Intl.message(
+      'Duration 6 months',
+      name: 'employerPlanLabelSixMonths',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duration 1 year`
+  String get employerPlanLabelYear {
+    return Intl.message(
+      'Duration 1 year',
+      name: 'employerPlanLabelYear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} job posts`
+  String employerPlanBenefitJobPosts(num count) {
+    return Intl.message(
+      '$count job posts',
+      name: 'employerPlanBenefitJobPosts',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Listing visible for {days} days`
+  String employerPlanBenefitVisibilityDays(num days) {
+    return Intl.message(
+      'Listing visible for $days days',
+      name: 'employerPlanBenefitVisibilityDays',
+      desc: '',
+      args: [days],
+    );
+  }
+
+  /// `{count} resume views`
+  String employerPlanBenefitResumeViews(num count) {
+    return Intl.message(
+      '$count resume views',
+      name: 'employerPlanBenefitResumeViews',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count} featured boosts`
+  String employerPlanBenefitFeaturedAds(num count) {
+    return Intl.message(
+      '$count featured boosts',
+      name: 'employerPlanBenefitFeaturedAds',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count} ad edits`
+  String employerPlanBenefitEdits(num count) {
+    return Intl.message(
+      '$count ad edits',
+      name: 'employerPlanBenefitEdits',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Unlimited ad edits`
+  String get employerPlanBenefitEditsUnlimited {
+    return Intl.message(
+      'Unlimited ad edits',
+      name: 'employerPlanBenefitEditsUnlimited',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Account`
+  String get employerAccountDefaultCompanyName {
+    return Intl.message(
+      'Company Account',
+      name: 'employerAccountDefaultCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please sign in as an employer to view this page.`
+  String get employerAccountLoginRequired {
+    return Intl.message(
+      'Please sign in as an employer to view this page.',
+      name: 'employerAccountLoginRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while loading data: {error}`
+  String employerAccountLoadError(String error) {
+    return Intl.message(
+      'An error occurred while loading data: $error',
+      name: 'employerAccountLoadError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Account`
+  String get employerAccountTitle {
+    return Intl.message(
+      'Account',
+      name: 'employerAccountTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select your company industry`
+  String get employerAccountIndustryPlaceholder {
+    return Intl.message(
+      'Select your company industry',
+      name: 'employerAccountIndustryPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account info`
+  String get employerAccountTabInfo {
+    return Intl.message(
+      'Account info',
+      name: 'employerAccountTabInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company bio`
+  String get employerAccountTabAbout {
+    return Intl.message(
+      'Company bio',
+      name: 'employerAccountTabAbout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company name`
+  String get employerAccountFieldCompanyName {
+    return Intl.message(
+      'Company name',
+      name: 'employerAccountFieldCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Industry`
+  String get employerAccountFieldIndustry {
+    return Intl.message(
+      'Industry',
+      name: 'employerAccountFieldIndustry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company website`
+  String get employerAccountFieldWebsite {
+    return Intl.message(
+      'Company website',
+      name: 'employerAccountFieldWebsite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company phone 1`
+  String get employerAccountFieldPhone1 {
+    return Intl.message(
+      'Company phone 1',
+      name: 'employerAccountFieldPhone1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company phone 2`
+  String get employerAccountFieldPhone2 {
+    return Intl.message(
+      'Company phone 2',
+      name: 'employerAccountFieldPhone2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company email`
+  String get employerAccountFieldEmail {
+    return Intl.message(
+      'Company email',
+      name: 'employerAccountFieldEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company information`
+  String get employerAccountSectionInfoTitle {
+    return Intl.message(
+      'Company information',
+      name: 'employerAccountSectionInfoTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact details`
+  String get employerAccountSectionContactTitle {
+    return Intl.message(
+      'Contact details',
+      name: 'employerAccountSectionContactTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company bio (Arabic)`
+  String get employerAccountAboutArabic {
+    return Intl.message(
+      'Company bio (Arabic)',
+      name: 'employerAccountAboutArabic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company bio (English)`
+  String get employerAccountAboutEnglish {
+    return Intl.message(
+      'Company bio (English)',
+      name: 'employerAccountAboutEnglish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get employerNavAccount {
+    return Intl.message(
+      'Account',
+      name: 'employerNavAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jobs`
+  String get employerNavJobs {
+    return Intl.message('Jobs', name: 'employerNavJobs', desc: '', args: []);
+  }
+
+  /// `Resumes`
+  String get employerNavResumes {
+    return Intl.message(
+      'Resumes',
+      name: 'employerNavResumes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get employerNavHome {
+    return Intl.message('Home', name: 'employerNavHome', desc: '', args: []);
+  }
+
+  /// `Company information saved successfully.`
+  String get employerEditInfoSuccess {
+    return Intl.message(
+      'Company information saved successfully.',
+      name: 'employerEditInfoSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to save: {error}`
+  String employerEditInfoFailure(String error) {
+    return Intl.message(
+      'Failed to save: $error',
+      name: 'employerEditInfoFailure',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Company information`
+  String get employerEditInfoHeader {
+    return Intl.message(
+      'Company information',
+      name: 'employerEditInfoHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company name (Arabic)`
+  String get employerEditInfoLabelCompanyName {
+    return Intl.message(
+      'Company name (Arabic)',
+      name: 'employerEditInfoLabelCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Industry (Arabic)`
+  String get employerEditInfoLabelIndustry {
+    return Intl.message(
+      'Industry (Arabic)',
+      name: 'employerEditInfoLabelIndustry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Advertiser role`
+  String get employerEditInfoLabelAdvertiserRole {
+    return Intl.message(
+      'Advertiser role',
+      name: 'employerEditInfoLabelAdvertiserRole',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get employerEditInfoLabelAddress {
+    return Intl.message(
+      'Address',
+      name: 'employerEditInfoLabelAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company website`
+  String get employerEditInfoLabelWebsite {
+    return Intl.message(
+      'Company website',
+      name: 'employerEditInfoLabelWebsite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact details`
+  String get employerEditInfoSectionPhones {
+    return Intl.message(
+      'Contact details',
+      name: 'employerEditInfoSectionPhones',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `945236782`
+  String get employerEditInfoPhoneHint {
+    return Intl.message(
+      '945236782',
+      name: 'employerEditInfoPhoneHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Secondary phone (optional)`
+  String get employerEditInfoLabelPhoneSecondary {
+    return Intl.message(
+      'Secondary phone (optional)',
+      name: 'employerEditInfoLabelPhoneSecondary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email address`
+  String get employerEditInfoLabelEmail {
+    return Intl.message(
+      'Email address',
+      name: 'employerEditInfoLabelEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get employerEditInfoSaveButton {
+    return Intl.message(
+      'Save',
+      name: 'employerEditInfoSaveButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This field is required`
+  String get employerEditInfoValidationRequired {
+    return Intl.message(
+      'This field is required',
+      name: 'employerEditInfoValidationRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Business owner`
+  String get employerEditInfoRoleOwner {
+    return Intl.message(
+      'Business owner',
+      name: 'employerEditInfoRoleOwner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recruitment agency`
+  String get employerEditInfoRoleAgency {
+    return Intl.message(
+      'Recruitment agency',
+      name: 'employerEditInfoRoleAgency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `HR representative`
+  String get employerEditInfoRoleHR {
+    return Intl.message(
+      'HR representative',
+      name: 'employerEditInfoRoleHR',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select advertiser role`
+  String get employerEditInfoSelectRoleTitle {
+    return Intl.message(
+      'Select advertiser role',
+      name: 'employerEditInfoSelectRoleTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tripoli`
+  String get employerEditInfoAddressTripoli {
+    return Intl.message(
+      'Tripoli',
+      name: 'employerEditInfoAddressTripoli',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Benghazi`
+  String get employerEditInfoAddressBenghazi {
+    return Intl.message(
+      'Benghazi',
+      name: 'employerEditInfoAddressBenghazi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Misrata`
+  String get employerEditInfoAddressMisrata {
+    return Intl.message(
+      'Misrata',
+      name: 'employerEditInfoAddressMisrata',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sabha`
+  String get employerEditInfoAddressSabha {
+    return Intl.message(
+      'Sabha',
+      name: 'employerEditInfoAddressSabha',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Derna`
+  String get employerEditInfoAddressDerna {
+    return Intl.message(
+      'Derna',
+      name: 'employerEditInfoAddressDerna',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gharyan`
+  String get employerEditInfoAddressGharyan {
+    return Intl.message(
+      'Gharyan',
+      name: 'employerEditInfoAddressGharyan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select city`
+  String get employerEditInfoSelectAddressTitle {
+    return Intl.message(
+      'Select city',
+      name: 'employerEditInfoSelectAddressTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary phone`
+  String get employerEditInfoLabelPhonePrimary {
+    return Intl.message(
+      'Primary phone',
+      name: 'employerEditInfoLabelPhonePrimary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company bio updated successfully.`
+  String get employerEditAboutSuccess {
+    return Intl.message(
+      'Company bio updated successfully.',
+      name: 'employerEditAboutSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to save bio: {error}`
+  String employerEditAboutFailure(String error) {
+    return Intl.message(
+      'Failed to save bio: $error',
+      name: 'employerEditAboutFailure',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Account created`
+  String get registerSuccessTitle {
+    return Intl.message(
+      'Account created',
+      name: 'registerSuccessTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can now log in`
+  String get registerSuccessDesc {
+    return Intl.message(
+      'You can now log in',
+      name: 'registerSuccessDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company bio`
+  String get employerEditAboutHeader {
+    return Intl.message(
+      'Company bio',
+      name: 'employerEditAboutHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company bio (Arabic)`
+  String get employerEditAboutLabelArabic {
+    return Intl.message(
+      'Company bio (Arabic)',
+      name: 'employerEditAboutLabelArabic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company bio (English)`
+  String get employerEditAboutLabelEnglish {
+    return Intl.message(
+      'Company bio (English)',
+      name: 'employerEditAboutLabelEnglish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get employerEditAboutSaveButton {
+    return Intl.message(
+      'Save',
+      name: 'employerEditAboutSaveButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This field is required`
+  String get employerEditAboutValidationRequired {
+    return Intl.message(
+      'This field is required',
+      name: 'employerEditAboutValidationRequired',
+      desc: '',
+      args: [],
+    );
   }
 }
 

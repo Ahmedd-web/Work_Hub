@@ -1,5 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/features/employer/screens/employer_membership_page.dart';
 
 class EmployerJobDetailPage extends StatefulWidget {
   const EmployerJobDetailPage({
@@ -17,6 +20,7 @@ class EmployerJobDetailPage extends StatefulWidget {
 
 class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
   int _sectionIndex = 0;
+  bool _isStopping = false;
 
   Map<String, dynamic> get job => widget.jobData;
 
@@ -166,7 +170,7 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: _isStopping ? null : _showStopDialog,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFCB1F31),
                   shape: RoundedRectangleBorder(
@@ -223,6 +227,22 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
           description: 'لم يتم تحميل صورة للإعلان حتى الآن.',
         );
     }
+  }
+
+  Future<void> _showStopDialog() async {
+    await AwesomeDialog(
+      context: context,
+      dialogType: DialogType.warning,
+      animType: AnimType.bottomSlide,
+      title: 'عذرًا، اشتراكك الحالي قد لا يسمح لك باستخدام هذه الخدمة',
+      btnOkText: 'إشترك الآن',
+      btnOkOnPress: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const EmployerMembershipPage()),
+        );
+      },
+      btnOkColor: AppColors.bannerGreen,
+    ).show();
   }
 }
 

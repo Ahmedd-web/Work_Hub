@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class EmployerEditInfoPage extends StatefulWidget {
@@ -70,6 +71,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
     if (!_formKey.currentState!.validate()) return;
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
+    final s = S.of(context);
     setState(() => _saving = true);
     try {
       await FirebaseFirestore.instance
@@ -88,15 +90,15 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
             'updated_at': FieldValue.serverTimestamp(),
           });
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('تم حفظ بيانات المنشأة بنجاح')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(s.employerEditInfoSuccess)));
       Navigator.of(context).pop();
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('فشل الحفظ: $e')));
+      ).showSnackBar(SnackBar(content: Text(s.employerEditInfoFailure('$e'))));
     } finally {
       if (mounted) setState(() => _saving = false);
     }
@@ -104,8 +106,11 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final s = S.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
           CustomHeader(
@@ -116,10 +121,11 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
             showBackButton: true,
             showMenuButton: false,
             showNotificationButton: false,
-            overlayChild: _HeaderPill(title: 'معلومات المنشأة'),
+            overlayChild: _HeaderPill(title: s.employerEditInfoHeader),
             overlayHeight: 70,
             height: 190,
           ),
+          SizedBox(height: 45),
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
@@ -129,17 +135,17 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _RoundedField(
-                      label: 'اسم الشركة بالعربية',
+                      label: s.employerEditInfoLabelCompanyName,
                       controller: _companyNameAr,
                     ),
                     const SizedBox(height: 20),
                     _RoundedField(
-                      label: 'مجال عمل الشركة بالعربية',
+                      label: s.employerEditInfoLabelIndustry,
                       controller: _industryAr,
                     ),
                     const SizedBox(height: 20),
                     _RoundedField(
-                      label: 'صفة المعلن',
+                      label: s.employerEditInfoLabelAdvertiserRole,
                       controller: _advertiserRole,
                       suffixIcon: Icons.arrow_drop_down,
                       readOnly: true,
@@ -155,7 +161,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                     ),
                     const SizedBox(height: 20),
                     _RoundedField(
-                      label: 'العنوان',
+                      label: s.employerEditInfoLabelAddress,
                       controller: _address,
                       suffixIcon: Icons.arrow_drop_down,
                       readOnly: true,
@@ -168,12 +174,24 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    _RoundedField(label: 'موقع الشركة', controller: _website),
+                    _RoundedField(
+                      label: s.employerEditInfoLabelWebsite,
+                      controller: _website,
+                    ),
                     const SizedBox(height: 24),
                     Text(
-                      'رقم الهاتف',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey.shade600,
+                      s.employerEditInfoSectionPhones,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      s.employerEditInfoLabelPhonePrimary,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.textTheme.bodySmall?.color?.withValues(
+                          alpha: 0.7,
+                        ),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -185,7 +203,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                             controller: _phoneNumber,
                             keyboardType: TextInputType.phone,
                             label: null,
-                            hintText: '945236782',
+                            hintText: s.employerEditInfoPhoneHint,
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -206,13 +224,13 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                     ),
                     const SizedBox(height: 20),
                     _RoundedField(
-                      label: 'رقم هاتف آخر (اختياري)',
+                      label: s.employerEditInfoLabelPhoneSecondary,
                       controller: _phoneNumberSecondary,
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 20),
                     _RoundedField(
-                      label: 'البريد الإلكتروني',
+                      label: s.employerEditInfoLabelEmail,
                       controller: _email,
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -222,8 +240,8 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                       child: ElevatedButton(
                         onPressed: _saving ? null : _save,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.purple,
-                          foregroundColor: Colors.white,
+                          backgroundColor: colorScheme.primary,
+                          foregroundColor: colorScheme.onPrimary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(28),
                           ),
@@ -238,9 +256,9 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                                     color: Colors.white,
                                   ),
                                 )
-                                : const Text(
-                                  'حفظ',
-                                  style: TextStyle(
+                                : Text(
+                                  s.employerEditInfoSaveButton,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -261,7 +279,12 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
     BuildContext context,
     String current,
   ) async {
-    final options = ['صاحب العمل', 'شركة توظيف', 'ممثل الموارد البشرية'];
+    final s = S.of(context);
+    final options = [
+      s.employerEditInfoRoleOwner,
+      s.employerEditInfoRoleAgency,
+      s.employerEditInfoRoleHR,
+    ];
     return showModalBottomSheet<String>(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -269,7 +292,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
       ),
       builder:
           (_) => _OptionSheet(
-            title: 'حدد صفة المعلن',
+            title: s.employerEditInfoSelectRoleTitle,
             options: options,
             current: current,
           ),
@@ -277,7 +300,15 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
   }
 
   Future<String?> _selectAddress(BuildContext context, String current) {
-    final options = ['طرابلس', 'بنغازي', 'مصراتة', 'سبها', 'درنة', 'غريان'];
+    final s = S.of(context);
+    final options = [
+      s.employerEditInfoAddressTripoli,
+      s.employerEditInfoAddressBenghazi,
+      s.employerEditInfoAddressMisrata,
+      s.employerEditInfoAddressSabha,
+      s.employerEditInfoAddressDerna,
+      s.employerEditInfoAddressGharyan,
+    ];
     return showModalBottomSheet<String>(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -285,7 +316,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
       ),
       builder:
           (_) => _OptionSheet(
-            title: 'اختر المدينة',
+            title: s.employerEditInfoSelectAddressTitle,
             options: options,
             current: current,
           ),
@@ -300,24 +331,26 @@ class _HeaderPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(40),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 12,
+            color: Colors.black.withValues(
+              alpha: theme.brightness == Brightness.dark ? 0.45 : 0.1,
+            ),
+            blurRadius: 14,
           ),
         ],
       ),
       child: Center(
         child: Text(
           title,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          style: theme.textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w800,
-            color: const Color(0xFF2C1F4F),
           ),
         ),
       ),
@@ -346,6 +379,12 @@ class _RoundedField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final s = S.of(context);
+    final borderColor = colorScheme.outline.withValues(
+      alpha: theme.brightness == Brightness.dark ? 0.5 : 0.25,
+    );
     final labelWidget =
         label == null
             ? const SizedBox.shrink()
@@ -353,8 +392,10 @@ class _RoundedField extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 6),
               child: Text(
                 label!,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey.shade600,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.textTheme.bodySmall?.color?.withValues(
+                    alpha: 0.7,
+                  ),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -372,28 +413,33 @@ class _RoundedField extends StatelessWidget {
             onTap: readOnly ? onTap : null,
             keyboardType: keyboardType,
             validator: (value) {
-              if ((value ?? '').trim().isEmpty) return 'هذا الحقل مطلوب';
+              if ((value ?? '').trim().isEmpty) {
+                return s.employerEditInfoValidationRequired;
+              }
               return null;
             },
             decoration: InputDecoration(
               hintText: hintText,
               filled: true,
-              fillColor: Colors.white,
+              fillColor: theme.cardColor,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 14,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+                borderSide: BorderSide(color: borderColor),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: Colors.grey.shade300),
+                borderSide: BorderSide(color: borderColor),
               ),
               suffixIcon:
                   suffixIcon != null
-                      ? Icon(suffixIcon, color: Colors.grey)
+                      ? Icon(
+                        suffixIcon,
+                        color: colorScheme.outline.withValues(alpha: 0.7),
+                      )
                       : null,
             ),
           ),
@@ -416,11 +462,16 @@ class _RoundedDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final borderColor = colorScheme.outline.withValues(
+      alpha: theme.brightness == Brightness.dark ? 0.5 : 0.25,
+    );
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: borderColor),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: DropdownButtonHideUnderline(
@@ -455,8 +506,14 @@ class _OptionSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return SafeArea(
-      child: Padding(
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.cardColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -465,9 +522,9 @@ class _OptionSheet extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 16),
             ...options.map(
@@ -475,7 +532,7 @@ class _OptionSheet extends StatelessWidget {
                 title: Text(option),
                 trailing:
                     option == current
-                        ? const Icon(Icons.check, color: AppColors.purple)
+                        ? Icon(Icons.check, color: colorScheme.primary)
                         : null,
                 onTap: () => Navigator.of(context).pop(option),
               ),

@@ -9,6 +9,8 @@
   "menuLogin": "Login",
   "menuLogout": "Logout",
   "menuDeleteAccount": "Delete Account",
+  "menuMembershipTitle": "Your current membership",
+  "menuMembershipStatusFree": "Free",
   "actionCreateResume": "Create your resume",
   "actionPostJob": "Post a job for free",
   "sectionJobCategories": "Job Categories",
@@ -23,6 +25,23 @@
   "bannerRemoteTitle": "Remote Friendly",
   "bannerRemoteSubtitle": "Discover remote roles across multiple industries.",
   "bannerRemoteBadge": "See all roles",
+  "employerResumesTitle": "Explore CVs",
+  "employerResumesSubtitle": "Filter resumes by time and specialty to pick the best fit.",
+  "employerResumesTimeLabel": "Time",
+  "employerResumesCategoryLabel": "Category",
+  "employerResumesTime24h": "Last 24h",
+  "employerResumesTime7d": "Last 7 days",
+  "employerResumesTime30d": "Last 30 days",
+  "employerResumesTimeAny": "Anytime",
+  "employerResumesCatAll": "All categories",
+  "employerResumesCatTech": "Tech",
+  "employerResumesCatMarketing": "Marketing",
+  "employerResumesCatAdmin": "Administration",
+  "employerResumesCatEngineering": "Engineering",
+  "employerDashboardLatestResumes": "Latest resumes",
+  "employerDashboardSeeMore": "See more",
+  "employerDashboardNoData": "No data",
+  "employerPostJobCta": "Post your job for free",
   "categoryInternationalOrganizations": "International Organizations",
   "categorySales": "Sales",
   "categoryAdministration": "Administration & Secretary",
@@ -156,6 +175,39 @@
   "logoutSuccess": "You have been logged out",
   "navHome": "Home",
   "navJobs": "Jobs",
+  "employerJobsStatusActive": "Active",
+  "employerJobsStatusArchived": "Archived",
+  "employerJobsStatusDeleted": "Deleted",
+  "employerJobsLoginPrompt": "Please sign in to view your jobs.",
+  "employerJobsLoadError": "Couldn't load jobs: {error}",
+  "@employerJobsLoadError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "employerJobsEmpty": "No jobs found.",
+  "employerJobsSearchHint": "Search jobs",
+  "employerResumesSearchHint": "Search resumes...",
+  "employerJobsDefaultTitle": "Job",
+  "employerJobsExperienceLabel": "Experience: {value}",
+  "@employerJobsExperienceLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "employerJobsEducationLabel": "Education level: {value}",
+  "@employerJobsEducationLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "employerJobsActionLabel": "Active",
   "navSaved": "Saved",
   "navProfile": "Profile",
   "placeholderTab": "{tab} tab coming soon",
@@ -249,5 +301,174 @@
   "cvSkillsEmpty": "No skills added yet.",
   "cvSummaryEmpty": "No summary provided.",
   "cvCreateCta": "Start building your CV",
-  "cvEditButton": "Edit my CV"
+  "cvEditButton": "Edit my CV",
+  "employerResumesTitle": "Explore CVs",
+  "employerResumesSubtitle": "Filter resumes by time and specialty to pick the best fit.",
+  "employerResumesTimeLabel": "Time",
+  "employerResumesCategoryLabel": "Category",
+  "employerResumesTime24h": "Last 24h",
+  "employerResumesTime7d": "Last 7 days",
+  "employerResumesTime30d": "Last 30 days",
+  "employerResumesTimeAny": "Anytime",
+  "employerResumesCatAll": "All categories",
+  "employerResumesCatTech": "Tech",
+  "employerResumesCatMarketing": "Marketing",
+  "employerResumesCatAdmin": "Administration",
+  "employerResumesCatEngineering": "Engineering",
+  "employerDashboardLatestResumes": "Latest resumes",
+  "employerDashboardSeeMore": "See more",
+  "employerDashboardNoData": "No data",
+  "employerPostJobCta": "Post your job for free",
+  "employerPremiumHeaderLabel": "Premium",
+  "employerPremiumOverviewTitle": "Work",
+  "employerPremiumOverviewBody": "Flexible posting plans tailored to your hiring needs\nImproved visibility through featured ads\nCost-effective hiring with scalable options.",
+  "employerPremiumChooseDuration": "Choose subscription duration",
+  "employerPremiumSubscribeNow": "Subscribe now ({price}\\$)",
+  "@employerPremiumSubscribeNow": {
+    "placeholders": {
+      "price": {
+        "type": "num"
+      }
+    }
+  },
+  "employerPremiumPopularBadge": "Most popular 🔥",
+  "employerPlanLabelWeek": "Duration 1 week",
+  "employerPlanLabelMonth": "Duration 1 month",
+  "employerPlanLabelThreeMonths": "Duration 3 months",
+  "employerPlanLabelSixMonths": "Duration 6 months",
+  "employerPlanLabelYear": "Duration 1 year",
+  "employerPlanBenefitJobPosts": "{count} job posts",
+  "@employerPlanBenefitJobPosts": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "employerPlanBenefitVisibilityDays": "Listing visible for {days} days",
+  "@employerPlanBenefitVisibilityDays": {
+    "placeholders": {
+      "days": {
+        "type": "num"
+      }
+    }
+  },
+  "employerPlanBenefitResumeViews": "{count} resume views",
+  "@employerPlanBenefitResumeViews": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "employerPlanBenefitFeaturedAds": "{count} featured boosts",
+  "@employerPlanBenefitFeaturedAds": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "employerPlanBenefitEdits": "{count} ad edits",
+  "@employerPlanBenefitEdits": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "employerPlanBenefitEditsUnlimited": "Unlimited ad edits",
+  "employerAccountDefaultCompanyName": "Company Account",
+  "employerAccountLoginRequired": "Please sign in as an employer to view this page.",
+  "employerAccountLoadError": "An error occurred while loading data: {error}",
+  "@employerAccountLoadError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "employerAccountTitle": "Account",
+  "employerAccountIndustryPlaceholder": "Select your company industry",
+  "employerAccountTabInfo": "Account info",
+  "employerAccountTabAbout": "Company bio",
+  "employerAccountFieldCompanyName": "Company name",
+  "employerAccountFieldIndustry": "Industry",
+  "employerAccountFieldWebsite": "Company website",
+  "employerAccountFieldPhone1": "Company phone 1",
+  "employerAccountFieldPhone2": "Company phone 2",
+  "employerAccountFieldEmail": "Company email",
+  "employerAccountSectionInfoTitle": "Company information",
+  "employerAccountSectionContactTitle": "Contact details",
+  "employerAccountAboutArabic": "Company bio (Arabic)",
+  "employerAccountAboutEnglish": "Company bio (English)",
+  "employerNavAccount": "Account",
+  "employerNavJobs": "Jobs",
+  "employerNavResumes": "Resumes",
+  "employerNavHome": "Home",
+  "employerEditInfoSuccess": "Company information saved successfully.",
+  "employerEditInfoFailure": "Failed to save: {error}",
+  "@employerEditInfoFailure": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "employerEditInfoHeader": "Company information",
+  "employerEditInfoLabelCompanyName": "Company name (Arabic)",
+  "employerEditInfoLabelIndustry": "Industry (Arabic)",
+  "employerEditInfoLabelAdvertiserRole": "Advertiser role",
+  "employerEditInfoLabelAddress": "Address",
+  "employerEditInfoLabelWebsite": "Company website",
+  "employerEditInfoSectionPhones": "Contact details",
+  "employerEditInfoPhoneHint": "945236782",
+  "employerEditInfoLabelPhoneSecondary": "Secondary phone (optional)",
+  "employerEditInfoLabelEmail": "Email address",
+  "employerEditInfoSaveButton": "Save",
+  "employerEditInfoValidationRequired": "This field is required",
+  "employerEditInfoRoleOwner": "Business owner",
+  "employerEditInfoRoleAgency": "Recruitment agency",
+  "employerEditInfoRoleHR": "HR representative",
+  "employerEditInfoSelectRoleTitle": "Select advertiser role",
+  "employerEditInfoAddressTripoli": "Tripoli",
+  "employerEditInfoAddressBenghazi": "Benghazi",
+  "employerEditInfoAddressMisrata": "Misrata",
+  "employerEditInfoAddressSabha": "Sabha",
+  "employerEditInfoAddressDerna": "Derna",
+  "employerEditInfoAddressGharyan": "Gharyan",
+  "employerEditInfoSelectAddressTitle": "Select city",
+  "employerEditInfoLabelPhonePrimary": "Primary phone",
+  "employerEditAboutSuccess": "Company bio updated successfully.",
+  "employerEditAboutFailure": "Failed to save bio: {error}","employerResumesTitle": "Explore CVs",
+"employerResumesSubtitle": "Filter resumes by time and specialty to pick the best fit.",
+"employerResumesTimeLabel": "Time",
+"employerResumesCategoryLabel": "Category",
+"employerResumesTime24h": "Last 24h",
+"employerResumesTime7d": "Last 7 days",
+"employerResumesTime30d": "Last 30 days",
+"employerResumesTimeAny": "Anytime",
+"employerResumesCatAll": "All categories",
+"employerResumesCatTech": "Tech",
+"employerResumesCatMarketing": "Marketing",
+"employerResumesCatAdmin": "Administration",
+"employerResumesCatEngineering": "Engineering",
+"employerDashboardLatestResumes": "Latest resumes",
+"employerDashboardSeeMore": "See more",
+"employerDashboardNoData": "No data",
+"employerPostJobCta": "Post your job for free",
+"registerSuccessTitle": "Account created",
+"registerSuccessDesc": "You can now log in",
+  "@employerEditAboutFailure": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "employerEditAboutHeader": "Company bio",
+  "employerEditAboutLabelArabic": "Company bio (Arabic)",
+  "employerEditAboutLabelEnglish": "Company bio (English)",
+  "employerEditAboutSaveButton": "Save",
+  "employerEditAboutValidationRequired": "This field is required"
 }
