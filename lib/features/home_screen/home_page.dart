@@ -19,9 +19,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static const List<String> _galleryImages = [
-    'lib/assets/photo_2025-11-06_14-31-56.jpg',
-    'lib/assets/photo_2025-11-06_14-00-46.jpg',
-    'lib/assets/photo_2025-11-06_13-10-55.jpg',
+    'lib/assets/photo_1_2025-11-21_17-19-33.jpg',
+    'lib/assets/photo_2_2025-11-21_17-19-33.jpg',
+    'lib/assets/photo_3_2025-11-21_17-19-33.jpg',
   ];
 
   final PageController _galleryController = PageController(
