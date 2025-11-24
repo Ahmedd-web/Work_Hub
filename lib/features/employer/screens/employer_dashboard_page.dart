@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
@@ -6,6 +8,7 @@ import 'package:work_hub/features/employer/screens/employer_resumes_page.dart';
 import 'package:work_hub/features/employer/screens/employer_jobs_page.dart';
 import 'package:work_hub/features/employer/screens/employer_post_job_page.dart';
 import 'package:work_hub/features/employer/widgets/employer_bottom_nav.dart';
+import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class EmployerDashboardPage extends StatefulWidget {
@@ -27,8 +30,11 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    String t(String ar, String en) => isArabic ? ar : en;
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
           CustomHeader(
@@ -54,7 +60,7 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
                     width: 32,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF6A1B99),
+                      color: colorScheme.primary,
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -63,7 +69,9 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
                 _PostJobButton(
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const EmployerPostJobPage()),
+                      MaterialPageRoute(
+                        builder: (_) => const EmployerPostJobPage(),
+                      ),
                     );
                   },
                 ),
@@ -72,19 +80,19 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'أحدث السير الذاتية',
+                      t('أحدث السير الذاتية', 'Latest resumes'),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     TextButton(
                       onPressed: _openResumesPage,
-                      child: const Text('شاهد المزيد'),
+                      child: Text(t('شاهد المزيد', 'See more')),
                     ),
                   ],
                 ),
                 const SizedBox(height: 12),
-                const _EmptyStateCard(message: 'لا يوجد بيانات'),
+                _EmptyStateCard(message: t('لا يوجد بيانات', 'No data')),
               ],
             ),
           ),
@@ -123,33 +131,52 @@ class _SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final width = MediaQuery.of(context).size.width * 0.9;
+    final s = S.of(context);
+    final locale = Localizations.localeOf(context);
+    final isArabic = locale.languageCode == 'ar';
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+    final hintColor = (textTheme.bodyMedium?.color ?? colorScheme.onSurface)
+        .withValues(alpha: 0.45);
+    final borderRadius = BorderRadius.circular(28);
+    final fillColor = theme.inputDecorationTheme.fillColor ?? theme.cardColor;
+
     return Center(
       child: Material(
-        color: Colors.white,
-        elevation: 4,
-        borderRadius: BorderRadius.circular(30),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(30),
-          onTap: onTap,
-          child: SizedBox(
-            width: width,
-            height: 54,
-            child: Row(
-              children: [
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Text(
-                    'ابحث في السير الذاتية..',
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                const Icon(Icons.search, color: Colors.grey),
-                const SizedBox(width: 14),
-              ],
+        color: Colors.transparent,
+        elevation: 0,
+        borderRadius: borderRadius,
+        child: SizedBox(
+          width: width,
+          height: 56,
+          child: TextFormField(
+            readOnly: true,
+            showCursor: false,
+            onTap: onTap,
+            textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+            textAlign: isArabic ? TextAlign.right : TextAlign.left,
+            style: textTheme.bodyMedium,
+            decoration: InputDecoration(
+              hintText: s.employerResumesSearchHint,
+              hintStyle: textTheme.bodyMedium?.copyWith(color: hintColor),
+              prefixIcon: Icon(Icons.search, color: hintColor),
+              filled: true,
+              fillColor: fillColor,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+              border: OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide.none,
+              ),
             ),
           ),
         ),
@@ -158,64 +185,93 @@ class _SearchField extends StatelessWidget {
   }
 }
 
-class _PromoBanner extends StatelessWidget {
+class _PromoBanner extends StatefulWidget {
   const _PromoBanner();
 
   @override
+  State<_PromoBanner> createState() => _PromoBannerState();
+}
+
+class _PromoBannerState extends State<_PromoBanner> {
+  final _controller = PageController(viewportFraction: 0.95);
+  int _currentIndex = 0;
+  Timer? _autoTimer;
+  final List<String> _images = const [
+    'lib/assets/photo_1_2025-11-21_17-19-33.jpg',
+    'lib/assets/photo_2_2025-11-21_17-19-33.jpg',
+    'lib/assets/photo_3_2025-11-21_17-19-33.jpg',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoSlide();
+  }
+
+  void _startAutoSlide() {
+    _autoTimer?.cancel();
+    _autoTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (!mounted || !_controller.hasClients) return;
+      final nextIndex = (_currentIndex + 1) % _images.length;
+      _controller.animateToPage(
+        nextIndex,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+      setState(() => _currentIndex = nextIndex);
+    });
+  }
+
+  @override
+  void dispose() {
+    _autoTimer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 3,
-      borderRadius: BorderRadius.circular(24),
-      child: Container(
-        height: 165,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          gradient: const LinearGradient(
-            colors: [Color(0xFF6B1F94), Color(0xFF31A46C)],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    return Column(
+      children: [
+        SizedBox(
+          height: 180,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: _images.length,
+            onPageChanged: (i) => setState(() => _currentIndex = i),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: Image.asset(_images[index], fit: BoxFit.cover),
+                ),
+              );
+            },
           ),
         ),
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Dream Job',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'شارك إعلانك الآن للوصول إلى أفضل المرشحين.',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.9),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 12),
-            Container(
-              width: 100,
-              height: double.infinity,
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(_images.length, (index) {
+            final isActive = index == _currentIndex;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              width: isActive ? 12 : 8,
+              height: 6,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                image: const DecorationImage(
-                  image: AssetImage('lib/assets/photo_2025-11-06_13-10-55.jpg'),
-                  fit: BoxFit.cover,
+                color: colorScheme.primary.withValues(
+                  alpha: isActive ? 0.9 : 0.4,
                 ),
+                borderRadius: BorderRadius.circular(8),
               ),
-            ),
-          ],
+            );
+          }),
         ),
-      ),
+      ],
     );
   }
 }
@@ -227,6 +283,8 @@ class _PostJobButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    String t(String ar, String en) => isArabic ? ar : en;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(38),
@@ -236,19 +294,19 @@ class _PostJobButton extends StatelessWidget {
       ),
       child: Material(
         color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(38),
-          onTap: onTap,
-          child: const Padding(
+          child: InkWell(
+            borderRadius: BorderRadius.circular(38),
+            onTap: onTap,
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.add_circle_outline, color: Colors.white),
-                SizedBox(width: 10),
+                const Icon(Icons.add_circle_outline, color: Colors.white),
+                const SizedBox(width: 10),
                 Text(
-                  'أعلن وظيفة مجاناً',
-                  style: TextStyle(
+                  S.of(context).employerPostJobCta,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -270,8 +328,10 @@ class _EmptyStateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Material(
-      color: Colors.white,
+      color: theme.cardColor,
       elevation: 0,
       borderRadius: BorderRadius.circular(24),
       child: Container(
@@ -279,13 +339,17 @@ class _EmptyStateCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 36),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
+          border: Border.all(
+            color: colorScheme.outline.withValues(
+              alpha: theme.brightness == Brightness.dark ? 0.35 : 0.2,
+            ),
+          ),
         ),
         child: Text(
           message,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: const Color(0xFF2E8C4D),
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: AppColors.bannerGreen,
             fontWeight: FontWeight.bold,
           ),
         ),

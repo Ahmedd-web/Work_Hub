@@ -26,6 +26,20 @@ class MenuEntry {
   });
 }
 
+class MembershipTileData {
+  final String title;
+  final String statusText;
+  final VoidCallback onTap;
+  final Color? statusColor;
+
+  const MembershipTileData({
+    required this.title,
+    required this.statusText,
+    required this.onTap,
+    this.statusColor,
+  });
+}
+
 /// استدع هذه الدالة عند الضغط على زر القائمة
 Future<void> showWorkHubMenuSheet(
   BuildContext context, {
@@ -38,6 +52,8 @@ Future<void> showWorkHubMenuSheet(
 
   // بقية العناصر
   required List<MenuEntry> items,
+
+  MembershipTileData? membershipTile,
 
   // خيارات شكلية
   Color? backgroundColor,
@@ -74,70 +90,78 @@ Future<void> showWorkHubMenuSheet(
     backgroundColor: Colors.transparent,
     builder: (_) {
       return SafeArea(
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          margin: EdgeInsets.only(top: media.size.height * 0.08),
-          decoration: BoxDecoration(
-            color: effectiveBackground,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x33000000),
-                blurRadius: 18,
-                offset: Offset(0, -4),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // الـ grab handle
-              Container(
-                width: 56,
-                height: 6,
-                margin: const EdgeInsets.only(bottom: 14),
-                decoration: BoxDecoration(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(3),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: media.viewInsets.bottom),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            margin: EdgeInsets.only(top: media.size.height * 0.08),
+            decoration: BoxDecoration(
+              color: effectiveBackground,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x33000000),
+                  blurRadius: 18,
+                  offset: Offset(0, -4),
                 ),
-              ),
-
-              // عنصر اختيار اللغة (يشبه Dropdown كبير داخل كبسولة)
-              _LanguagePill(
-                value: resolvedCurrent,
-                options: options,
-                onChanged: onLanguageChanged,
-              ),
-
-              const SizedBox(height: 14),
-              _ThemeModeToggle(
-                isDarkMode: isDarkMode,
-                onChanged: onThemeModeChanged,
-              ),
-
-              const SizedBox(height: 14),
-
-              // قائمة العناصر
-              ...items.map(
-                (e) => Padding(
-                  padding: const EdgeInsets.only(bottom: 14),
-                  child: _PillTile(
-                    leading: Icon(
-                      e.icon,
-                      color: e.iconColor ?? defaultIconColor,
-                      size: 26,
-                    ),
-                    title: e.title,
-                    textColor: e.textColor ?? defaultTextColor,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      e.onTap();
-                    },
-                    backgroundColor: pillColor,
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // الـ grab handle
+                Container(
+                  width: 56,
+                  height: 6,
+                  margin: const EdgeInsets.only(bottom: 14),
+                  decoration: BoxDecoration(
+                    color: colorScheme.outlineVariant.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(3),
                   ),
                 ),
-              ),
-            ],
+
+                // عنصر اختيار اللغة (يشبه Dropdown كبير داخل كبسولة)
+                _LanguagePill(
+                  value: resolvedCurrent,
+                  options: options,
+                  onChanged: onLanguageChanged,
+                ),
+
+                const SizedBox(height: 14),
+                _ThemeModeToggle(
+                  isDarkMode: isDarkMode,
+                  onChanged: onThemeModeChanged,
+                ),
+
+                const SizedBox(height: 14),
+
+                if (membershipTile != null) ...[
+                  _MembershipTile(data: membershipTile!),
+                  const SizedBox(height: 14),
+                ],
+
+                // قائمة العناصر
+                ...items.map(
+                  (e) => Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: _PillTile(
+                      leading: Icon(
+                        e.icon,
+                        color: e.iconColor ?? defaultIconColor,
+                        size: 26,
+                      ),
+                      title: e.title,
+                      textColor: e.textColor ?? defaultTextColor,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        e.onTap();
+                      },
+                      backgroundColor: pillColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -219,12 +243,21 @@ class _PillTile extends StatelessWidget {
       color: textColor,
       fontWeight: FontWeight.w600,
     );
+    final borderRadius = BorderRadius.circular(32);
+    final Color appliedBackground =
+        backgroundColor ??
+        (
+          theme.brightness == Brightness.dark
+              ? theme.colorScheme.surface.withValues(alpha: 0.2)
+              : AppColors.pillBackground
+        );
 
     return Material(
-      color: backgroundColor,
-      borderRadius: BorderRadius.circular(28),
+      color: appliedBackground,
+      borderRadius: borderRadius,
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: borderRadius,
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -254,6 +287,99 @@ class _PillTile extends StatelessWidget {
     );
   }
 }
+
+
+class _MembershipTile extends StatelessWidget {
+  const _MembershipTile({required this.data});
+
+  final MembershipTileData data;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final bool isDark = theme.brightness == Brightness.dark;
+    final backgroundColor =
+        isDark
+            ? colorScheme.surfaceVariant.withValues(alpha: 0.3)
+            : Colors.white;
+    final borderColor =
+        isDark
+            ? Colors.white.withValues(alpha: 0.08)
+            : colorScheme.primary.withValues(alpha: 0.08);
+    final badgeColor = data.statusColor ?? AppColors.bannerGreen;
+
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: borderColor),
+          boxShadow:
+              isDark
+                  ? null
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(28),
+          onTap: data.onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data.title,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: badgeColor,
+                          borderRadius: BorderRadius.circular(26),
+                        ),
+                        child: Text(
+                          data.statusText,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Icon(
+                  Icons.keyboard_arrow_left_rounded,
+                  size: 28,
+                  color: colorScheme.primary,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 /// كبسولة اختيار اللغة (Globe + Dropdown Arrow)
 class _LanguagePill extends StatelessWidget {

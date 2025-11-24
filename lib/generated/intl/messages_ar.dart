@@ -20,9 +20,33 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(days) => "تاريخ النشر: منذ ${days} يوم";
+  static String m0(error) => "حدث خطأ أثناء تحميل البيانات: ${error}";
 
-  static String m1(tab) => "تبويب ${tab} متاح قريباً";
+  static String m1(error) => "تعذر حفظ النبذة: ${error}";
+
+  static String m2(error) => "فشل الحفظ: ${error}";
+
+  static String m3(value) => "مستوى التعليم: ${value}";
+
+  static String m4(value) => "سنوات الخبرة: ${value}";
+
+  static String m5(error) => "تعذر تحميل الوظائف: ${error}";
+
+  static String m6(count) => "${count} تعديل إعلان";
+
+  static String m7(count) => "${count} تعزيز مميز";
+
+  static String m8(count) => "${count} إعلان وظيفة";
+
+  static String m9(count) => "${count} عرض سيرة ذاتية";
+
+  static String m10(days) => "مدة ظهور الإعلان ${days} يوم";
+
+  static String m11(price) => "اشترك الآن (${price}\\\$)";
+
+  static String m12(days) => "تاريخ النشر: منذ ${days} يوم";
+
+  static String m13(tab) => "تبويب ${tab} متاح قريباً";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -265,6 +289,244 @@ class MessageLookup extends MessageLookupByLibrary {
     "editProfileUpload": MessageLookupByLibrary.simpleMessage(
       "رفع السيرة الذاتية",
     ),
+    "employerAccountAboutArabic": MessageLookupByLibrary.simpleMessage(
+      "نبذة عن الشركة (بالعربية)",
+    ),
+    "employerAccountAboutEnglish": MessageLookupByLibrary.simpleMessage(
+      "نبذة عن الشركة (بالإنجليزية)",
+    ),
+    "employerAccountDefaultCompanyName": MessageLookupByLibrary.simpleMessage(
+      "حساب الشركة",
+    ),
+    "employerAccountFieldCompanyName": MessageLookupByLibrary.simpleMessage(
+      "اسم الشركة",
+    ),
+    "employerAccountFieldEmail": MessageLookupByLibrary.simpleMessage(
+      "بريد الشركة",
+    ),
+    "employerAccountFieldIndustry": MessageLookupByLibrary.simpleMessage(
+      "مجال عمل الشركة",
+    ),
+    "employerAccountFieldPhone1": MessageLookupByLibrary.simpleMessage(
+      "رقم الشركة 1",
+    ),
+    "employerAccountFieldPhone2": MessageLookupByLibrary.simpleMessage(
+      "رقم الشركة 2",
+    ),
+    "employerAccountFieldWebsite": MessageLookupByLibrary.simpleMessage(
+      "موقع الشركة",
+    ),
+    "employerAccountIndustryPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "اختر مجال عمل الشركة",
+    ),
+    "employerAccountLoadError": m0,
+    "employerAccountLoginRequired": MessageLookupByLibrary.simpleMessage(
+      "يرجى تسجيل الدخول كصاحب عمل لعرض هذه الصفحة.",
+    ),
+    "employerAccountSectionContactTitle": MessageLookupByLibrary.simpleMessage(
+      "وسائل التواصل",
+    ),
+    "employerAccountSectionInfoTitle": MessageLookupByLibrary.simpleMessage(
+      "معلومات الشركة",
+    ),
+    "employerAccountTabAbout": MessageLookupByLibrary.simpleMessage(
+      "نبذة عن الشركة",
+    ),
+    "employerAccountTabInfo": MessageLookupByLibrary.simpleMessage(
+      "معلومات الحساب",
+    ),
+    "employerAccountTitle": MessageLookupByLibrary.simpleMessage("الحساب"),
+    "employerDashboardLatestResumes": MessageLookupByLibrary.simpleMessage(
+      "أحدث السير الذاتية",
+    ),
+    "employerDashboardNoData": MessageLookupByLibrary.simpleMessage(
+      "لا يوجد بيانات",
+    ),
+    "employerDashboardSeeMore": MessageLookupByLibrary.simpleMessage(
+      "شاهد المزيد",
+    ),
+    "employerEditAboutFailure": m1,
+    "employerEditAboutHeader": MessageLookupByLibrary.simpleMessage(
+      "نبذة عن الشركة",
+    ),
+    "employerEditAboutLabelArabic": MessageLookupByLibrary.simpleMessage(
+      "نبذة عن الشركة (بالعربية)",
+    ),
+    "employerEditAboutLabelEnglish": MessageLookupByLibrary.simpleMessage(
+      "نبذة عن الشركة (بالإنجليزية)",
+    ),
+    "employerEditAboutSaveButton": MessageLookupByLibrary.simpleMessage("حفظ"),
+    "employerEditAboutSuccess": MessageLookupByLibrary.simpleMessage(
+      "تم تحديث نبذة الشركة بنجاح.",
+    ),
+    "employerEditAboutValidationRequired": MessageLookupByLibrary.simpleMessage(
+      "هذا الحقل مطلوب",
+    ),
+    "employerEditInfoAddressBenghazi": MessageLookupByLibrary.simpleMessage(
+      "بنغازي",
+    ),
+    "employerEditInfoAddressDerna": MessageLookupByLibrary.simpleMessage(
+      "درنة",
+    ),
+    "employerEditInfoAddressGharyan": MessageLookupByLibrary.simpleMessage(
+      "غريان",
+    ),
+    "employerEditInfoAddressMisrata": MessageLookupByLibrary.simpleMessage(
+      "مصراتة",
+    ),
+    "employerEditInfoAddressSabha": MessageLookupByLibrary.simpleMessage(
+      "سبها",
+    ),
+    "employerEditInfoAddressTripoli": MessageLookupByLibrary.simpleMessage(
+      "طرابلس",
+    ),
+    "employerEditInfoFailure": m2,
+    "employerEditInfoHeader": MessageLookupByLibrary.simpleMessage(
+      "معلومات الشركة",
+    ),
+    "employerEditInfoLabelAddress": MessageLookupByLibrary.simpleMessage(
+      "المدينة / العنوان",
+    ),
+    "employerEditInfoLabelAdvertiserRole": MessageLookupByLibrary.simpleMessage(
+      "دور المعلن",
+    ),
+    "employerEditInfoLabelCompanyName": MessageLookupByLibrary.simpleMessage(
+      "اسم الشركة (بالعربية)",
+    ),
+    "employerEditInfoLabelEmail": MessageLookupByLibrary.simpleMessage(
+      "البريد الإلكتروني للشركة",
+    ),
+    "employerEditInfoLabelIndustry": MessageLookupByLibrary.simpleMessage(
+      "مجال الشركة (بالعربية)",
+    ),
+    "employerEditInfoLabelPhonePrimary": MessageLookupByLibrary.simpleMessage(
+      "رقم الشركة 1",
+    ),
+    "employerEditInfoLabelPhoneSecondary": MessageLookupByLibrary.simpleMessage(
+      "رقم الشركة 2 (اختياري)",
+    ),
+    "employerEditInfoLabelWebsite": MessageLookupByLibrary.simpleMessage(
+      "موقع الشركة",
+    ),
+    "employerEditInfoPhoneHint": MessageLookupByLibrary.simpleMessage(
+      "945236782",
+    ),
+    "employerEditInfoRoleAgency": MessageLookupByLibrary.simpleMessage(
+      "وكالة توظيف",
+    ),
+    "employerEditInfoRoleHR": MessageLookupByLibrary.simpleMessage(
+      "مندوب الموارد البشرية",
+    ),
+    "employerEditInfoRoleOwner": MessageLookupByLibrary.simpleMessage(
+      "مالك الشركة",
+    ),
+    "employerEditInfoSaveButton": MessageLookupByLibrary.simpleMessage("حفظ"),
+    "employerEditInfoSectionPhones": MessageLookupByLibrary.simpleMessage(
+      "بيانات الاتصال",
+    ),
+    "employerEditInfoSelectAddressTitle": MessageLookupByLibrary.simpleMessage(
+      "اختر المدينة",
+    ),
+    "employerEditInfoSelectRoleTitle": MessageLookupByLibrary.simpleMessage(
+      "اختر دور المعلن",
+    ),
+    "employerEditInfoSuccess": MessageLookupByLibrary.simpleMessage(
+      "تم حفظ معلومات الشركة بنجاح.",
+    ),
+    "employerEditInfoValidationRequired": MessageLookupByLibrary.simpleMessage(
+      "هذا الحقل مطلوب",
+    ),
+    "employerJobsActionLabel": MessageLookupByLibrary.simpleMessage("فعالة"),
+    "employerJobsDefaultTitle": MessageLookupByLibrary.simpleMessage("وظيفة"),
+    "employerJobsEducationLabel": m3,
+    "employerJobsEmpty": MessageLookupByLibrary.simpleMessage("لا توجد وظائف."),
+    "employerJobsExperienceLabel": m4,
+    "employerJobsLoadError": m5,
+    "employerJobsLoginPrompt": MessageLookupByLibrary.simpleMessage(
+      "يرجى تسجيل الدخول لعرض الوظائف.",
+    ),
+    "employerJobsSearchHint": MessageLookupByLibrary.simpleMessage(
+      "ابحث في الوظائف",
+    ),
+    "employerJobsStatusActive": MessageLookupByLibrary.simpleMessage("فعالة"),
+    "employerJobsStatusArchived": MessageLookupByLibrary.simpleMessage(
+      "مؤرشفة",
+    ),
+    "employerJobsStatusDeleted": MessageLookupByLibrary.simpleMessage("محذوفة"),
+    "employerNavAccount": MessageLookupByLibrary.simpleMessage("الحساب"),
+    "employerNavHome": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+    "employerNavJobs": MessageLookupByLibrary.simpleMessage("الوظائف"),
+    "employerNavResumes": MessageLookupByLibrary.simpleMessage("السير الذاتية"),
+    "employerPlanBenefitEdits": m6,
+    "employerPlanBenefitEditsUnlimited": MessageLookupByLibrary.simpleMessage(
+      "عدد غير محدود من تعديلات الإعلان",
+    ),
+    "employerPlanBenefitFeaturedAds": m7,
+    "employerPlanBenefitJobPosts": m8,
+    "employerPlanBenefitResumeViews": m9,
+    "employerPlanBenefitVisibilityDays": m10,
+    "employerPlanLabelMonth": MessageLookupByLibrary.simpleMessage(
+      "خطة شهر واحد",
+    ),
+    "employerPlanLabelSixMonths": MessageLookupByLibrary.simpleMessage(
+      "خطة ستة أشهر",
+    ),
+    "employerPlanLabelThreeMonths": MessageLookupByLibrary.simpleMessage(
+      "خطة ثلاثة أشهر",
+    ),
+    "employerPlanLabelWeek": MessageLookupByLibrary.simpleMessage(
+      "خطة أسبوع واحد",
+    ),
+    "employerPlanLabelYear": MessageLookupByLibrary.simpleMessage(
+      "خطة سنة كاملة",
+    ),
+    "employerPostJobCta": MessageLookupByLibrary.simpleMessage(
+      "أعلن وظيفتك مجاناً",
+    ),
+    "employerPremiumChooseDuration": MessageLookupByLibrary.simpleMessage(
+      "اختر مدة الاشتراك",
+    ),
+    "employerPremiumHeaderLabel": MessageLookupByLibrary.simpleMessage(
+      "الباقة المميزة",
+    ),
+    "employerPremiumOverviewBody": MessageLookupByLibrary.simpleMessage(
+      "خطط نشر مرنة مصممة لتناسب احتياجات التوظيف\nرؤية محسّنة من خلال الإعلانات المميزة\nتوظيف فعال من حيث التكلفة مع خيارات قابلة للتوسع.",
+    ),
+    "employerPremiumOverviewTitle": MessageLookupByLibrary.simpleMessage("عمل"),
+    "employerPremiumPopularBadge": MessageLookupByLibrary.simpleMessage(
+      "الأكثر شيوعاً 🔥",
+    ),
+    "employerPremiumSubscribeNow": m11,
+    "employerResumesCatAdmin": MessageLookupByLibrary.simpleMessage("الإدارة"),
+    "employerResumesCatAll": MessageLookupByLibrary.simpleMessage(
+      "جميع التخصصات",
+    ),
+    "employerResumesCatEngineering": MessageLookupByLibrary.simpleMessage(
+      "الهندسة",
+    ),
+    "employerResumesCatMarketing": MessageLookupByLibrary.simpleMessage(
+      "التسويق",
+    ),
+    "employerResumesCatTech": MessageLookupByLibrary.simpleMessage("التقنية"),
+    "employerResumesCategoryLabel": MessageLookupByLibrary.simpleMessage(
+      "التخصص",
+    ),
+    "employerResumesSearchHint": MessageLookupByLibrary.simpleMessage(
+      "ابحث في السير الذاتية..",
+    ),
+    "employerResumesSubtitle": MessageLookupByLibrary.simpleMessage(
+      "اختر المرشح المثالي لفرصتك من خلال تصفية السير الذاتية حسب الوقت والتخصص.",
+    ),
+    "employerResumesTime24h": MessageLookupByLibrary.simpleMessage(
+      "آخر 24 ساعة",
+    ),
+    "employerResumesTime30d": MessageLookupByLibrary.simpleMessage("آخر شهر"),
+    "employerResumesTime7d": MessageLookupByLibrary.simpleMessage("آخر أسبوع"),
+    "employerResumesTimeAny": MessageLookupByLibrary.simpleMessage("أي وقت"),
+    "employerResumesTimeLabel": MessageLookupByLibrary.simpleMessage("التوقيت"),
+    "employerResumesTitle": MessageLookupByLibrary.simpleMessage(
+      "استكشف السير الذاتية",
+    ),
     "fieldRequired": MessageLookupByLibrary.simpleMessage("مطلوب"),
     "filterAllCategories": MessageLookupByLibrary.simpleMessage("كل التصنيفات"),
     "filterAnyTime": MessageLookupByLibrary.simpleMessage("أي وقت"),
@@ -314,7 +576,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "jobInfoTab": MessageLookupByLibrary.simpleMessage("معلومات الوظيفة"),
     "jobLocationJordan": MessageLookupByLibrary.simpleMessage("طرابلس"),
     "jobLocationSaudi": MessageLookupByLibrary.simpleMessage("بنغازي"),
-    "jobPostedAt": m0,
+    "jobPostedAt": m12,
     "jobTitleAdminOfficer": MessageLookupByLibrary.simpleMessage("مسؤول إداري"),
     "jobTitleFinanceSpecialist": MessageLookupByLibrary.simpleMessage(
       "أخصائي مالي",
@@ -354,6 +616,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "menuDeleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
     "menuLogin": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "menuLogout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+    "menuMembershipStatusFree": MessageLookupByLibrary.simpleMessage("مجانية"),
+    "menuMembershipTitle": MessageLookupByLibrary.simpleMessage(
+      "عضويتك الحالية",
+    ),
     "menuPrivacy": MessageLookupByLibrary.simpleMessage(
       "سياسة الخصوصية وشروط الاستخدام",
     ),
@@ -379,7 +645,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "أبرز وظيفتك بعلامة عاجل وتنبيه خاص.",
     ),
     "offerUrgentTitle": MessageLookupByLibrary.simpleMessage("توظيف عاجل"),
-    "placeholderTab": m1,
+    "placeholderTab": m13,
     "profileAddress": MessageLookupByLibrary.simpleMessage("العنوان"),
     "profileCity": MessageLookupByLibrary.simpleMessage("المدينة / المنطقة"),
     "profileEmail": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
@@ -456,6 +722,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "أدخل رقم الهاتف...",
     ),
     "registerPhoneLabel": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
+    "registerSuccessDesc": MessageLookupByLibrary.simpleMessage(
+      "يمكنك الآن تسجيل الدخول",
+    ),
+    "registerSuccessTitle": MessageLookupByLibrary.simpleMessage(
+      "تم إنشاء الحساب",
+    ),
     "registerTabEmployer": MessageLookupByLibrary.simpleMessage(
       "تسجيل صاحب عمل",
     ),

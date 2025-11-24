@@ -185,8 +185,8 @@ class _JobSeekerForm extends State<JobSeekerForm> {
                   context: dialogContext,
                   dialogType: DialogType.success,
                   animType: AnimType.rightSlide,
-                  title: s.dialogErrorTitle,
-                  desc: s.registerButton,
+                  title: s.registerSuccessTitle,
+                  desc: s.registerSuccessDesc,
                   btnOkText: s.loginButton,
                   btnOkOnPress: () {},
                 ).show();

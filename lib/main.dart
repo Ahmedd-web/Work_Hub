@@ -3,6 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
+
+import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/employer_session.dart';
 import 'package:work_hub/core/routes.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
@@ -20,66 +23,68 @@ Future<void> main() async {
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  static _MyAppState? of(BuildContext context) =>
-      context.findAncestorStateOfType<_MyAppState>();
+  static MyAppState? of(BuildContext context) =>
+      context.findAncestorStateOfType<MyAppState>();
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  Locale? _locale;
-  ThemeMode _themeMode = ThemeMode.light;
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
-  static const _localePrefKey = 'preferred_locale';
+class MyAppState extends State<MyApp> {
+  Locale? localeValue;
+  ThemeMode themeModeValue = ThemeMode.light;
+  final GlobalKey<NavigatorState> navigatorKeyValue =
+      GlobalKey<NavigatorState>();
+  static const localePrefKeyValue = 'preferredlocale';
 
   @override
   void initState() {
     super.initState();
-    _loadInitialLocale();
+    loadInitialLocale();
   }
 
-  ThemeMode get themeMode => _themeMode;
+  ThemeMode get themeMode => themeModeValue;
 
-  Future<void> _loadInitialLocale() async {
+  Future<void> loadInitialLocale() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedCode = prefs.getString(_localePrefKey);
-    Locale? initialLocale;
+    final savedCodeValue = prefs.getString(localePrefKeyValue);
+    Locale? initialLocaleValue;
 
-    if (savedCode != null && savedCode.isNotEmpty) {
-      initialLocale = _resolveSupportedLocale(Locale(savedCode));
+    if (savedCodeValue != null && savedCodeValue.isNotEmpty) {
+      initialLocaleValue = resolveSupportedLocale(Locale(savedCodeValue));
     } else {
-      final deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
-      initialLocale = _resolveSupportedLocale(deviceLocale);
+      final deviceLocaleValue =
+          WidgetsBinding.instance.platformDispatcher.locale;
+      initialLocaleValue = resolveSupportedLocale(deviceLocaleValue);
     }
 
-    if (initialLocale != null && mounted) {
-      setState(() => _locale = initialLocale);
+    if (initialLocaleValue != null && mounted) {
+      setState(() => localeValue = initialLocaleValue);
     }
   }
 
-  Locale? _resolveSupportedLocale(Locale? locale) {
-    if (locale == null) return null;
-    for (final supported in S.delegate.supportedLocales) {
-      if (supported.languageCode == locale.languageCode) {
-        return Locale(supported.languageCode);
+  Locale? resolveSupportedLocale(Locale? localeInput) {
+    if (localeInput == null) return null;
+    for (final supportedValue in S.delegate.supportedLocales) {
+      if (supportedValue.languageCode == localeInput.languageCode) {
+        return Locale(supportedValue.languageCode);
       }
     }
     return null;
   }
 
-  Future<void> setLocale(Locale locale) async {
-    final normalized = _resolveSupportedLocale(locale);
-    if (!mounted || normalized == null) return;
-    setState(() => _locale = normalized);
+  Future<void> setLocale(Locale localeInput) async {
+    final normalizedValue = resolveSupportedLocale(localeInput);
+    if (!mounted || normalizedValue == null) return;
+    setState(() => localeValue = normalizedValue);
 
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_localePrefKey, normalized.languageCode);
+    await prefs.setString(localePrefKeyValue, normalizedValue.languageCode);
   }
 
-  void setThemeMode(ThemeMode mode) {
+  void setThemeMode(ThemeMode modeValue) {
     if (!mounted) return;
-    setState(() => _themeMode = mode);
+    setState(() => themeModeValue = modeValue);
   }
 
   @override
@@ -88,9 +93,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: _themeMode,
-      navigatorKey: _navigatorKey,
-      locale: _locale,
+      themeMode: themeModeValue,
+      navigatorKey: navigatorKeyValue,
+      locale: localeValue,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -99,7 +104,7 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: S.delegate.supportedLocales,
       routes: Approutes.routes,
-      home: const AuthGate(),
+      home: const SplashMahanti(),
     );
   }
 }
@@ -111,30 +116,111 @@ class AuthGate extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+      builder: (context, snapshotValue) {
+        if (snapshotValue.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
         }
-        final isAuthenticated = snapshot.data != null;
-        if (!isAuthenticated) {
+        final isAuthenticatedValue = snapshotValue.data != null;
+        if (!isAuthenticatedValue) {
           return const Welcome();
         }
         return FutureBuilder<bool>(
           future: EmployerSession.isEmployer(),
-          builder: (context, employerSnapshot) {
-            if (!employerSnapshot.hasData) {
+          builder: (context, employerSnapshotValue) {
+            if (!employerSnapshotValue.hasData) {
               return const Scaffold(
                 body: Center(child: CircularProgressIndicator()),
               );
             }
-            return employerSnapshot.data == true
+            return employerSnapshotValue.data == true
                 ? const EmployerDashboardPage()
                 : const HomePage();
           },
         );
       },
+    );
+  }
+}
+
+class SplashMahanti extends StatefulWidget {
+  const SplashMahanti({super.key});
+
+  @override
+  State<SplashMahanti> createState() => SplashMahantiState();
+}
+
+class SplashMahantiState extends State<SplashMahanti>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controllerValue;
+  late Animation<double> opacityValue;
+  late Animation<double> scaleValue;
+  Timer? timerValue;
+
+  @override
+  void initState() {
+    super.initState();
+    controllerValue = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    opacityValue = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: controllerValue, curve: Curves.easeOut));
+    scaleValue = Tween<double>(begin: 0.7, end: 1.0).animate(
+      CurvedAnimation(parent: controllerValue, curve: Curves.easeOutBack),
+    );
+    controllerValue.forward();
+
+    timerValue = Timer(const Duration(seconds: 3), () {
+      if (!mounted) return;
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const AuthGate()));
+    });
+  }
+
+  @override
+  void dispose() {
+    timerValue?.cancel();
+    controllerValue.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(AppAssets.splash, fit: BoxFit.cover),
+          Center(
+            child: AnimatedBuilder(
+              animation: controllerValue,
+              builder: (context, childValue) {
+                return Opacity(
+                  opacity: opacityValue.value,
+                  child: Transform.scale(
+                    scale: scaleValue.value,
+                    child: childValue,
+                  ),
+                );
+              },
+              child: const Text(
+                'مهنتي',
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                  letterSpacing: 1,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

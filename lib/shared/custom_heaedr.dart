@@ -1,7 +1,12 @@
+import 'dart:math' as math;
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:work_hub/core/employer_session.dart';
+import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/features/employer/screens/employer_membership_page.dart';
 import 'package:work_hub/features/home_screen/menuSheet/about_us.dart';
 import 'package:work_hub/features/home_screen/menuSheet/ads_page.dart';
 import 'package:work_hub/features/home_screen/menuSheet/contact_us.dart';
@@ -43,6 +48,8 @@ class CustomHeader extends StatelessWidget {
   final String? backgroundImage;
   final BoxFit backgroundImageFit;
   final Widget? titleWidget;
+  final Widget? heroChild;
+  final double? heroHeight;
 
   const CustomHeader({
     super.key,
@@ -65,6 +72,8 @@ class CustomHeader extends StatelessWidget {
     this.backgroundImage,
     this.backgroundImageFit = BoxFit.cover,
     this.titleWidget,
+    this.heroChild,
+    this.heroHeight,
   });
 
   @override
@@ -82,13 +91,16 @@ class CustomHeader extends StatelessWidget {
         theme.inputDecorationTheme.fillColor ?? colorScheme.surface;
     const double defaultSearchBarHeight = 56;
     final bool hasOverlayChild = overlayChild != null || showSearchBar;
+    final bool hasHeroChild = heroChild != null;
     final bool useImageBackground =
         backgroundImage != null && backgroundImage!.isNotEmpty;
     final double overlayChildHeight =
-        overlayChild != null
-            ? (overlayHeight ?? 120)
-            : defaultSearchBarHeight;
-    final double overlap = hasOverlayChild ? overlayChildHeight / 2 : 0;
+        overlayChild != null ? (overlayHeight ?? 120) : defaultSearchBarHeight;
+    final double heroChildHeight = heroChild != null ? (heroHeight ?? 140) : 0;
+    final double overlap = [
+      hasOverlayChild ? overlayChildHeight / 2 : 0.0,
+      hasHeroChild ? heroChildHeight / 2 : 0.0,
+    ].reduce(math.max);
     final double baseHeight = height ?? 200;
     final double totalHeight = baseHeight + overlap;
 
@@ -105,10 +117,7 @@ class CustomHeader extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.asset(
-                      backgroundImage!,
-                      fit: backgroundImageFit,
-                    ),
+                    Image.asset(backgroundImage!, fit: backgroundImageFit),
                     Container(
                       color: effectiveBackground.withValues(alpha: 0.25),
                     ),
@@ -124,18 +133,19 @@ class CustomHeader extends StatelessWidget {
             ),
 
           if (showBackButton || showMenuButton)
-            Positioned(
-              left: 8,
-              top: 12,
+            PositionedDirectional(
+              start: 8,
+              top: 24,
               child: IconButton(
                 iconSize: 30,
-                icon: showBackButton
-                    ? IconTheme(
-                        data: IconThemeData(color: effectiveTextColor),
-                        child: const BackButtonIcon(),
-                      )
-                    : Icon(Icons.menu, color: effectiveTextColor),
-                onPressed: () {
+                icon:
+                    showBackButton
+                        ? IconTheme(
+                          data: IconThemeData(color: effectiveTextColor),
+                          child: const BackButtonIcon(),
+                        )
+                        : Icon(Icons.menu, color: effectiveTextColor),
+                onPressed: () async {
                   if (showBackButton) {
                     if (onBackPressed != null) {
                       onBackPressed!();
@@ -162,6 +172,23 @@ class CustomHeader extends StatelessWidget {
                   final isDarkMode =
                       (appState?.themeMode ?? ThemeMode.light) ==
                       ThemeMode.dark;
+                  final isEmployerUser = await EmployerSession.isEmployer();
+                  final membershipTile =
+                      isEmployerUser
+                          ? MembershipTileData(
+                            title: s.menuMembershipTitle,
+                            statusText: s.menuMembershipStatusFree,
+                            statusColor: AppColors.bannerGreen,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder:
+                                      (_) => const EmployerMembershipPage(),
+                                ),
+                              );
+                            },
+                          )
+                          : null;
 
                   showWorkHubMenuSheet(
                     context,
@@ -186,6 +213,7 @@ class CustomHeader extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
+                    membershipTile: membershipTile,
                     items: [
                       MenuEntry(
                         icon: Icons.help_outline,
@@ -259,9 +287,9 @@ class CustomHeader extends StatelessWidget {
               ),
             ),
           if (showNotificationButton)
-            Positioned(
-              right: 8,
-              top: 12,
+            PositionedDirectional(
+              end: 8,
+              top: 24,
               child: IconButton(
                 iconSize: 30,
                 icon: Icon(Icons.notifications_none, color: effectiveTextColor),
@@ -276,13 +304,27 @@ class CustomHeader extends StatelessWidget {
               ),
               child:
                   titleWidget ??
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: effectiveTextColor,
-                      fontSize: 42,
-                      fontWeight: FontWeight.w900,
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0.0, end: 1.0),
+                    duration: const Duration(milliseconds: 700),
+                    curve: Curves.easeOut,
+                    builder: (context, value, child) {
+                      return Opacity(
+                        opacity: value,
+                        child: Transform.scale(
+                          scale: 0.85 + (0.15 * value),
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: effectiveTextColor,
+                        fontSize: 42,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ),
             ),
@@ -327,13 +369,21 @@ class CustomHeader extends StatelessWidget {
                                 ),
                                 filled: true,
                                 fillColor: searchFillColor,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 14),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
+            ),
+          if (hasHeroChild)
+            Positioned(
+              left: 24,
+              right: 24,
+              bottom: -heroChildHeight / 2,
+              child: SizedBox(height: heroChildHeight, child: heroChild),
             ),
         ],
       ),
@@ -347,9 +397,7 @@ Future<void> _handleDeleteAccount(BuildContext context) async {
   final navigator = Navigator.of(context);
   final user = FirebaseAuth.instance.currentUser;
   if (user == null) {
-    messenger.showSnackBar(
-      SnackBar(content: Text(s.profileNoData)),
-    );
+    messenger.showSnackBar(SnackBar(content: Text(s.profileNoData)));
     return;
   }
 
@@ -375,7 +423,11 @@ Future<void> _handleDeleteAccount(BuildContext context) async {
   );
 
   try {
-    await FirebaseFirestore.instance.collection('Profile').doc(user.uid).delete().catchError((_) {});
+    await FirebaseFirestore.instance
+        .collection('Profile')
+        .doc(user.uid)
+        .delete()
+        .catchError((_) {});
     await user.delete();
   } on FirebaseAuthException catch (e) {
     navigator.pop();
