@@ -36,6 +36,7 @@ class MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKeyValue =
       GlobalKey<NavigatorState>();
   static const localePrefKeyValue = 'preferredlocale';
+  bool showSplash = true;
 
   @override
   void initState() {
@@ -104,7 +105,11 @@ class MyAppState extends State<MyApp> {
       ],
       supportedLocales: S.delegate.supportedLocales,
       routes: Approutes.routes,
-      home: const SplashMahanti(),
+      home: showSplash
+          ? SplashMahanti(
+              onFinish: () => setState(() => showSplash = false),
+            )
+          : const AuthGate(),
     );
   }
 }
@@ -145,7 +150,9 @@ class AuthGate extends StatelessWidget {
 }
 
 class SplashMahanti extends StatefulWidget {
-  const SplashMahanti({super.key});
+  const SplashMahanti({super.key, this.onFinish});
+
+  final VoidCallback? onFinish;
 
   @override
   State<SplashMahanti> createState() => SplashMahantiState();
@@ -176,9 +183,7 @@ class SplashMahantiState extends State<SplashMahanti>
 
     timerValue = Timer(const Duration(seconds: 3), () {
       if (!mounted) return;
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => const AuthGate()));
+      widget.onFinish?.call();
     });
   }
 

@@ -21,11 +21,11 @@ class CustomInputField extends StatefulWidget {
   });
 
   @override
-  State<CustomInputField> createState() => _CustomInputFieldState();
+  State<CustomInputField> createState() => CustomInputFieldState();
 }
 
-class _CustomInputFieldState extends State<CustomInputField> {
-  bool _hideText = true;
+class CustomInputFieldState extends State<CustomInputField> {
+  bool hideText = true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,7 +34,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
         TextFormField(
           controller: widget.controller,
           keyboardType: widget.keyboardType,
-          obscureText: widget.isPassword ? _hideText : false,
+          obscureText: widget.isPassword ? hideText : false,
           validator: widget.validator,
           textDirection: widget.textDirection,
           textAlign:
@@ -48,10 +48,10 @@ class _CustomInputFieldState extends State<CustomInputField> {
                 widget.isPassword
                     ? IconButton(
                       icon: Icon(
-                        _hideText ? Icons.visibility_off : Icons.visibility,
+                        hideText ? Icons.visibility_off : Icons.visibility,
                       ),
                       onPressed: () {
-                        setState(() => _hideText = !_hideText);
+                        setState(() => hideText = !hideText);
                       },
                     )
                     : null,

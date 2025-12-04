@@ -9,16 +9,16 @@ class EmployerPremiumPlansPage extends StatefulWidget {
 
   @override
   State<EmployerPremiumPlansPage> createState() =>
-      _EmployerPremiumPlansPageState();
+      EmployerPremiumPlansPageState();
 }
 
-class _EmployerPremiumPlansPageState extends State<EmployerPremiumPlansPage> {
-  int _selectedDuration = 1;
+class EmployerPremiumPlansPageState extends State<EmployerPremiumPlansPage> {
+  int selectedDuration = 1;
 
-  static const List<_PlanDefinition> _planDefinitions = [
-    _PlanDefinition(
+  static const List<PlanDefinition> planDefinitions = [
+    PlanDefinition(
       price: 50,
-      label: _PlanLabel.week,
+      label: PlanLabel.week,
       jobPosts: 1,
       visibilityDays: 7,
       resumeViews: 20,
@@ -26,36 +26,36 @@ class _EmployerPremiumPlansPageState extends State<EmployerPremiumPlansPage> {
       editCount: 1,
       isPopular: true,
     ),
-    _PlanDefinition(
+    PlanDefinition(
       price: 100,
-      label: _PlanLabel.month,
+      label: PlanLabel.month,
       jobPosts: 15,
       visibilityDays: 3,
       resumeViews: 25,
       featuredAds: 3,
       unlimitedEdits: true,
     ),
-    _PlanDefinition(
+    PlanDefinition(
       price: 150,
-      label: _PlanLabel.threeMonths,
+      label: PlanLabel.threeMonths,
       jobPosts: 70,
       visibilityDays: 7,
       resumeViews: 50,
       featuredAds: 15,
       unlimitedEdits: true,
     ),
-    _PlanDefinition(
+    PlanDefinition(
       price: 200,
-      label: _PlanLabel.sixMonths,
+      label: PlanLabel.sixMonths,
       jobPosts: 120,
       visibilityDays: 7,
       resumeViews: 100,
       featuredAds: 25,
       unlimitedEdits: true,
     ),
-    _PlanDefinition(
+    PlanDefinition(
       price: 250,
-      label: _PlanLabel.year,
+      label: PlanLabel.year,
       jobPosts: 300,
       visibilityDays: 14,
       resumeViews: 100,
@@ -71,8 +71,8 @@ class _EmployerPremiumPlansPageState extends State<EmployerPremiumPlansPage> {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
     final isDark = theme.brightness == Brightness.dark;
-    final plans = _buildPlans(s);
-    final selectedPlan = plans[_selectedDuration];
+    final plans = buildPlans(s);
+    final selectedPlan = plans[selectedDuration];
     final Color secondaryTextColor = (textTheme.bodyMedium?.color ??
             colorScheme.onSurface)
         .withValues(alpha: 0.7);
@@ -215,10 +215,10 @@ class _EmployerPremiumPlansPageState extends State<EmployerPremiumPlansPage> {
                   child: Row(
                     children: List.generate(
                       plans.length,
-                      (index) => _PremiumPlanCard(
+                      (index) => PremiumPlanCard(
                         plan: plans[index],
-                        active: _selectedDuration == index,
-                        onTap: () => setState(() => _selectedDuration = index),
+                        active: selectedDuration == index,
+                        onTap: () => setState(() => selectedDuration = index),
                       ),
                     ),
                   ),
@@ -252,14 +252,14 @@ class _EmployerPremiumPlansPageState extends State<EmployerPremiumPlansPage> {
     );
   }
 
-  List<_PremiumPlanData> _buildPlans(S s) {
-    return _planDefinitions.map((plan) {
-      final label = _resolveLabel(plan.label, s);
+  List<PremiumPlanData> buildPlans(S s) {
+    return planDefinitions.map((plan) {
+      final label = resolveLabel(plan.label, s);
       final editsLine =
           plan.unlimitedEdits
               ? s.employerPlanBenefitEditsUnlimited
               : s.employerPlanBenefitEdits(plan.editCount ?? 0);
-      return _PremiumPlanData(
+      return PremiumPlanData(
         price: plan.price,
         label: label,
         description: [
@@ -274,30 +274,30 @@ class _EmployerPremiumPlansPageState extends State<EmployerPremiumPlansPage> {
     }).toList();
   }
 
-  String _resolveLabel(_PlanLabel label, S s) {
+  String resolveLabel(PlanLabel label, S s) {
     switch (label) {
-      case _PlanLabel.week:
+      case PlanLabel.week:
         return s.employerPlanLabelWeek;
-      case _PlanLabel.month:
+      case PlanLabel.month:
         return s.employerPlanLabelMonth;
-      case _PlanLabel.threeMonths:
+      case PlanLabel.threeMonths:
         return s.employerPlanLabelThreeMonths;
-      case _PlanLabel.sixMonths:
+      case PlanLabel.sixMonths:
         return s.employerPlanLabelSixMonths;
-      case _PlanLabel.year:
+      case PlanLabel.year:
         return s.employerPlanLabelYear;
     }
   }
 }
 
-class _PremiumPlanCard extends StatelessWidget {
-  const _PremiumPlanCard({
+class PremiumPlanCard extends StatelessWidget {
+  const PremiumPlanCard({
     required this.plan,
     required this.active,
     required this.onTap,
   });
 
-  final _PremiumPlanData plan;
+  final PremiumPlanData plan;
   final bool active;
   final VoidCallback onTap;
 
@@ -427,10 +427,10 @@ class _PremiumPlanCard extends StatelessWidget {
   }
 }
 
-enum _PlanLabel { week, month, threeMonths, sixMonths, year }
+enum PlanLabel { week, month, threeMonths, sixMonths, year }
 
-class _PlanDefinition {
-  const _PlanDefinition({
+class PlanDefinition {
+  const PlanDefinition({
     required this.price,
     required this.label,
     required this.jobPosts,
@@ -443,7 +443,7 @@ class _PlanDefinition {
   });
 
   final int price;
-  final _PlanLabel label;
+  final PlanLabel label;
   final int jobPosts;
   final int visibilityDays;
   final int resumeViews;
@@ -453,8 +453,8 @@ class _PlanDefinition {
   final bool isPopular;
 }
 
-class _PremiumPlanData {
-  const _PremiumPlanData({
+class PremiumPlanData {
+  const PremiumPlanData({
     required this.price,
     required this.label,
     required this.description,

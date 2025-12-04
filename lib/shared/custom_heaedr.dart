@@ -113,7 +113,7 @@ class CustomHeader extends StatelessWidget {
           if (useImageBackground)
             Positioned.fill(
               child: ClipPath(
-                clipper: _CurvedHeaderClipper(),
+                clipper: CurvedHeaderClipper(),
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -128,7 +128,7 @@ class CustomHeader extends StatelessWidget {
           else
             Positioned.fill(
               child: CustomPaint(
-                painter: _CurvedHeaderPainter(color: effectiveBackground),
+                painter: CurvedHeaderPainter(color: effectiveBackground),
               ),
             ),
 
@@ -262,7 +262,7 @@ class CustomHeader extends StatelessWidget {
                       MenuEntry(
                         icon: Icons.delete_forever,
                         title: s.menuDeleteAccount,
-                        onTap: () => _handleDeleteAccount(context),
+                        onTap: () => handleDeleteAccount(context),
                         iconColor: Colors.redAccent,
                         textColor: Colors.redAccent,
                       ),
@@ -391,7 +391,7 @@ class CustomHeader extends StatelessWidget {
   }
 }
 
-Future<void> _handleDeleteAccount(BuildContext context) async {
+Future<void> handleDeleteAccount(BuildContext context) async {
   final s = S.of(context);
   final messenger = ScaffoldMessenger.of(context);
   final navigator = Navigator.of(context);
@@ -456,10 +456,10 @@ Future<void> _handleDeleteAccount(BuildContext context) async {
   navigator.pushNamedAndRemoveUntil("login", (route) => false);
 }
 
-class _CurvedHeaderPainter extends CustomPainter {
+class CurvedHeaderPainter extends CustomPainter {
   final Color color;
 
-  _CurvedHeaderPainter({required this.color});
+  CurvedHeaderPainter({required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -484,11 +484,11 @@ class _CurvedHeaderPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _CurvedHeaderPainter oldDelegate) =>
+  bool shouldRepaint(covariant CurvedHeaderPainter oldDelegate) =>
       oldDelegate.color != color;
 }
 
-class _CurvedHeaderClipper extends CustomClipper<Path> {
+class CurvedHeaderClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final double sideY = size.height - 52;

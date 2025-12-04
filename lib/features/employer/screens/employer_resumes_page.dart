@@ -13,14 +13,14 @@ class EmployerResumesPage extends StatefulWidget {
   const EmployerResumesPage({super.key});
 
   @override
-  State<EmployerResumesPage> createState() => _EmployerResumesPageState();
+  State<EmployerResumesPage> createState() => EmployerResumesPageState();
 }
 
-class _EmployerResumesPageState extends State<EmployerResumesPage> {
-  String _selectedTime = '';
-  String _selectedCategory = '';
+class EmployerResumesPageState extends State<EmployerResumesPage> {
+  String selectedTime = '';
+  String selectedCategory = '';
 
-  final _resumes = [
+  final resumes = [
     {
       'name': 'ليلى أحمد',
       'role': 'مصممة واجهات وتجربة مستخدم',
@@ -70,14 +70,14 @@ class _EmployerResumesPageState extends State<EmployerResumesPage> {
       'phone': '+218 94 222 3344',
     },
   ];
-  bool _isLoading = true;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 600), () {
       if (!mounted) return;
-      setState(() => _isLoading = false);
+      setState(() => isLoading = false);
     });
   }
 
@@ -100,11 +100,11 @@ class _EmployerResumesPageState extends State<EmployerResumesPage> {
       s.employerResumesCatMarketing,
       s.employerResumesCatEngineering,
     ];
-    if (!timeOptions.contains(_selectedTime)) {
-      _selectedTime = timeOptions.first;
+    if (!timeOptions.contains(selectedTime)) {
+      selectedTime = timeOptions.first;
     }
-    if (!categoryOptions.contains(_selectedCategory)) {
-      _selectedCategory = categoryOptions.first;
+    if (!categoryOptions.contains(selectedCategory)) {
+      selectedCategory = categoryOptions.first;
     }
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -118,7 +118,7 @@ class _EmployerResumesPageState extends State<EmployerResumesPage> {
             showMenuButton: true,
             showNotificationButton: true,
             showSearchBar: false,
-            overlayChild: const _ResumeSearchField(),
+            overlayChild: const ResumeSearchField(),
             overlayHeight: 70,
             height: 160,
           ),
@@ -145,44 +145,44 @@ class _EmployerResumesPageState extends State<EmployerResumesPage> {
                 Row(
                   children: [
                     Expanded(
-                      child: _DropdownFilter(
+                      child: DropdownFilter(
                         label: S.of(context).employerResumesTimeLabel,
-                        value: _selectedTime,
+                        value: selectedTime,
                         options: timeOptions,
                         onChanged: (value) {
                           if (value != null)
-                            setState(() => _selectedTime = value);
+                            setState(() => selectedTime = value);
                         },
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: _DropdownFilter(
+                      child: DropdownFilter(
                         label: S.of(context).employerResumesCategoryLabel,
-                        value: _selectedCategory,
+                        value: selectedCategory,
                         options: categoryOptions,
                         onChanged: (value) {
                           if (value != null)
-                            setState(() => _selectedCategory = value);
+                            setState(() => selectedCategory = value);
                         },
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 24),
-                if (_isLoading)
+                if (isLoading)
                   ...List.generate(
                     3,
                     (_) => const Padding(
                       padding: EdgeInsets.only(bottom: 16),
-                      child: _ResumeCardShimmer(),
+                      child: ResumeCardShimmer(),
                     ),
                   )
                 else
-                  ..._resumes.map(
+                  ...resumes.map(
                     (resume) => Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: _ResumeCard(data: resume),
+                      child: ResumeCard(data: resume),
                     ),
                   ),
               ],
@@ -212,8 +212,8 @@ class _EmployerResumesPageState extends State<EmployerResumesPage> {
   }
 }
 
-class _ResumeSearchField extends StatelessWidget {
-  const _ResumeSearchField();
+class ResumeSearchField extends StatelessWidget {
+  const ResumeSearchField();
 
   @override
   Widget build(BuildContext context) {
@@ -267,8 +267,8 @@ class _ResumeSearchField extends StatelessWidget {
   }
 }
 
-class _DropdownFilter extends StatelessWidget {
-  const _DropdownFilter({
+class DropdownFilter extends StatelessWidget {
+  const DropdownFilter({
     required this.label,
     required this.value,
     required this.options,
@@ -336,8 +336,8 @@ class _DropdownFilter extends StatelessWidget {
   }
 }
 
-class _ResumeCard extends StatelessWidget {
-  const _ResumeCard({required this.data});
+class ResumeCard extends StatelessWidget {
+  const ResumeCard({required this.data});
 
   final Map<String, dynamic> data;
 
@@ -522,8 +522,8 @@ class _ResumeCard extends StatelessWidget {
   }
 }
 
-class _ResumeCardShimmer extends StatelessWidget {
-  const _ResumeCardShimmer();
+class ResumeCardShimmer extends StatelessWidget {
+  const ResumeCardShimmer();
 
   @override
   Widget build(BuildContext context) {
@@ -649,7 +649,7 @@ class EmployerResumeDetailPage extends StatelessWidget {
             showMenuButton: false,
             showNotificationButton: false,
             showSearchBar: false,
-            heroChild: _ResumeHeroCard(
+            heroChild: ResumeHeroCard(
               name: name,
               role: role,
               location: location,
@@ -671,7 +671,7 @@ class EmployerResumeDetailPage extends StatelessWidget {
                       Expanded(
                         child: SizedBox(
                           height: 140,
-                          child: _InfoBadge(
+                          child: InfoBadge(
                             icon: Icons.place_outlined,
                             label: t('المدينة', 'City'),
                             value: location,
@@ -682,7 +682,7 @@ class EmployerResumeDetailPage extends StatelessWidget {
                       Expanded(
                         child: SizedBox(
                           height: 140,
-                          child: _InfoBadge(
+                          child: InfoBadge(
                             icon: Icons.timeline_rounded,
                             label: t('الخبرة', 'Experience'),
                             value: experience,
@@ -693,7 +693,7 @@ class EmployerResumeDetailPage extends StatelessWidget {
                       Expanded(
                         child: SizedBox(
                           height: 140,
-                          child: _InfoBadge(
+                          child: InfoBadge(
                             icon: Icons.access_time,
                             label: t('آخر تحديث', 'Updated'),
                             value: updated,
@@ -703,7 +703,7 @@ class EmployerResumeDetailPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 36),
-                  _SectionCard(
+                  SectionCard(
                     title: t('نبذة مختصرة', 'Summary'),
                     child: Text(
                       (summary == null || summary.isEmpty)
@@ -716,7 +716,7 @@ class EmployerResumeDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  _SectionCard(
+                  SectionCard(
                     title: t('المهارات الرئيسية', 'Key Skills'),
                     child:
                         skills.isEmpty
@@ -755,7 +755,7 @@ class EmployerResumeDetailPage extends StatelessWidget {
                             ),
                   ),
                   const SizedBox(height: 24),
-                  _SectionCard(
+                  SectionCard(
                     title: t('أبرز الخبرات', 'Experience Highlights'),
                     child:
                         highlights.isEmpty
@@ -769,18 +769,18 @@ class EmployerResumeDetailPage extends StatelessWidget {
                             : Column(
                               children:
                                   highlights
-                                      .map((text) => _BulletLine(text: text))
+                                      .map((text) => BulletLine(text: text))
                                       .toList(),
                             ),
                   ),
                   const SizedBox(height: 24),
-                  _SectionCard(
+                  SectionCard(
                     title: t('معلومات التواصل', 'Contact Info'),
                     child: Column(
                       children: [
-                        _ContactRow(icon: Icons.mail_outline, value: email),
+                        ContactRow(icon: Icons.mail_outline, value: email),
                         const Divider(height: 24),
-                        _ContactRow(icon: Icons.phone_outlined, value: phone),
+                        ContactRow(icon: Icons.phone_outlined, value: phone),
                       ],
                     ),
                   ),
@@ -795,8 +795,8 @@ class EmployerResumeDetailPage extends StatelessWidget {
   }
 }
 
-class _ResumeHeroCard extends StatelessWidget {
-  const _ResumeHeroCard({
+class ResumeHeroCard extends StatelessWidget {
+  const ResumeHeroCard({
     required this.name,
     required this.role,
     required this.location,
@@ -883,8 +883,8 @@ class _ResumeHeroCard extends StatelessWidget {
   }
 }
 
-class _InfoBadge extends StatelessWidget {
-  const _InfoBadge({
+class InfoBadge extends StatelessWidget {
+  const InfoBadge({
     required this.icon,
     required this.label,
     required this.value,
@@ -940,8 +940,8 @@ class _InfoBadge extends StatelessWidget {
   }
 }
 
-class _SectionCard extends StatelessWidget {
-  const _SectionCard({required this.title, required this.child});
+class SectionCard extends StatelessWidget {
+  const SectionCard({required this.title, required this.child});
 
   final String title;
   final Widget child;
@@ -973,8 +973,8 @@ class _SectionCard extends StatelessWidget {
   }
 }
 
-class _BulletLine extends StatelessWidget {
-  const _BulletLine({required this.text});
+class BulletLine extends StatelessWidget {
+  const BulletLine({required this.text});
 
   final String text;
 
@@ -1007,8 +1007,8 @@ class _BulletLine extends StatelessWidget {
   }
 }
 
-class _ContactRow extends StatelessWidget {
-  const _ContactRow({required this.icon, required this.value});
+class ContactRow extends StatelessWidget {
+  const ContactRow({required this.icon, required this.value});
 
   final IconData icon;
   final String value;

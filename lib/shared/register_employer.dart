@@ -11,11 +11,11 @@ class EmployerForm extends StatefulWidget {
   const EmployerForm({super.key});
 
   @override
-  State<EmployerForm> createState() => _EmployerFormState();
+  State<EmployerForm> createState() => EmployerFormState();
 }
 
-class _EmployerFormState extends State<EmployerForm> {
-  final _formKey = GlobalKey<FormState>();
+class EmployerFormState extends State<EmployerForm> {
+  final formKey = GlobalKey<FormState>();
 
   final companyNameController = TextEditingController();
   final phoneController = TextEditingController();
@@ -35,9 +35,9 @@ class _EmployerFormState extends State<EmployerForm> {
     super.dispose();
   }
 
-  Future<void> _registerEmployer(BuildContext context) async {
+  Future<void> registerEmployer(BuildContext context) async {
     final s = S.of(context);
-    if (!_formKey.currentState!.validate()) return;
+    if (!formKey.currentState!.validate()) return;
     setState(() => isLoading = true);
     try {
       final credential = await FirebaseAuth.instance
@@ -114,7 +114,7 @@ class _EmployerFormState extends State<EmployerForm> {
   Widget build(BuildContext context) {
     final s = S.of(context);
     return Form(
-      key: _formKey,
+      key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: ListView(
         padding: const EdgeInsets.all(20),
@@ -206,7 +206,7 @@ class _EmployerFormState extends State<EmployerForm> {
           ),
           const SizedBox(height: 30),
           ElevatedButton(
-            onPressed: () => _registerEmployer(context),
+            onPressed: () => registerEmployer(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.cyan,
               padding: const EdgeInsets.symmetric(vertical: 14),

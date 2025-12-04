@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,95 +13,100 @@ class EmployerEditInfoPage extends StatefulWidget {
   final Map<String, dynamic> initialData;
 
   @override
-  State<EmployerEditInfoPage> createState() => _EmployerEditInfoPageState();
+  State<EmployerEditInfoPage> createState() => EmployerEditInfoPageState();
 }
 
-class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
-  late final TextEditingController _companyNameAr;
-  late final TextEditingController _industryAr;
-  late final TextEditingController _advertiserRole;
-  late final TextEditingController _address;
-  late final TextEditingController _website;
-  late final TextEditingController _phoneNumber;
-  late final TextEditingController _phoneNumberSecondary;
-  late final TextEditingController _email;
-  String _phonePrefix = 'LY (+218)';
-  bool _saving = false;
+class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
+  late final TextEditingController companyNameAr;
+  late final TextEditingController industryAr;
+  late final TextEditingController advertiserRole;
+  late final TextEditingController address;
+  late final TextEditingController website;
+  late final TextEditingController phoneNumber;
+  late final TextEditingController phoneNumberSecondary;
+  late final TextEditingController email;
+  String phonePrefix = 'LY (+218)';
+  bool saving = false;
 
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     final data = widget.initialData;
-    _companyNameAr = TextEditingController(
+    companyNameAr = TextEditingController(
       text: data['company_name'] as String? ?? '',
     );
-    _industryAr = TextEditingController(
+    industryAr = TextEditingController(
       text: data['industry'] as String? ?? '',
     );
-    _advertiserRole = TextEditingController(
+    advertiserRole = TextEditingController(
       text: data['advertiser_role'] as String? ?? '',
     );
-    _address = TextEditingController(text: data['address'] as String? ?? '');
-    _website = TextEditingController(text: data['website'] as String? ?? '');
-    _phoneNumber = TextEditingController(
+    address = TextEditingController(text: data['address'] as String? ?? '');
+    website = TextEditingController(text: data['website'] as String? ?? '');
+    phoneNumber = TextEditingController(
       text: data['phone_primary']?.toString() ?? '',
     );
-    _phoneNumberSecondary = TextEditingController(
+    phoneNumberSecondary = TextEditingController(
       text: data['phone_secondary']?.toString() ?? '',
     );
-    _email = TextEditingController(text: data['email'] as String? ?? '');
-    _phonePrefix = data['phone_country'] as String? ?? 'LY (+218)';
+    email = TextEditingController(text: data['email'] as String? ?? '');
+    phonePrefix = data['phone_country'] as String? ?? 'LY (+218)';
   }
 
   @override
   void dispose() {
-    _companyNameAr.dispose();
-    _industryAr.dispose();
-    _advertiserRole.dispose();
-    _address.dispose();
-    _website.dispose();
-    _phoneNumber.dispose();
-    _phoneNumberSecondary.dispose();
-    _email.dispose();
+    companyNameAr.dispose();
+    industryAr.dispose();
+    advertiserRole.dispose();
+    address.dispose();
+    website.dispose();
+    phoneNumber.dispose();
+    phoneNumberSecondary.dispose();
+    email.dispose();
     super.dispose();
   }
 
-  Future<void> _save() async {
-    if (!_formKey.currentState!.validate()) return;
+  Future<void> save() async {
+    if (!formKey.currentState!.validate()) return;
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
     final s = S.of(context);
-    setState(() => _saving = true);
+    setState(() => saving = true);
     try {
       await FirebaseFirestore.instance
           .collection('employers')
           .doc(user.uid)
           .update({
-            'company_name': _companyNameAr.text.trim(),
-            'industry': _industryAr.text.trim(),
-            'advertiser_role': _advertiserRole.text.trim(),
-            'address': _address.text.trim(),
-            'website': _website.text.trim(),
-            'phone_primary': _phoneNumber.text.trim(),
-            'phone_country': _phonePrefix,
-            'phone_secondary': _phoneNumberSecondary.text.trim(),
-            'email': _email.text.trim(),
+            'company_name': companyNameAr.text.trim(),
+            'industry': industryAr.text.trim(),
+            'advertiser_role': advertiserRole.text.trim(),
+            'address': address.text.trim(),
+            'website': website.text.trim(),
+            'phone_primary': phoneNumber.text.trim(),
+            'phone_country': phonePrefix,
+            'phone_secondary': phoneNumberSecondary.text.trim(),
+            'email': email.text.trim(),
             'updated_at': FieldValue.serverTimestamp(),
           });
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(s.employerEditInfoSuccess)));
-      Navigator.of(context).pop();
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.rightSlide,
+        title: s.employerEditInfoSuccess,
+        btnOkText: s.commonOk,
+        btnOkOnPress: () {},
+      ).show();
+      if (mounted) Navigator.of(context).pop();
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(s.employerEditInfoFailure('$e'))));
     } finally {
-      if (mounted) setState(() => _saving = false);
+      if (mounted) setState(() => saving = false);
     }
   }
 
@@ -121,7 +127,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
             showBackButton: true,
             showMenuButton: false,
             showNotificationButton: false,
-            overlayChild: _HeaderPill(title: s.employerEditInfoHeader),
+            overlayChild: HeaderPill(title: s.employerEditInfoHeader),
             overlayHeight: 70,
             height: 190,
           ),
@@ -130,53 +136,54 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
               child: Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _RoundedField(
+                    RoundedField(
                       label: s.employerEditInfoLabelCompanyName,
-                      controller: _companyNameAr,
+                      controller: companyNameAr,
                     ),
                     const SizedBox(height: 20),
-                    _RoundedField(
+                    RoundedField(
                       label: s.employerEditInfoLabelIndustry,
-                      controller: _industryAr,
+                      controller: industryAr,
+                      maxLength: 25,
                     ),
                     const SizedBox(height: 20),
-                    _RoundedField(
+                    RoundedField(
                       label: s.employerEditInfoLabelAdvertiserRole,
-                      controller: _advertiserRole,
+                      controller: advertiserRole,
                       suffixIcon: Icons.arrow_drop_down,
                       readOnly: true,
                       onTap: () async {
-                        final value = await _selectAdvertiserRole(
+                        final value = await selectAdvertiserRole(
                           context,
-                          _advertiserRole.text,
+                          advertiserRole.text,
                         );
                         if (value != null) {
-                          _advertiserRole.text = value;
+                          advertiserRole.text = value;
                         }
                       },
                     ),
                     const SizedBox(height: 20),
-                    _RoundedField(
+                    RoundedField(
                       label: s.employerEditInfoLabelAddress,
-                      controller: _address,
+                      controller: address,
                       suffixIcon: Icons.arrow_drop_down,
                       readOnly: true,
                       onTap: () async {
-                        final value = await _selectAddress(
+                        final value = await selectAddress(
                           context,
-                          _address.text,
+                          address.text,
                         );
-                        if (value != null) _address.text = value;
+                        if (value != null) address.text = value;
                       },
                     ),
                     const SizedBox(height: 20),
-                    _RoundedField(
+                    RoundedField(
                       label: s.employerEditInfoLabelWebsite,
-                      controller: _website,
+                      controller: website,
                     ),
                     const SizedBox(height: 24),
                     Text(
@@ -199,8 +206,8 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: _RoundedField(
-                            controller: _phoneNumber,
+                          child: RoundedField(
+                            controller: phoneNumber,
                             keyboardType: TextInputType.phone,
                             label: null,
                             hintText: s.employerEditInfoPhoneHint,
@@ -209,10 +216,10 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                         const SizedBox(width: 12),
                         SizedBox(
                           width: 120,
-                          child: _RoundedDropdown(
-                            value: _phonePrefix,
+                          child: RoundedDropdown(
+                            value: phonePrefix,
                             onChanged:
-                                (value) => setState(() => _phonePrefix = value),
+                                (value) => setState(() => phonePrefix = value),
                             options: const [
                               'LY (+218)',
                               'TN (+216)',
@@ -223,22 +230,22 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    _RoundedField(
+                    RoundedField(
                       label: s.employerEditInfoLabelPhoneSecondary,
-                      controller: _phoneNumberSecondary,
+                      controller: phoneNumberSecondary,
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 20),
-                    _RoundedField(
+                    RoundedField(
                       label: s.employerEditInfoLabelEmail,
-                      controller: _email,
+                      controller: email,
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 32),
                     SizedBox(
                       height: 54,
                       child: ElevatedButton(
-                        onPressed: _saving ? null : _save,
+                        onPressed: saving ? null : save,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: colorScheme.primary,
                           foregroundColor: colorScheme.onPrimary,
@@ -247,7 +254,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                           ),
                         ),
                         child:
-                            _saving
+                            saving
                                 ? const SizedBox(
                                   width: 22,
                                   height: 22,
@@ -275,7 +282,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
     );
   }
 
-  Future<String?> _selectAdvertiserRole(
+  Future<String?> selectAdvertiserRole(
     BuildContext context,
     String current,
   ) async {
@@ -291,7 +298,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder:
-          (_) => _OptionSheet(
+          (_) => OptionSheet(
             title: s.employerEditInfoSelectRoleTitle,
             options: options,
             current: current,
@@ -299,7 +306,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
     );
   }
 
-  Future<String?> _selectAddress(BuildContext context, String current) {
+  Future<String?> selectAddress(BuildContext context, String current) {
     final s = S.of(context);
     final options = [
       s.employerEditInfoAddressTripoli,
@@ -315,7 +322,7 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder:
-          (_) => _OptionSheet(
+          (_) => OptionSheet(
             title: s.employerEditInfoSelectAddressTitle,
             options: options,
             current: current,
@@ -324,8 +331,8 @@ class _EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
   }
 }
 
-class _HeaderPill extends StatelessWidget {
-  const _HeaderPill({required this.title});
+class HeaderPill extends StatelessWidget {
+  const HeaderPill({required this.title});
 
   final String title;
 
@@ -358,8 +365,8 @@ class _HeaderPill extends StatelessWidget {
   }
 }
 
-class _RoundedField extends StatelessWidget {
-  const _RoundedField({
+class RoundedField extends StatelessWidget {
+  const RoundedField({
     this.label,
     required this.controller,
     this.keyboardType,
@@ -367,6 +374,7 @@ class _RoundedField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.hintText,
+    this.maxLength,
   });
 
   final String? label;
@@ -376,6 +384,7 @@ class _RoundedField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final String? hintText;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -412,6 +421,23 @@ class _RoundedField extends StatelessWidget {
             readOnly: readOnly,
             onTap: readOnly ? onTap : null,
             keyboardType: keyboardType,
+            maxLength: maxLength,
+            buildCounter:
+                maxLength == null
+                    ? null
+                    : (
+                      context, {
+                      required int currentLength,
+                      required bool isFocused,
+                      required int? maxLength,
+                    }) => Text(
+                      '$currentLength/$maxLength',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.textTheme.bodySmall?.color?.withValues(
+                          alpha: 0.6,
+                        ),
+                      ),
+                    ),
             validator: (value) {
               if ((value ?? '').trim().isEmpty) {
                 return s.employerEditInfoValidationRequired;
@@ -449,8 +475,8 @@ class _RoundedField extends StatelessWidget {
   }
 }
 
-class _RoundedDropdown extends StatelessWidget {
-  const _RoundedDropdown({
+class RoundedDropdown extends StatelessWidget {
+  const RoundedDropdown({
     required this.value,
     required this.onChanged,
     required this.options,
@@ -493,8 +519,8 @@ class _RoundedDropdown extends StatelessWidget {
   }
 }
 
-class _OptionSheet extends StatelessWidget {
-  const _OptionSheet({
+class OptionSheet extends StatelessWidget {
+  const OptionSheet({
     required this.title,
     required this.options,
     required this.current,
