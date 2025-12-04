@@ -10,11 +10,11 @@ class JobSeekerForm extends StatefulWidget {
   const JobSeekerForm({super.key});
 
   @override
-  State<JobSeekerForm> createState() => _JobSeekerForm();
+  State<JobSeekerForm> createState() => JobseekerForm();
 }
 
-class _JobSeekerForm extends State<JobSeekerForm> {
-  final _formKey = GlobalKey<FormState>();
+class JobseekerForm extends State<JobSeekerForm> {
+  final formKey = GlobalKey<FormState>();
 
   final fullNameController = TextEditingController();
   final phoneController = TextEditingController();
@@ -31,7 +31,7 @@ class _JobSeekerForm extends State<JobSeekerForm> {
   Widget build(BuildContext context) {
     final s = S.of(context);
     return Form(
-      key: _formKey,
+      key: formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: ListView(
         padding: const EdgeInsets.all(20),
@@ -139,7 +139,7 @@ class _JobSeekerForm extends State<JobSeekerForm> {
             onPressed: () async {
               final navigator = Navigator.of(context);
               final dialogContext = context;
-              if (!_formKey.currentState!.validate()) return;
+              if (!formKey.currentState!.validate()) return;
               setState(() => isLoading = true);
               bool registrationSucceeded = false;
               String? errorMessage;

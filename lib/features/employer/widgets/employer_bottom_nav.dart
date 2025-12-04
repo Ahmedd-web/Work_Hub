@@ -46,7 +46,7 @@ class EmployerBottomNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _BottomNavIcon(
+          BottomNavIcon(
             icon: Icons.person_outline,
             label: s.employerNavAccount,
             active: currentIndex == 3,
@@ -54,7 +54,7 @@ class EmployerBottomNav extends StatelessWidget {
             isDark: isDark,
             onTap: () => onChanged(3),
           ),
-          _BottomNavIcon(
+          BottomNavIcon(
             icon: Icons.work_outline,
             label: s.employerNavJobs,
             active: currentIndex == 1,
@@ -62,7 +62,7 @@ class EmployerBottomNav extends StatelessWidget {
             isDark: isDark,
             onTap: () => onChanged(1),
           ),
-          _BottomNavIcon(
+          BottomNavIcon(
             icon: Icons.receipt_long_outlined,
             label: s.employerNavResumes,
             active: currentIndex == 2,
@@ -70,7 +70,7 @@ class EmployerBottomNav extends StatelessWidget {
             isDark: isDark,
             onTap: () => onChanged(2),
           ),
-          _BottomNavIcon(
+          BottomNavIcon(
             icon: Icons.home_outlined,
             label: s.employerNavHome,
             active: currentIndex == 0,
@@ -85,8 +85,8 @@ class EmployerBottomNav extends StatelessWidget {
   }
 }
 
-class _BottomNavIcon extends StatelessWidget {
-  const _BottomNavIcon({
+class BottomNavIcon extends StatelessWidget {
+  const BottomNavIcon({
     required this.icon,
     required this.label,
     required this.active,

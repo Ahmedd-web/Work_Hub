@@ -13,11 +13,11 @@ class EmployerMembershipPage extends StatelessWidget {
     final theme = Theme.of(context);
     final s = S.of(context);
     final features = [
-      _FeatureRow(text: s.employerPlanBenefitJobPosts(1), available: true),
-      _FeatureRow(text: s.employerPlanBenefitResumeViews(20), available: true),
-      _FeatureRow(text: s.employerPlanBenefitFeaturedAds(10), available: true),
-      _FeatureRow(text: s.employerPlanBenefitEdits(0), available: false),
-      _FeatureRow(
+      FeatureRow(text: s.employerPlanBenefitJobPosts(1), available: true),
+      FeatureRow(text: s.employerPlanBenefitResumeViews(20), available: true),
+      FeatureRow(text: s.employerPlanBenefitFeaturedAds(10), available: true),
+      FeatureRow(text: s.employerPlanBenefitEdits(0), available: false),
+      FeatureRow(
         text: s.employerPlanBenefitEditsUnlimited,
         available: false,
       ),
@@ -159,8 +159,8 @@ class EmployerMembershipPage extends StatelessWidget {
   }
 }
 
-class _FeatureRow extends StatelessWidget {
-  const _FeatureRow({required this.text, required this.available});
+class FeatureRow extends StatelessWidget {
+  const FeatureRow({required this.text, required this.available});
 
   final String text;
   final bool available;

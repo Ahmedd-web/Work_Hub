@@ -13,11 +13,11 @@ class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Login> createState() => LoginState();
 }
 
-class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
+class LoginState extends State<Login> {
+  final formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -54,14 +54,13 @@ class _LoginState extends State<Login> {
         ),
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
             const SizedBox(height: 12),
 
-            /// Email Field
             Text(
               s.loginEmail,
               style: textTheme.titleMedium?.copyWith(
@@ -85,7 +84,6 @@ class _LoginState extends State<Login> {
             ),
             const SizedBox(height: 25),
 
-            /// Password Field
             Text(
               s.loginPassword,
               style: textTheme.titleMedium?.copyWith(
@@ -114,7 +112,6 @@ class _LoginState extends State<Login> {
 
             const SizedBox(height: 30),
 
-            /// Login Button
             ElevatedButton(
               onPressed: () async {
                 try {
@@ -166,7 +163,6 @@ class _LoginState extends State<Login> {
 
             const SizedBox(height: 20),
 
-            /// Navigate to Register
             Center(
               child: InkWell(
                 onTap: () {

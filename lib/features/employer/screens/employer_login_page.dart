@@ -11,30 +11,30 @@ class EmployerLoginPage extends StatefulWidget {
   const EmployerLoginPage({super.key});
 
   @override
-  State<EmployerLoginPage> createState() => _EmployerLoginPageState();
+  State<EmployerLoginPage> createState() => EmployerLoginPageState();
 }
 
-class _EmployerLoginPageState extends State<EmployerLoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false;
+class EmployerLoginPageState extends State<EmployerLoginPage> {
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
-  Future<void> _login() async {
-    if (!_formKey.currentState!.validate()) return;
+  Future<void> login() async {
+    if (!formKey.currentState!.validate()) return;
     final s = S.of(context);
-    setState(() => _isLoading = true);
+    setState(() => isLoading = true);
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
       await EmployerSession.setMode(true);
       if (!mounted) return;
@@ -56,7 +56,7 @@ class _EmployerLoginPageState extends State<EmployerLoginPage> {
                 : (e.message ?? s.dialogErrorTitle),
       ).show();
     } finally {
-      if (mounted) setState(() => _isLoading = false);
+      if (mounted) setState(() => isLoading = false);
     }
   }
 
@@ -74,7 +74,7 @@ class _EmployerLoginPageState extends State<EmployerLoginPage> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -92,7 +92,7 @@ class _EmployerLoginPageState extends State<EmployerLoginPage> {
               ),
               const SizedBox(height: 8),
               CustomInputField(
-                controller: _emailController,
+                controller: emailController,
                 prefixIcon: Icons.email_outlined,
                 hint: s.loginEmailHint,
                 validator: (val) =>
@@ -107,7 +107,7 @@ class _EmployerLoginPageState extends State<EmployerLoginPage> {
               ),
               const SizedBox(height: 8),
               CustomInputField(
-                controller: _passwordController,
+                controller: passwordController,
                 prefixIcon: Icons.lock_outline,
                 hint: s.loginPasswordHint,
                 isPassword: true,
@@ -116,13 +116,13 @@ class _EmployerLoginPageState extends State<EmployerLoginPage> {
               ),
               const SizedBox(height: 30),
               ElevatedButton(
-                onPressed: _isLoading ? null : _login,
+                onPressed: isLoading ? null : login,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.bannerGreen,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 child:
-                    _isLoading
+                    isLoading
                         ? SizedBox(
                           width: 24,
                           height: 24,

@@ -15,13 +15,13 @@ class EmployerDashboardPage extends StatefulWidget {
   const EmployerDashboardPage({super.key});
 
   @override
-  State<EmployerDashboardPage> createState() => _EmployerDashboardPageState();
+  State<EmployerDashboardPage> createState() => EmployerDashboardPageState();
 }
 
-class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
-  int _currentNavIndex = 0;
+class EmployerDashboardPageState extends State<EmployerDashboardPage> {
+  int currentnavindex = 0;
 
-  void _openResumesPage() {
+  void openresumespage() {
     Navigator.of(
       context,
     ).push(MaterialPageRoute(builder: (_) => const EmployerResumesPage()));
@@ -30,9 +30,9 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-    String t(String ar, String en) => isArabic ? ar : en;
+    final colorscheme = theme.colorScheme;
+    final isarabic = Localizations.localeOf(context).languageCode == 'ar';
+    String t(String ar, String en) => isarabic ? ar : en;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
@@ -45,7 +45,7 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
             showMenuButton: true,
             showNotificationButton: true,
             showSearchBar: false,
-            overlayChild: _SearchField(onTap: _openResumesPage),
+            overlayChild: searchfield(onTap: openresumespage),
             overlayHeight: 70,
             height: 160,
           ),
@@ -53,20 +53,20 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
             child: ListView(
               padding: const EdgeInsets.fromLTRB(20, 56, 20, 100),
               children: [
-                const _PromoBanner(),
+                const promobanner(),
                 const SizedBox(height: 16),
                 Center(
                   child: Container(
                     width: 32,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: colorScheme.primary,
+                      color: colorscheme.primary,
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
                 const SizedBox(height: 24),
-                _PostJobButton(
+                postjobbutton(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -86,20 +86,20 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: _openResumesPage,
+                      onPressed: openresumespage,
                       child: Text(t('شاهد المزيد', 'See more')),
                     ),
                   ],
                 ),
                 const SizedBox(height: 12),
-                _EmptyStateCard(message: t('لا يوجد بيانات', 'No data')),
+                emptystatecard(message: t('لا يوجد بيانات', 'No data')),
               ],
             ),
           ),
         ],
       ),
       bottomNavigationBar: EmployerBottomNav(
-        currentIndex: _currentNavIndex,
+        currentIndex: currentnavindex,
         onChanged: (index) {
           if (index == 3) {
             Navigator.of(context).pushReplacement(
@@ -114,18 +114,18 @@ class _EmployerDashboardPageState extends State<EmployerDashboardPage> {
             return;
           }
           if (index == 2) {
-            _openResumesPage();
+            openresumespage();
             return;
           }
-          setState(() => _currentNavIndex = index);
+          setState(() => currentnavindex = index);
         },
       ),
     );
   }
 }
 
-class _SearchField extends StatelessWidget {
-  const _SearchField({required this.onTap});
+class searchfield extends StatelessWidget {
+  const searchfield({required this.onTap, super.key});
 
   final VoidCallback onTap;
 
@@ -135,19 +135,19 @@ class _SearchField extends StatelessWidget {
     final width = MediaQuery.of(context).size.width * 0.9;
     final s = S.of(context);
     final locale = Localizations.localeOf(context);
-    final isArabic = locale.languageCode == 'ar';
-    final textTheme = theme.textTheme;
-    final colorScheme = theme.colorScheme;
-    final hintColor = (textTheme.bodyMedium?.color ?? colorScheme.onSurface)
+    final isarabic = locale.languageCode == 'ar';
+    final texttheme = theme.textTheme;
+    final colorscheme = theme.colorScheme;
+    final hintcolor = (texttheme.bodyMedium?.color ?? colorscheme.onSurface)
         .withValues(alpha: 0.45);
-    final borderRadius = BorderRadius.circular(28);
-    final fillColor = theme.inputDecorationTheme.fillColor ?? theme.cardColor;
+    final borderradius = BorderRadius.circular(28);
+    final fillcolor = theme.inputDecorationTheme.fillColor ?? theme.cardColor;
 
     return Center(
       child: Material(
         color: Colors.transparent,
         elevation: 0,
-        borderRadius: borderRadius,
+        borderRadius: borderradius,
         child: SizedBox(
           width: width,
           height: 56,
@@ -155,26 +155,26 @@ class _SearchField extends StatelessWidget {
             readOnly: true,
             showCursor: false,
             onTap: onTap,
-            textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
-            textAlign: isArabic ? TextAlign.right : TextAlign.left,
-            style: textTheme.bodyMedium,
+            textDirection: isarabic ? TextDirection.rtl : TextDirection.ltr,
+            textAlign: isarabic ? TextAlign.right : TextAlign.left,
+            style: texttheme.bodyMedium,
             decoration: InputDecoration(
               hintText: s.employerResumesSearchHint,
-              hintStyle: textTheme.bodyMedium?.copyWith(color: hintColor),
-              prefixIcon: Icon(Icons.search, color: hintColor),
+              hintStyle: texttheme.bodyMedium?.copyWith(color: hintcolor),
+              prefixIcon: Icon(Icons.search, color: hintcolor),
               filled: true,
-              fillColor: fillColor,
+              fillColor: fillcolor,
               contentPadding: const EdgeInsets.symmetric(horizontal: 12),
               border: OutlineInputBorder(
-                borderRadius: borderRadius,
+                borderRadius: borderradius,
                 borderSide: BorderSide.none,
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: borderRadius,
+                borderRadius: borderradius,
                 borderSide: BorderSide.none,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: borderRadius,
+                borderRadius: borderradius,
                 borderSide: BorderSide.none,
               ),
             ),
@@ -185,18 +185,18 @@ class _SearchField extends StatelessWidget {
   }
 }
 
-class _PromoBanner extends StatefulWidget {
-  const _PromoBanner();
+class promobanner extends StatefulWidget {
+  const promobanner({super.key});
 
   @override
-  State<_PromoBanner> createState() => _PromoBannerState();
+  State<promobanner> createState() => promobannerstate();
 }
 
-class _PromoBannerState extends State<_PromoBanner> {
-  final _controller = PageController(viewportFraction: 0.95);
-  int _currentIndex = 0;
-  Timer? _autoTimer;
-  final List<String> _images = const [
+class promobannerstate extends State<promobanner> {
+  final controller = PageController(viewportFraction: 0.95);
+  int currentindex = 0;
+  Timer? autotimer;
+  final List<String> images = const [
     'lib/assets/photo_1_2025-11-21_17-19-33.jpg',
     'lib/assets/photo_2_2025-11-21_17-19-33.jpg',
     'lib/assets/photo_3_2025-11-21_17-19-33.jpg',
@@ -205,48 +205,48 @@ class _PromoBannerState extends State<_PromoBanner> {
   @override
   void initState() {
     super.initState();
-    _startAutoSlide();
+    startautoslide();
   }
 
-  void _startAutoSlide() {
-    _autoTimer?.cancel();
-    _autoTimer = Timer.periodic(const Duration(seconds: 5), (_) {
-      if (!mounted || !_controller.hasClients) return;
-      final nextIndex = (_currentIndex + 1) % _images.length;
-      _controller.animateToPage(
-        nextIndex,
+  void startautoslide() {
+    autotimer?.cancel();
+    autotimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (!mounted || !controller.hasClients) return;
+      final nextindex = (currentindex + 1) % images.length;
+      controller.animateToPage(
+        nextindex,
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
-      setState(() => _currentIndex = nextIndex);
+      setState(() => currentindex = nextindex);
     });
   }
 
   @override
   void dispose() {
-    _autoTimer?.cancel();
-    _controller.dispose();
+    autotimer?.cancel();
+    controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorscheme = theme.colorScheme;
     return Column(
       children: [
         SizedBox(
           height: 180,
           child: PageView.builder(
-            controller: _controller,
-            itemCount: _images.length,
-            onPageChanged: (i) => setState(() => _currentIndex = i),
+            controller: controller,
+            itemCount: images.length,
+            onPageChanged: (i) => setState(() => currentindex = i),
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(24),
-                  child: Image.asset(_images[index], fit: BoxFit.cover),
+                  child: Image.asset(images[index], fit: BoxFit.cover),
                 ),
               );
             },
@@ -255,16 +255,16 @@ class _PromoBannerState extends State<_PromoBanner> {
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(_images.length, (index) {
-            final isActive = index == _currentIndex;
+          children: List.generate(images.length, (index) {
+            final isactive = index == currentindex;
             return AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               margin: const EdgeInsets.symmetric(horizontal: 4),
-              width: isActive ? 12 : 8,
+              width: isactive ? 12 : 8,
               height: 6,
               decoration: BoxDecoration(
-                color: colorScheme.primary.withValues(
-                  alpha: isActive ? 0.9 : 0.4,
+                color: colorscheme.primary.withValues(
+                  alpha: isactive ? 0.9 : 0.4,
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -276,15 +276,15 @@ class _PromoBannerState extends State<_PromoBanner> {
   }
 }
 
-class _PostJobButton extends StatelessWidget {
-  const _PostJobButton({required this.onTap});
+class postjobbutton extends StatelessWidget {
+  const postjobbutton({required this.onTap, super.key});
 
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-    String t(String ar, String en) => isArabic ? ar : en;
+    final isarabic = Localizations.localeOf(context).languageCode == 'ar';
+    String t(String ar, String en) => isarabic ? ar : en;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(38),
@@ -294,11 +294,11 @@ class _PostJobButton extends StatelessWidget {
       ),
       child: Material(
         color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(38),
-            onTap: onTap,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(38),
+          onTap: onTap,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -321,15 +321,15 @@ class _PostJobButton extends StatelessWidget {
   }
 }
 
-class _EmptyStateCard extends StatelessWidget {
-  const _EmptyStateCard({required this.message});
+class emptystatecard extends StatelessWidget {
+  const emptystatecard({required this.message, super.key});
 
   final String message;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorscheme = theme.colorScheme;
     return Material(
       color: theme.cardColor,
       elevation: 0,
@@ -340,7 +340,7 @@ class _EmptyStateCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: colorScheme.outline.withValues(
+            color: colorscheme.outline.withValues(
               alpha: theme.brightness == Brightness.dark ? 0.35 : 0.2,
             ),
           ),

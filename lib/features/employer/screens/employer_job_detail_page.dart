@@ -15,16 +15,16 @@ class EmployerJobDetailPage extends StatefulWidget {
   final String jobId;
 
   @override
-  State<EmployerJobDetailPage> createState() => _EmployerJobDetailPageState();
+  State<EmployerJobDetailPage> createState() => EmployerJobDetailPageState();
 }
 
-class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
-  int _sectionIndex = 0;
-  bool _isStopping = false;
+class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
+  int sectionIndex = 0;
+  bool isStopping = false;
 
   Map<String, dynamic> get job => widget.jobData;
 
-  String get _salaryText {
+  String get salaryText {
     final from = (job['salary_from'] as String?) ?? '';
     final to = (job['salary_to'] as String?) ?? '';
     final currency = (job['currency'] as String?) ?? '';
@@ -116,17 +116,17 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _MetricChip(
+                        MetricChip(
                           icon: Icons.attach_money,
                           label: 'الراتب',
-                          value: _salaryText,
+                          value: salaryText,
                         ),
-                        _MetricChip(
+                        MetricChip(
                           icon: Icons.timelapse_outlined,
                           label: 'الخبرة',
                           value: '$experience سنوات',
                         ),
-                        _MetricChip(
+                        MetricChip(
                           icon: Icons.location_on_outlined,
                           label: 'الموقع',
                           value: country,
@@ -138,12 +138,12 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _RoundedActionButton(
+                      RoundedActionButton(
                         text: 'تمييز الإعلان',
                         icon: Icons.star_border,
                         onTap: () {},
                       ),
-                      _RoundedActionButton(
+                      RoundedActionButton(
                         text: 'إظهار المتقدمين',
                         icon: Icons.visibility_outlined,
                         onTap: () {},
@@ -151,14 +151,14 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  _SectionTabs(
-                    index: _sectionIndex,
-                    onChanged: (index) => setState(() => _sectionIndex = index),
+                  SectionTabs(
+                    index: sectionIndex,
+                    onChanged: (index) => setState(() => sectionIndex = index),
                   ),
                   const SizedBox(height: 16),
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 250),
-                    child: _buildSectionContent(),
+                    child: buildSectionContent(),
                   ),
                 ],
               ),
@@ -170,7 +170,7 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
-                onPressed: _isStopping ? null : _showStopDialog,
+                onPressed: isStopping ? null : showStopDialog,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFCB1F31),
                   shape: RoundedRectangleBorder(
@@ -189,32 +189,32 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
     );
   }
 
-  Widget _buildSectionContent() {
-    switch (_sectionIndex) {
+  Widget buildSectionContent() {
+    switch (sectionIndex) {
       case 0:
-        return _InfoCard(
+        return InfoCard(
           title: 'معلومات الوظيفة',
           items: [
-            _InfoRow(
+            InfoRow(
               label: 'المسمى الوظيفي',
               value: job['arabic_title'] ?? '-',
             ),
-            _InfoRow(
+            InfoRow(
               label: 'سنوات الخبرة',
               value: job['experience_years'] ?? '-',
             ),
-            _InfoRow(
+            InfoRow(
               label: 'مستوى التعليم',
               value: job['education_level'] ?? '-',
             ),
-            _InfoRow(label: 'القسم', value: job['department'] ?? '-'),
-            _InfoRow(label: 'الجنسية', value: job['nationality'] ?? '-'),
-            _InfoRow(label: 'مكان العمل', value: job['country'] ?? '-'),
-            _InfoRow(label: 'المدينة', value: job['city'] ?? '-'),
+            InfoRow(label: 'القسم', value: job['department'] ?? '-'),
+            InfoRow(label: 'الجنسية', value: job['nationality'] ?? '-'),
+            InfoRow(label: 'مكان العمل', value: job['country'] ?? '-'),
+            InfoRow(label: 'المدينة', value: job['city'] ?? '-'),
           ],
         );
       case 1:
-        return _InfoCard(
+        return InfoCard(
           title: 'وصف الوظيفة',
           description:
               (job['description'] as String?)?.trim().isEmpty ?? true
@@ -222,14 +222,14 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                   : job['description'],
         );
       default:
-        return _InfoCard(
+        return InfoCard(
           title: 'صورة الإعلان',
           description: 'لم يتم تحميل صورة للإعلان حتى الآن.',
         );
     }
   }
 
-  Future<void> _showStopDialog() async {
+  Future<void> showStopDialog() async {
     await AwesomeDialog(
       context: context,
       dialogType: DialogType.warning,
@@ -246,8 +246,8 @@ class _EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
   }
 }
 
-class _MetricChip extends StatelessWidget {
-  const _MetricChip({
+class MetricChip extends StatelessWidget {
+  const MetricChip({
     required this.icon,
     required this.label,
     required this.value,
@@ -270,8 +270,8 @@ class _MetricChip extends StatelessWidget {
   }
 }
 
-class _RoundedActionButton extends StatelessWidget {
-  const _RoundedActionButton({
+class RoundedActionButton extends StatelessWidget {
+  const RoundedActionButton({
     required this.text,
     required this.icon,
     required this.onTap,
@@ -314,8 +314,8 @@ class _RoundedActionButton extends StatelessWidget {
   }
 }
 
-class _SectionTabs extends StatelessWidget {
-  const _SectionTabs({required this.index, required this.onChanged});
+class SectionTabs extends StatelessWidget {
+  const SectionTabs({required this.index, required this.onChanged});
 
   final int index;
   final ValueChanged<int> onChanged;
@@ -355,11 +355,11 @@ class _SectionTabs extends StatelessWidget {
   }
 }
 
-class _InfoCard extends StatelessWidget {
-  const _InfoCard({required this.title, this.items, this.description});
+class InfoCard extends StatelessWidget {
+  const InfoCard({required this.title, this.items, this.description});
 
   final String title;
-  final List<_InfoRow>? items;
+  final List<InfoRow>? items;
   final String? description;
 
   @override
@@ -424,8 +424,8 @@ class _InfoCard extends StatelessWidget {
   }
 }
 
-class _InfoRow {
-  const _InfoRow({required this.label, required this.value});
+class InfoRow {
+  const InfoRow({required this.label, required this.value});
 
   final String label;
   final String value;

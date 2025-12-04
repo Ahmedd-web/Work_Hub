@@ -12,46 +12,46 @@ class EmployerEditAboutPage extends StatefulWidget {
   final Map<String, dynamic> initialData;
 
   @override
-  State<EmployerEditAboutPage> createState() => _EmployerEditAboutPageState();
+  State<EmployerEditAboutPage> createState() => EmployerEditAboutPageState();
 }
 
-class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
-  late final TextEditingController _aboutArController;
-  late final TextEditingController _aboutEnController;
-  final _formKey = GlobalKey<FormState>();
-  bool _isSaving = false;
+class EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
+  late final TextEditingController aboutArController;
+  late final TextEditingController aboutEnController;
+  final formKey = GlobalKey<FormState>();
+  bool isSaving = false;
 
   @override
   void initState() {
     super.initState();
-    _aboutArController = TextEditingController(
+    aboutArController = TextEditingController(
       text: widget.initialData['about'] as String? ?? '',
     );
-    _aboutEnController = TextEditingController(
+    aboutEnController = TextEditingController(
       text: widget.initialData['about_en'] as String? ?? '',
     );
   }
 
   @override
   void dispose() {
-    _aboutArController.dispose();
-    _aboutEnController.dispose();
+    aboutArController.dispose();
+    aboutEnController.dispose();
     super.dispose();
   }
 
-  Future<void> _save() async {
-    if (!_formKey.currentState!.validate()) return;
+  Future<void>save() async {
+    if (!formKey.currentState!.validate()) return;
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
     final s = S.of(context);
-    setState(() => _isSaving = true);
+    setState(() => isSaving = true);
     try {
       await FirebaseFirestore.instance
           .collection('employers')
           .doc(user.uid)
           .update({
-            'about': _aboutArController.text.trim(),
-            'about_en': _aboutEnController.text.trim(),
+            'about': aboutArController.text.trim(),
+            'about_en': aboutEnController.text.trim(),
             'updated_at': FieldValue.serverTimestamp(),
           });
       if (!mounted) return;
@@ -67,7 +67,7 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
         SnackBar(content: Text(s.employerEditAboutFailure('$e'))),
       );
     } finally {
-      if (mounted) setState(() => _isSaving = false);
+      if (mounted) setState(() => isSaving = false);
     }
   }
 
@@ -86,7 +86,7 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
             backgroundColor: AppColors.purple,
             backgroundImage: AppAssets.headerLogo,
             showBackButton: true,
-            overlayChild: _AboutHeader(title: s.employerEditAboutHeader),
+            overlayChild: AboutHeader(title: s.employerEditAboutHeader),
             overlayHeight: 80,
             height: 190,
           ),
@@ -94,26 +94,26 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(20, 50, 20, 40),
               child: Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _DescriptionField(
+                    DescriptionField(
                       label: s.employerEditAboutLabelArabic,
-                      controller: _aboutArController,
+                      controller: aboutArController,
                       textDirection: TextDirection.rtl,
                     ),
                     const SizedBox(height: 24),
-                    _DescriptionField(
+                    DescriptionField(
                       label: s.employerEditAboutLabelEnglish,
-                      controller: _aboutEnController,
+                      controller: aboutEnController,
                       textDirection: TextDirection.ltr,
                     ),
                     const SizedBox(height: 32),
                     SizedBox(
                       height: 54,
                       child: ElevatedButton(
-                        onPressed: _isSaving ? null : _save,
+                        onPressed: isSaving ? null : save,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: colorScheme.primary,
                           foregroundColor: colorScheme.onPrimary,
@@ -122,7 +122,7 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
                           ),
                         ),
                         child:
-                            _isSaving
+                            isSaving
                                 ? const SizedBox(
                                   width: 22,
                                   height: 22,
@@ -151,8 +151,8 @@ class _EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
   }
 }
 
-class _AboutHeader extends StatelessWidget {
-  const _AboutHeader({required this.title});
+class AboutHeader extends StatelessWidget {
+  const AboutHeader({required this.title});
 
   final String title;
 
@@ -185,8 +185,8 @@ class _AboutHeader extends StatelessWidget {
   }
 }
 
-class _DescriptionField extends StatelessWidget {
-  const _DescriptionField({
+class DescriptionField extends StatelessWidget {
+  const DescriptionField({
     required this.label,
     required this.controller,
     required this.textDirection,

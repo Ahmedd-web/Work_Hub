@@ -17,19 +17,19 @@ class EmployerAccountPage extends StatefulWidget {
   const EmployerAccountPage({super.key});
 
   @override
-  State<EmployerAccountPage> createState() => _EmployerAccountPageState();
+  State<EmployerAccountPage> createState() => EmployerAccountPageState();
 }
 
-class _EmployerAccountPageState extends State<EmployerAccountPage> {
-  bool _showInfo = true;
-  Stream<DocumentSnapshot<Map<String, dynamic>>>? _profileStream;
+class EmployerAccountPageState extends State<EmployerAccountPage> {
+  bool showInfo = true;
+  Stream<DocumentSnapshot<Map<String, dynamic>>>? profileStream;
 
   @override
   void initState() {
     super.initState();
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      _profileStream =
+      profileStream =
           FirebaseFirestore.instance
               .collection('employers')
               .doc(user.uid)
@@ -37,7 +37,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
     }
   }
 
-  Map<String, dynamic> _composeProfile(Map<String, dynamic>? source) {
+  Map<String, dynamic> composeProfile(Map<String, dynamic>? source) {
     final phones = <String>[
       source?['phone_primary']?.toString() ?? '',
       source?['phone_secondary']?.toString() ?? '',
@@ -59,7 +59,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
     };
   }
 
-  Future<void> _openEditPage(Map<String, dynamic> rawData) async {
+  Future<void> openEditPage(Map<String, dynamic> rawData) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => EmployerEditInfoPage(initialData: rawData),
@@ -67,7 +67,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
     );
   }
 
-  Future<void> _openAboutEditPage(Map<String, dynamic> rawData) async {
+  Future<void> openAboutEditPage(Map<String, dynamic> rawData) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => EmployerEditAboutPage(initialData: rawData),
@@ -80,7 +80,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
     final s = S.of(context);
     final theme = Theme.of(context);
     final background = theme.scaffoldBackgroundColor;
-    if (_profileStream == null) {
+    if (profileStream == null) {
       return Scaffold(
         backgroundColor: background,
         body: Center(
@@ -96,7 +96,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
     return Scaffold(
       backgroundColor: background,
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: _profileStream,
+        stream: profileStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(
@@ -108,7 +108,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
             );
           }
           final rawData = snapshot.data?.data() ?? {};
-          final profile = _composeProfile(rawData);
+          final profile = composeProfile(rawData);
           final isLoading =
               snapshot.connectionState == ConnectionState.waiting &&
               !snapshot.hasData;
@@ -134,7 +134,7 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
                 showMenuButton: true,
                 showNotificationButton: true,
                 showSearchBar: false,
-                overlayChild: _EmployerIdentityCard(
+                overlayChild: EmployerIdentityCard(
                   name: displayCompanyName,
                   subtitle: displayIndustry,
                 ),
@@ -149,10 +149,10 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-                          child: _EmployerTabs(
-                            showInfo: _showInfo,
+                          child: EmployerTabs(
+                            showInfo: showInfo,
                             onChanged:
-                                (value) => setState(() => _showInfo = value),
+                                (value) => setState(() => showInfo = value),
                           ),
                         ),
                         Expanded(
@@ -161,18 +161,18 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
                             physics: const ClampingScrollPhysics(),
                             child:
                                 isLoading
-                                    ? const _AccountShimmer()
+                                    ? const AccountShimmer()
                                     : AnimatedSwitcher(
                                       duration: const Duration(
                                         milliseconds: 250,
                                       ),
                                       child:
-                                          _showInfo
-                                              ? _CompanyInfoSection(
+                                          showInfo
+                                              ? CompanyInfoSection(
                                                 key: const ValueKey('info'),
                                                 data: profile,
                                               )
-                                              : _CompanyAboutSection(
+                                              : CompanyAboutSection(
                                                 key: const ValueKey('about'),
                                                 data: profile,
                                               ),
@@ -181,18 +181,18 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
                         ),
                       ],
                     ),
-                    if (_showInfo)
+                    if (showInfo)
                       Positioned(
                         left: 24,
                         bottom: 32,
-                        child: _EditButton(onTap: () => _openEditPage(rawData)),
+                        child: EditButton(onTap: () => openEditPage(rawData)),
                       )
                     else
                       Positioned(
                         left: 24,
                         bottom: 32,
-                        child: _EditButton(
-                          onTap: () => _openAboutEditPage(rawData),
+                        child: EditButton(
+                          onTap: () => openAboutEditPage(rawData),
                         ),
                       ),
                   ],
@@ -224,8 +224,8 @@ class _EmployerAccountPageState extends State<EmployerAccountPage> {
   }
 }
 
-class _EmployerIdentityCard extends StatelessWidget {
-  const _EmployerIdentityCard({required this.name, required this.subtitle});
+class EmployerIdentityCard extends StatelessWidget {
+  const EmployerIdentityCard({required this.name, required this.subtitle});
 
   final String name;
   final String subtitle;
@@ -298,8 +298,8 @@ class _EmployerIdentityCard extends StatelessWidget {
   }
 }
 
-class _EmployerTabs extends StatelessWidget {
-  const _EmployerTabs({required this.showInfo, required this.onChanged});
+class EmployerTabs extends StatelessWidget {
+  const EmployerTabs({required this.showInfo, required this.onChanged});
 
   final bool showInfo;
   final ValueChanged<bool> onChanged;
@@ -328,14 +328,14 @@ class _EmployerTabs extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: _TabButton(
+            child: TabButton(
               label: s.employerAccountTabInfo,
               active: showInfo,
               onTap: () => onChanged(true),
             ),
           ),
           Expanded(
-            child: _TabButton(
+            child: TabButton(
               label: s.employerAccountTabAbout,
               active: !showInfo,
               onTap: () => onChanged(false),
@@ -347,8 +347,8 @@ class _EmployerTabs extends StatelessWidget {
   }
 }
 
-class _TabButton extends StatelessWidget {
-  const _TabButton({
+class TabButton extends StatelessWidget {
+  const TabButton({
     required this.label,
     required this.active,
     required this.onTap,
@@ -383,8 +383,8 @@ class _TabButton extends StatelessWidget {
   }
 }
 
-class _CompanyInfoSection extends StatelessWidget {
-  const _CompanyInfoSection({super.key, required this.data});
+class CompanyInfoSection extends StatelessWidget {
+  const CompanyInfoSection({super.key, required this.data});
 
   final Map<String, dynamic> data;
 
@@ -393,34 +393,34 @@ class _CompanyInfoSection extends StatelessWidget {
     final s = S.of(context);
     final phones = List<String>.from(data['phones'] as List);
     final companyFields = [
-      _FieldTileData(
+      FieldTileData(
         label: s.employerAccountFieldCompanyName,
         value: data['company_name'] as String,
         icon: Icons.storefront_outlined,
       ),
-      _FieldTileData(
+      FieldTileData(
         label: s.employerAccountFieldIndustry,
         value: data['industry'] as String,
         icon: Icons.category_outlined,
       ),
     ];
     final contactFields = [
-      _FieldTileData(
+      FieldTileData(
         label: s.employerAccountFieldWebsite,
         value: data['website'] as String,
         icon: Icons.public,
       ),
-      _FieldTileData(
+      FieldTileData(
         label: s.employerAccountFieldPhone1,
         value: phones.isNotEmpty ? phones[0] : '',
         icon: Icons.phone_outlined,
       ),
-      _FieldTileData(
+      FieldTileData(
         label: s.employerAccountFieldPhone2,
         value: phones.length > 1 ? phones[1] : '',
         icon: Icons.phone_outlined,
       ),
-      _FieldTileData(
+      FieldTileData(
         label: s.employerAccountFieldEmail,
         value: data['email'] as String,
         icon: Icons.mail_outline,
@@ -429,13 +429,13 @@ class _CompanyInfoSection extends StatelessWidget {
 
     return Column(
       children: [
-        _SectionCard(
+        SectionCard(
           title: s.employerAccountSectionInfoTitle,
           icon: Icons.badge_outlined,
           fields: companyFields,
         ),
         const SizedBox(height: 8),
-        _SectionCard(
+        SectionCard(
           title: s.employerAccountSectionContactTitle,
           icon: Icons.contact_phone_outlined,
           fields: contactFields,
@@ -445,8 +445,8 @@ class _CompanyInfoSection extends StatelessWidget {
   }
 }
 
-class _CompanyAboutSection extends StatelessWidget {
-  const _CompanyAboutSection({super.key, required this.data});
+class CompanyAboutSection extends StatelessWidget {
+  const CompanyAboutSection({super.key, required this.data});
 
   final Map<String, dynamic> data;
 
@@ -457,16 +457,16 @@ class _CompanyAboutSection extends StatelessWidget {
     final s = S.of(context);
     return Column(
       children: [
-        _AboutSummaryTile(label: s.employerAccountAboutArabic, value: aboutAr),
+        AboutSummaryTile(label: s.employerAccountAboutArabic, value: aboutAr),
         const SizedBox(height: 14),
-        _AboutSummaryTile(label: s.employerAccountAboutEnglish, value: aboutEn),
+        AboutSummaryTile(label: s.employerAccountAboutEnglish, value: aboutEn),
       ],
     );
   }
 }
 
-class _SectionCard extends StatelessWidget {
-  const _SectionCard({
+class SectionCard extends StatelessWidget {
+  const SectionCard({
     required this.title,
     required this.icon,
     this.fields,
@@ -478,7 +478,7 @@ class _SectionCard extends StatelessWidget {
 
   final String title;
   final IconData icon;
-  final List<_FieldTileData>? fields;
+  final List<FieldTileData>? fields;
   final String? description;
 
   @override
@@ -520,7 +520,7 @@ class _SectionCard extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           if (fields != null)
-            ..._buildFields(theme)
+            ...buildFields(theme)
           else if (description != null)
             Text(
               description!,
@@ -531,11 +531,11 @@ class _SectionCard extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildFields(ThemeData theme) {
+  List<Widget> buildFields(ThemeData theme) {
     final widgets = <Widget>[];
     final fieldList = fields ?? [];
     for (var i = 0; i < fieldList.length; i++) {
-      widgets.add(_FieldTile(data: fieldList[i]));
+      widgets.add(FieldTile(data: fieldList[i]));
       if (i != fieldList.length - 1) {
         widgets.add(const Divider(height: 28));
       }
@@ -544,8 +544,8 @@ class _SectionCard extends StatelessWidget {
   }
 }
 
-class _FieldTileData {
-  const _FieldTileData({
+class FieldTileData {
+  const FieldTileData({
     required this.label,
     required this.value,
     required this.icon,
@@ -556,10 +556,10 @@ class _FieldTileData {
   final IconData icon;
 }
 
-class _FieldTile extends StatelessWidget {
-  const _FieldTile({required this.data});
+class FieldTile extends StatelessWidget {
+  const FieldTile({required this.data});
 
-  final _FieldTileData data;
+  final FieldTileData data;
 
   @override
   Widget build(BuildContext context) {
@@ -605,8 +605,8 @@ class _FieldTile extends StatelessWidget {
   }
 }
 
-class _AccountShimmer extends StatelessWidget {
-  const _AccountShimmer();
+class AccountShimmer extends StatelessWidget {
+  const AccountShimmer();
 
   @override
   Widget build(BuildContext context) {
@@ -684,8 +684,8 @@ class _AccountShimmer extends StatelessWidget {
   }
 }
 
-class _AboutSummaryTile extends StatelessWidget {
-  const _AboutSummaryTile({required this.label, required this.value});
+class AboutSummaryTile extends StatelessWidget {
+  const AboutSummaryTile({required this.label, required this.value});
 
   final String label;
   final String value;
@@ -725,8 +725,8 @@ class _AboutSummaryTile extends StatelessWidget {
   }
 }
 
-class _EditButton extends StatelessWidget {
-  const _EditButton({required this.onTap});
+class EditButton extends StatelessWidget {
+  const EditButton({required this.onTap});
 
   final VoidCallback onTap;
 
