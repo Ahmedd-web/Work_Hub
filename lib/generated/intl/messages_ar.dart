@@ -1,3 +1,15 @@
+// DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
+// This is a library that provides messages for a ar locale. All the
+// messages from the main program should be duplicated here with the same
+// function name.
+
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
+
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
@@ -36,8 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(tab) => "تبويب ${tab} متاح قريباً";
 
-  final messages = notInlinedMessages(notInlinedMessages);
-  static Map<String, Function> notInlinedMessages(_) => <String, Function>{
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "actionCreateResume": MessageLookupByLibrary.simpleMessage(
       "أنشئ سيرتك الذاتية",
     ),
@@ -581,6 +593,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "loginEmail": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "loginEmailHint": MessageLookupByLibrary.simpleMessage(
       "أدخل بريدك الإلكتروني...",
+    ),
+    "loginEmailInvalid": MessageLookupByLibrary.simpleMessage(
+      "البريد الإلكتروني غير صالح",
     ),
     "loginEmailRequired": MessageLookupByLibrary.simpleMessage("مطلوب"),
     "loginNoAccount": MessageLookupByLibrary.simpleMessage("لا تمتلك حساباً؟"),

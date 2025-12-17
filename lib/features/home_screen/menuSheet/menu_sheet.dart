@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/features/home_screen/menuSheet/widgets/menu_language_pill.dart';
+import 'package:work_hub/features/home_screen/menuSheet/widgets/menu_membership_tile.dart';
+import 'package:work_hub/features/home_screen/menuSheet/widgets/menu_pill_tile.dart';
+import 'package:work_hub/features/home_screen/menuSheet/widgets/menu_theme_toggle.dart';
 import 'package:work_hub/generated/l10n.dart';
 
-/// ألوان قابلة للتعديل سريعًا
 class WorkHubColors {
-  static const purple = AppColors.purple; // عدّل البنفسجي حسب هويتك
+  static const purple = AppColors.purple;
   static const green = AppColors.secondary;
-  static const pillBg = AppColors.pillBackground; // خلفية العناصر
+  static const pillBg = AppColors.pillBackground; 
 }
 
-/// نموذج عنصر قائمة (باستثناء اختيار اللغة)
 class MenuEntry {
   final IconData icon;
   final String title;
@@ -40,22 +42,18 @@ class MembershipTileData {
   });
 }
 
-/// استدع هذه الدالة عند الضغط على زر القائمة
 Future<void> showWorkHubMenuSheet(
   BuildContext context, {
-  // لغة حالية + تغيير اللغة
   String? currentLanguage,
   List<String>? languages,
   required ValueChanged<String> onLanguageChanged,
   required bool isDarkMode,
   required ValueChanged<bool> onThemeModeChanged,
 
-  // بقية العناصر
   required List<MenuEntry> items,
 
   MembershipTileData? membershipTile,
 
-  // خيارات شكلية
   Color? backgroundColor,
 }) {
   final theme = Theme.of(context);
@@ -109,7 +107,6 @@ Future<void> showWorkHubMenuSheet(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // الـ grab handle
                 Container(
                   width: 56,
                   height: 6,
@@ -120,15 +117,14 @@ Future<void> showWorkHubMenuSheet(
                   ),
                 ),
 
-                // عنصر اختيار اللغة (يشبه Dropdown كبير داخل كبسولة)
-                _LanguagePill(
+                MenuLanguagePill(
                   value: resolvedCurrent,
                   options: options,
                   onChanged: onLanguageChanged,
                 ),
 
                 const SizedBox(height: 14),
-                _ThemeModeToggle(
+                MenuThemeToggle(
                   isDarkMode: isDarkMode,
                   onChanged: onThemeModeChanged,
                 ),
@@ -136,15 +132,14 @@ Future<void> showWorkHubMenuSheet(
                 const SizedBox(height: 14),
 
                 if (membershipTile != null) ...[
-                  _MembershipTile(data: membershipTile!),
+                  MenuMembershipTile(data: membershipTile!),
                   const SizedBox(height: 14),
                 ],
 
-                // قائمة العناصر
                 ...items.map(
                   (e) => Padding(
                     padding: const EdgeInsets.only(bottom: 14),
-                    child: _PillTile(
+                    child: MenuPillTile(
                       leading: Icon(
                         e.icon,
                         color: e.iconColor ?? defaultIconColor,
@@ -169,10 +164,9 @@ Future<void> showWorkHubMenuSheet(
   );
 }
 
-/// كبسولة عنصر عام (Icon + Label)
 
-class _ThemeModeToggle extends StatelessWidget {
-  const _ThemeModeToggle({required this.isDarkMode, required this.onChanged});
+class ThemeModeToggle extends StatelessWidget {
+  const ThemeModeToggle({required this.isDarkMode, required this.onChanged});
 
   final bool isDarkMode;
   final ValueChanged<bool> onChanged;
@@ -224,14 +218,14 @@ class _ThemeModeToggle extends StatelessWidget {
   }
 }
 
-class _PillTile extends StatelessWidget {
+class PillTile extends StatelessWidget {
   final Widget leading;
   final String title;
   final VoidCallback onTap;
   final Color textColor;
   final Color backgroundColor;
 
-  const _PillTile({
+  const PillTile({
     required this.leading,
     required this.title,
     required this.onTap,
@@ -292,8 +286,8 @@ class _PillTile extends StatelessWidget {
 }
 
 
-class _MembershipTile extends StatelessWidget {
-  const _MembershipTile({required this.data});
+class MembershipTile extends StatelessWidget {
+  const MembershipTile({required this.data});
 
   final MembershipTileData data;
 
@@ -384,13 +378,12 @@ class _MembershipTile extends StatelessWidget {
 }
 
 
-/// كبسولة اختيار اللغة (Globe + Dropdown Arrow)
-class _LanguagePill extends StatelessWidget {
+class LanguagePill extends StatelessWidget {
   final String value;
   final List<String> options;
   final ValueChanged<String> onChanged;
 
-  const _LanguagePill({
+  const LanguagePill({
     required this.value,
     required this.options,
     required this.onChanged,
@@ -425,7 +418,7 @@ class _LanguagePill extends StatelessWidget {
           Expanded(
             child: InkWell(
               borderRadius: BorderRadius.circular(22),
-              onTap: () => _showLanguageSheet(context, options, s),
+              onTap: () => showLanguageSheet(context, options, s),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
@@ -453,7 +446,7 @@ class _LanguagePill extends StatelessWidget {
     );
   }
 
-  Future<void> _showLanguageSheet(
+  Future<void> showLanguageSheet(
     BuildContext context,
     List<String> options,
     S s,
@@ -556,5 +549,3 @@ class _LanguagePill extends StatelessWidget {
     }
   }
 }
-
-

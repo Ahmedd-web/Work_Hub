@@ -1,32 +1,41 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'intl/messages_all.dart';
 
+// **************************************************************************
+// Generator: Flutter Intl IDE plugin
+// Made by Localizely
+// **************************************************************************
+
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
+// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
+
 class S {
   S();
 
-  static S? currentt;
+  static S? _current;
 
   static S get current {
     assert(
-      current != null,
+      _current != null,
       'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
     );
-    return current!;
+    return _current!;
   }
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name =
-        (locale.countryCode?.isEmpty ?? false)
-            ? locale.languageCode
-            : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       final instance = S();
-      S.currentt = instance;
+      S._current = instance;
 
       return instance;
     });
@@ -45,10 +54,12 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Mhnty`
   String get appTitle {
     return Intl.message('Mhnty', name: 'appTitle', desc: '', args: []);
   }
 
+  /// `Looking for a job..`
   String get searchHint {
     return Intl.message(
       'Looking for a job..',
@@ -58,10 +69,12 @@ class S {
     );
   }
 
+  /// `About Us`
   String get menuAbout {
     return Intl.message('About Us', name: 'menuAbout', desc: '', args: []);
   }
 
+  /// `Services Ads`
   String get menuServicesAds {
     return Intl.message(
       'Services Ads',
@@ -71,10 +84,12 @@ class S {
     );
   }
 
+  /// `Contact Us`
   String get menuContact {
     return Intl.message('Contact Us', name: 'menuContact', desc: '', args: []);
   }
 
+  /// `Privacy Policy and Terms of Use`
   String get menuPrivacy {
     return Intl.message(
       'Privacy Policy and Terms of Use',
@@ -84,14 +99,17 @@ class S {
     );
   }
 
+  /// `Login`
   String get menuLogin {
     return Intl.message('Login', name: 'menuLogin', desc: '', args: []);
   }
 
+  /// `Logout`
   String get menuLogout {
     return Intl.message('Logout', name: 'menuLogout', desc: '', args: []);
   }
 
+  /// `Delete Account`
   String get menuDeleteAccount {
     return Intl.message(
       'Delete Account',
@@ -101,6 +119,7 @@ class S {
     );
   }
 
+  /// `Your current membership`
   String get menuMembershipTitle {
     return Intl.message(
       'Your current membership',
@@ -110,6 +129,7 @@ class S {
     );
   }
 
+  /// `Free`
   String get menuMembershipStatusFree {
     return Intl.message(
       'Free',
@@ -119,6 +139,7 @@ class S {
     );
   }
 
+  /// `Create your resume`
   String get actionCreateResume {
     return Intl.message(
       'Create your resume',
@@ -128,6 +149,7 @@ class S {
     );
   }
 
+  /// `Post a job for free`
   String get actionPostJob {
     return Intl.message(
       'Post a job for free',
@@ -137,6 +159,7 @@ class S {
     );
   }
 
+  /// `Job Categories`
   String get sectionJobCategories {
     return Intl.message(
       'Job Categories',
@@ -146,10 +169,12 @@ class S {
     );
   }
 
+  /// `See more`
   String get actionSeeMore {
     return Intl.message('See more', name: 'actionSeeMore', desc: '', args: []);
   }
 
+  /// `Featured Offers`
   String get sectionFeaturedOffers {
     return Intl.message(
       'Featured Offers',
@@ -159,6 +184,7 @@ class S {
     );
   }
 
+  /// `Your Dream Job`
   String get bannerDreamTitle {
     return Intl.message(
       'Your Dream Job',
@@ -168,6 +194,7 @@ class S {
     );
   }
 
+  /// `Explore curated openings tailored to your skills.`
   String get bannerDreamSubtitle {
     return Intl.message(
       'Explore curated openings tailored to your skills.',
@@ -177,7 +204,7 @@ class S {
     );
   }
 
- 
+  /// `Apply now`
   String get bannerDreamBadge {
     return Intl.message(
       'Apply now',
@@ -187,7 +214,7 @@ class S {
     );
   }
 
-  
+  /// `Top Companies`
   String get bannerTopCompaniesTitle {
     return Intl.message(
       'Top Companies',
@@ -197,6 +224,7 @@ class S {
     );
   }
 
+  /// `Connect with leading teams hiring this week.`
   String get bannerTopCompaniesSubtitle {
     return Intl.message(
       'Connect with leading teams hiring this week.',
@@ -206,7 +234,7 @@ class S {
     );
   }
 
-  
+  /// `View companies`
   String get bannerTopCompaniesBadge {
     return Intl.message(
       'View companies',
@@ -216,7 +244,7 @@ class S {
     );
   }
 
-  
+  /// `Remote Friendly`
   String get bannerRemoteTitle {
     return Intl.message(
       'Remote Friendly',
@@ -226,6 +254,7 @@ class S {
     );
   }
 
+  /// `Discover remote roles across multiple industries.`
   String get bannerRemoteSubtitle {
     return Intl.message(
       'Discover remote roles across multiple industries.',
@@ -235,6 +264,7 @@ class S {
     );
   }
 
+  /// `See all roles`
   String get bannerRemoteBadge {
     return Intl.message(
       'See all roles',
@@ -243,6 +273,8 @@ class S {
       args: [],
     );
   }
+
+  /// `Explore CVs`
   String get employerResumesTitle {
     return Intl.message(
       'Explore CVs',
@@ -252,6 +284,7 @@ class S {
     );
   }
 
+  /// `Filter resumes by time and specialty to pick the best fit.`
   String get employerResumesSubtitle {
     return Intl.message(
       'Filter resumes by time and specialty to pick the best fit.',
@@ -261,6 +294,7 @@ class S {
     );
   }
 
+  /// `Time`
   String get employerResumesTimeLabel {
     return Intl.message(
       'Time',
@@ -270,6 +304,7 @@ class S {
     );
   }
 
+  /// `Category`
   String get employerResumesCategoryLabel {
     return Intl.message(
       'Category',
@@ -279,6 +314,7 @@ class S {
     );
   }
 
+  /// `Last 24h`
   String get employerResumesTime24h {
     return Intl.message(
       'Last 24h',
@@ -288,6 +324,7 @@ class S {
     );
   }
 
+  /// `Last 7 days`
   String get employerResumesTime7d {
     return Intl.message(
       'Last 7 days',
@@ -297,6 +334,7 @@ class S {
     );
   }
 
+  /// `Last 30 days`
   String get employerResumesTime30d {
     return Intl.message(
       'Last 30 days',
@@ -306,6 +344,7 @@ class S {
     );
   }
 
+  /// `Anytime`
   String get employerResumesTimeAny {
     return Intl.message(
       'Anytime',
@@ -315,6 +354,7 @@ class S {
     );
   }
 
+  /// `All categories`
   String get employerResumesCatAll {
     return Intl.message(
       'All categories',
@@ -324,6 +364,7 @@ class S {
     );
   }
 
+  /// `Tech`
   String get employerResumesCatTech {
     return Intl.message(
       'Tech',
@@ -333,6 +374,7 @@ class S {
     );
   }
 
+  /// `Marketing`
   String get employerResumesCatMarketing {
     return Intl.message(
       'Marketing',
@@ -342,6 +384,7 @@ class S {
     );
   }
 
+  /// `Administration`
   String get employerResumesCatAdmin {
     return Intl.message(
       'Administration',
@@ -351,6 +394,7 @@ class S {
     );
   }
 
+  /// `Engineering`
   String get employerResumesCatEngineering {
     return Intl.message(
       'Engineering',
@@ -360,6 +404,7 @@ class S {
     );
   }
 
+  /// `Latest resumes`
   String get employerDashboardLatestResumes {
     return Intl.message(
       'Latest resumes',
@@ -369,6 +414,7 @@ class S {
     );
   }
 
+  /// `See more`
   String get employerDashboardSeeMore {
     return Intl.message(
       'See more',
@@ -378,6 +424,7 @@ class S {
     );
   }
 
+  /// `No data`
   String get employerDashboardNoData {
     return Intl.message(
       'No data',
@@ -387,6 +434,7 @@ class S {
     );
   }
 
+  /// `Post your job for free`
   String get employerPostJobCta {
     return Intl.message(
       'Post your job for free',
@@ -396,6 +444,7 @@ class S {
     );
   }
 
+  /// `International Organizations`
   String get categoryInternationalOrganizations {
     return Intl.message(
       'International Organizations',
@@ -405,10 +454,12 @@ class S {
     );
   }
 
+  /// `Sales`
   String get categorySales {
     return Intl.message('Sales', name: 'categorySales', desc: '', args: []);
   }
 
+  /// `Administration & Secretary`
   String get categoryAdministration {
     return Intl.message(
       'Administration & Secretary',
@@ -418,6 +469,7 @@ class S {
     );
   }
 
+  /// `Engineering`
   String get categoryEngineering {
     return Intl.message(
       'Engineering',
@@ -427,6 +479,7 @@ class S {
     );
   }
 
+  /// `Designer`
   String get categoryDesigner {
     return Intl.message(
       'Designer',
@@ -436,6 +489,7 @@ class S {
     );
   }
 
+  /// `Programming`
   String get categoryProgramming {
     return Intl.message(
       'Programming',
@@ -445,6 +499,7 @@ class S {
     );
   }
 
+  /// `Marketing`
   String get categoryMarketing {
     return Intl.message(
       'Marketing',
@@ -454,6 +509,7 @@ class S {
     );
   }
 
+  /// `Customer Support`
   String get categoryCustomerSupport {
     return Intl.message(
       'Customer Support',
@@ -463,10 +519,12 @@ class S {
     );
   }
 
+  /// `Quality`
   String get jobDeptQuality {
     return Intl.message('Quality', name: 'jobDeptQuality', desc: '', args: []);
   }
 
+  /// `Administration`
   String get jobDeptAdministration {
     return Intl.message(
       'Administration',
@@ -476,10 +534,12 @@ class S {
     );
   }
 
+  /// `Finance`
   String get jobDeptFinance {
     return Intl.message('Finance', name: 'jobDeptFinance', desc: '', args: []);
   }
 
+  /// `Boosted Listing`
   String get offerBoostedTitle {
     return Intl.message(
       'Boosted Listing',
@@ -489,6 +549,7 @@ class S {
     );
   }
 
+  /// `Appear at the top of every search for 7 days.`
   String get offerBoostedSubtitle {
     return Intl.message(
       'Appear at the top of every search for 7 days.',
@@ -498,6 +559,7 @@ class S {
     );
   }
 
+  /// `Premium`
   String get offerBoostedBadge {
     return Intl.message(
       'Premium',
@@ -507,6 +569,7 @@ class S {
     );
   }
 
+  /// `Urgent Hire`
   String get offerUrgentTitle {
     return Intl.message(
       'Urgent Hire',
@@ -516,6 +579,7 @@ class S {
     );
   }
 
+  /// `Highlight your role with an urgent badge and alert.`
   String get offerUrgentSubtitle {
     return Intl.message(
       'Highlight your role with an urgent badge and alert.',
@@ -525,6 +589,7 @@ class S {
     );
   }
 
+  /// `Sponsored`
   String get offerUrgentBadge {
     return Intl.message(
       'Sponsored',
@@ -534,6 +599,7 @@ class S {
     );
   }
 
+  /// `Talent Spotlight`
   String get offerSpotlightTitle {
     return Intl.message(
       'Talent Spotlight',
@@ -543,6 +609,7 @@ class S {
     );
   }
 
+  /// `Showcase your profile to companies looking now.`
   String get offerSpotlightSubtitle {
     return Intl.message(
       'Showcase your profile to companies looking now.',
@@ -552,6 +619,7 @@ class S {
     );
   }
 
+  /// `Popular`
   String get offerSpotlightBadge {
     return Intl.message(
       'Popular',
@@ -561,14 +629,17 @@ class S {
     );
   }
 
+  /// `Any time`
   String get filterAnyTime {
     return Intl.message('Any time', name: 'filterAnyTime', desc: '', args: []);
   }
 
+  /// `Category`
   String get filterCategory {
     return Intl.message('Category', name: 'filterCategory', desc: '', args: []);
   }
 
+  /// `Last 24 hours`
   String get filterLast24h {
     return Intl.message(
       'Last 24 hours',
@@ -578,10 +649,12 @@ class S {
     );
   }
 
+  /// `Past week`
   String get filterLast7d {
     return Intl.message('Past week', name: 'filterLast7d', desc: '', args: []);
   }
 
+  /// `Past month`
   String get filterLast30d {
     return Intl.message(
       'Past month',
@@ -591,6 +664,7 @@ class S {
     );
   }
 
+  /// `All categories`
   String get filterAllCategories {
     return Intl.message(
       'All categories',
@@ -599,6 +673,8 @@ class S {
       args: [],
     );
   }
+
+  /// `Choose country`
   String get filterChooseCountry {
     return Intl.message(
       'Choose country',
@@ -608,6 +684,7 @@ class S {
     );
   }
 
+  /// `Confidential`
   String get jobCompanyConfidential {
     return Intl.message(
       'Confidential',
@@ -617,6 +694,7 @@ class S {
     );
   }
 
+  /// `Tripoli`
   String get jobLocationJordan {
     return Intl.message(
       'Tripoli',
@@ -626,6 +704,7 @@ class S {
     );
   }
 
+  /// `Benghazi`
   String get jobLocationSaudi {
     return Intl.message(
       'Benghazi',
@@ -634,6 +713,8 @@ class S {
       args: [],
     );
   }
+
+  /// `Featured post`
   String get jobFeaturedBadge {
     return Intl.message(
       'Featured post',
@@ -643,6 +724,7 @@ class S {
     );
   }
 
+  /// `Quality Supervisor`
   String get jobTitleQualitySupervisor {
     return Intl.message(
       'Quality Supervisor',
@@ -652,6 +734,7 @@ class S {
     );
   }
 
+  /// `Admin Officer`
   String get jobTitleAdminOfficer {
     return Intl.message(
       'Admin Officer',
@@ -661,6 +744,7 @@ class S {
     );
   }
 
+  /// `Internal Auditor`
   String get jobTitleInternalAuditor {
     return Intl.message(
       'Internal Auditor',
@@ -670,6 +754,7 @@ class S {
     );
   }
 
+  /// `Finance Specialist`
   String get jobTitleFinanceSpecialist {
     return Intl.message(
       'Finance Specialist',
@@ -679,18 +764,22 @@ class S {
     );
   }
 
+  /// `English`
   String get languageEnglish {
     return Intl.message('English', name: 'languageEnglish', desc: '', args: []);
   }
 
+  /// `Arabic`
   String get languageArabic {
     return Intl.message('Arabic', name: 'languageArabic', desc: '', args: []);
   }
 
+  /// `Loading...`
   String get appLoading {
     return Intl.message('Loading...', name: 'appLoading', desc: '', args: []);
   }
 
+  /// `Welcome to Nuqta Wasl`
   String get welcomeTitle {
     return Intl.message(
       'Welcome to Nuqta Wasl',
@@ -700,6 +789,7 @@ class S {
     );
   }
 
+  /// `Your gateway to seamless work management.`
   String get welcomeSubtitle {
     return Intl.message(
       'Your gateway to seamless work management.',
@@ -709,6 +799,7 @@ class S {
     );
   }
 
+  /// `I am job Seeker`
   String get welcomeJobSeeker {
     return Intl.message(
       'I am job Seeker',
@@ -718,6 +809,7 @@ class S {
     );
   }
 
+  /// `I am an Employer`
   String get welcomeEmployer {
     return Intl.message(
       'I am an Employer',
@@ -727,6 +819,7 @@ class S {
     );
   }
 
+  /// `Or you can browse as a guest`
   String get welcomeBrowseAsGuest {
     return Intl.message(
       'Or you can browse as a guest',
@@ -736,6 +829,7 @@ class S {
     );
   }
 
+  /// `Continue as Guest`
   String get welcomeContinueGuest {
     return Intl.message(
       'Continue as Guest',
@@ -745,6 +839,7 @@ class S {
     );
   }
 
+  /// `Do you already have an account?`
   String get welcomeHaveAccount {
     return Intl.message(
       'Do you already have an account?',
@@ -754,10 +849,12 @@ class S {
     );
   }
 
+  /// `Login`
   String get welcomeLogin {
     return Intl.message('Login', name: 'welcomeLogin', desc: '', args: []);
   }
 
+  /// `Welcome Back!`
   String get loginTitle {
     return Intl.message(
       'Welcome Back!',
@@ -767,10 +864,12 @@ class S {
     );
   }
 
+  /// `Email`
   String get loginEmail {
     return Intl.message('Email', name: 'loginEmail', desc: '', args: []);
   }
 
+  /// `Enter your email...`
   String get loginEmailHint {
     return Intl.message(
       'Enter your email...',
@@ -780,6 +879,7 @@ class S {
     );
   }
 
+  /// `Required`
   String get loginEmailRequired {
     return Intl.message(
       'Required',
@@ -789,10 +889,22 @@ class S {
     );
   }
 
+  /// `Invalid email address`
+  String get loginEmailInvalid {
+    return Intl.message(
+      'Invalid email address',
+      name: 'loginEmailInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
   String get loginPassword {
     return Intl.message('Password', name: 'loginPassword', desc: '', args: []);
   }
 
+  /// `Enter your password...`
   String get loginPasswordHint {
     return Intl.message(
       'Enter your password...',
@@ -802,6 +914,7 @@ class S {
     );
   }
 
+  /// `Password is required`
   String get loginPasswordRequired {
     return Intl.message(
       'Password is required',
@@ -811,6 +924,7 @@ class S {
     );
   }
 
+  /// `Password must be at least 6 characters`
   String get loginPasswordTooShort {
     return Intl.message(
       'Password must be at least 6 characters',
@@ -820,10 +934,12 @@ class S {
     );
   }
 
+  /// `Login`
   String get loginButton {
     return Intl.message('Login', name: 'loginButton', desc: '', args: []);
   }
 
+  /// `Don't have an account?`
   String get loginNoAccount {
     return Intl.message(
       'Don\'t have an account?',
@@ -833,10 +949,12 @@ class S {
     );
   }
 
+  /// `Register`
   String get loginRegister {
     return Intl.message('Register', name: 'loginRegister', desc: '', args: []);
   }
 
+  /// `Create Account`
   String get registerTitle {
     return Intl.message(
       'Create Account',
@@ -846,6 +964,7 @@ class S {
     );
   }
 
+  /// `Register Employer`
   String get registerTabEmployer {
     return Intl.message(
       'Register Employer',
@@ -855,6 +974,7 @@ class S {
     );
   }
 
+  /// `Register Job Seeker`
   String get registerTabJobSeeker {
     return Intl.message(
       'Register Job Seeker',
@@ -864,10 +984,12 @@ class S {
     );
   }
 
+  /// `Required`
   String get fieldRequired {
     return Intl.message('Required', name: 'fieldRequired', desc: '', args: []);
   }
 
+  /// `First Name`
   String get registerFirstNameLabel {
     return Intl.message(
       'First Name',
@@ -877,6 +999,7 @@ class S {
     );
   }
 
+  /// `Enter first name...`
   String get registerFirstNameHint {
     return Intl.message(
       'Enter first name...',
@@ -886,6 +1009,7 @@ class S {
     );
   }
 
+  /// `Last Name`
   String get registerLastNameLabel {
     return Intl.message(
       'Last Name',
@@ -895,6 +1019,7 @@ class S {
     );
   }
 
+  /// `Enter last name...`
   String get registerLastNameHint {
     return Intl.message(
       'Enter last name...',
@@ -904,6 +1029,7 @@ class S {
     );
   }
 
+  /// `Phone Number`
   String get registerPhoneLabel {
     return Intl.message(
       'Phone Number',
@@ -913,6 +1039,7 @@ class S {
     );
   }
 
+  /// `Enter phone number...`
   String get registerPhoneHint {
     return Intl.message(
       'Enter phone number...',
@@ -922,6 +1049,7 @@ class S {
     );
   }
 
+  /// `Email`
   String get registerEmailLabel {
     return Intl.message(
       'Email',
@@ -931,6 +1059,7 @@ class S {
     );
   }
 
+  /// `example@gmail.com`
   String get registerEmailHint {
     return Intl.message(
       'example@gmail.com',
@@ -940,7 +1069,7 @@ class S {
     );
   }
 
- 
+  /// `Password`
   String get registerPasswordLabel {
     return Intl.message(
       'Password',
@@ -950,7 +1079,7 @@ class S {
     );
   }
 
- 
+  /// `Enter password...`
   String get registerPasswordHint {
     return Intl.message(
       'Enter password...',
@@ -960,6 +1089,7 @@ class S {
     );
   }
 
+  /// `Password must be at least 6 characters`
   String get registerPasswordTooShort {
     return Intl.message(
       'Password must be at least 6 characters',
@@ -969,6 +1099,7 @@ class S {
     );
   }
 
+  /// `Confirm Password`
   String get registerConfirmPasswordLabel {
     return Intl.message(
       'Confirm Password',
@@ -978,6 +1109,7 @@ class S {
     );
   }
 
+  /// `Re-enter password...`
   String get registerConfirmPasswordHint {
     return Intl.message(
       'Re-enter password...',
@@ -987,6 +1119,7 @@ class S {
     );
   }
 
+  /// `Passwords do not match`
   String get registerPasswordMismatch {
     return Intl.message(
       'Passwords do not match',
@@ -996,6 +1129,7 @@ class S {
     );
   }
 
+  /// `Employer name`
   String get registerEmployerNameLabel {
     return Intl.message(
       'Employer name',
@@ -1005,6 +1139,7 @@ class S {
     );
   }
 
+  /// `Company, organization, restaurant name...`
   String get registerEmployerNameHint {
     return Intl.message(
       'Company, organization, restaurant name...',
@@ -1014,11 +1149,12 @@ class S {
     );
   }
 
+  /// `Register`
   String get registerButton {
     return Intl.message('Register', name: 'registerButton', desc: '', args: []);
   }
 
-  
+  /// `Already have an account?`
   String get registerHaveAccount {
     return Intl.message(
       'Already have an account?',
@@ -1028,10 +1164,12 @@ class S {
     );
   }
 
+  /// `Login`
   String get registerLoginLink {
     return Intl.message('Login', name: 'registerLoginLink', desc: '', args: []);
   }
 
+  /// `The password provided is too weak`
   String get authErrorWeakPassword {
     return Intl.message(
       'The password provided is too weak',
@@ -1041,6 +1179,7 @@ class S {
     );
   }
 
+  /// `The account already exists for that email`
   String get authErrorEmailInUse {
     return Intl.message(
       'The account already exists for that email',
@@ -1050,10 +1189,12 @@ class S {
     );
   }
 
+  /// `Job Info`
   String get jobInfoTab {
     return Intl.message('Job Info', name: 'jobInfoTab', desc: '', args: []);
   }
 
+  /// `Company Info`
   String get companyInfoTab {
     return Intl.message(
       'Company Info',
@@ -1063,10 +1204,12 @@ class S {
     );
   }
 
+  /// `Apply Now`
   String get applyNow {
     return Intl.message('Apply Now', name: 'applyNow', desc: '', args: []);
   }
 
+  /// `Salary`
   String get jobDetailSalaryLabel {
     return Intl.message(
       'Salary',
@@ -1076,6 +1219,7 @@ class S {
     );
   }
 
+  /// `Experience`
   String get jobDetailExperienceLabel {
     return Intl.message(
       'Experience',
@@ -1085,6 +1229,7 @@ class S {
     );
   }
 
+  /// `Location`
   String get jobDetailLocationLabel {
     return Intl.message(
       'Location',
@@ -1094,6 +1239,7 @@ class S {
     );
   }
 
+  /// `Job Information`
   String get jobInfoSectionTitle {
     return Intl.message(
       'Job Information',
@@ -1102,6 +1248,8 @@ class S {
       args: [],
     );
   }
+
+  /// `Company Information`
   String get companyInfoSectionTitle {
     return Intl.message(
       'Company Information',
@@ -1111,6 +1259,7 @@ class S {
     );
   }
 
+  /// `Job Description`
   String get jobDescriptionTitle {
     return Intl.message(
       'Job Description',
@@ -1120,6 +1269,7 @@ class S {
     );
   }
 
+  /// `Job Title`
   String get jobDetailJobTitle {
     return Intl.message(
       'Job Title',
@@ -1129,6 +1279,7 @@ class S {
     );
   }
 
+  /// `Years of Experience`
   String get jobDetailExperienceYears {
     return Intl.message(
       'Years of Experience',
@@ -1138,6 +1289,7 @@ class S {
     );
   }
 
+  /// `Education Level`
   String get jobDetailEducationLevel {
     return Intl.message(
       'Education Level',
@@ -1147,6 +1299,7 @@ class S {
     );
   }
 
+  /// `Department`
   String get jobDetailDepartment {
     return Intl.message(
       'Department',
@@ -1156,6 +1309,7 @@ class S {
     );
   }
 
+  /// `Nationality`
   String get jobDetailNationality {
     return Intl.message(
       'Nationality',
@@ -1165,6 +1319,7 @@ class S {
     );
   }
 
+  /// `Work Location`
   String get jobDetailWorkLocation {
     return Intl.message(
       'Work Location',
@@ -1174,10 +1329,12 @@ class S {
     );
   }
 
+  /// `City`
   String get jobDetailCity {
     return Intl.message('City', name: 'jobDetailCity', desc: '', args: []);
   }
 
+  /// `Apply Before`
   String get jobDetailDeadline {
     return Intl.message(
       'Apply Before',
@@ -1187,6 +1344,7 @@ class S {
     );
   }
 
+  /// `Company Summary`
   String get jobDetailCompanySummary {
     return Intl.message(
       'Company Summary',
@@ -1196,6 +1354,7 @@ class S {
     );
   }
 
+  /// `Company name`
   String get jobDetailCompanyNameLabel {
     return Intl.message(
       'Company name',
@@ -1205,6 +1364,7 @@ class S {
     );
   }
 
+  /// `Present your profile with confidence. Review the requirements, highlight your key achievements, and submit an application tailored to the hiring manager.`
   String get jobDescriptionDefault {
     return Intl.message(
       'Present your profile with confidence. Review the requirements, highlight your key achievements, and submit an application tailored to the hiring manager.',
@@ -1214,6 +1374,7 @@ class S {
     );
   }
 
+  /// `We invest in continuous learning, transparent leadership, and an inclusive culture so every team member can grow.`
   String get jobCompanySummaryDefault {
     return Intl.message(
       'We invest in continuous learning, transparent leadership, and an inclusive culture so every team member can grow.',
@@ -1223,6 +1384,7 @@ class S {
     );
   }
 
+  /// `You haven’t saved any jobs yet.`
   String get savedEmptyMessage {
     return Intl.message(
       'You haven’t saved any jobs yet.',
@@ -1232,6 +1394,7 @@ class S {
     );
   }
 
+  /// `Personal Info`
   String get profilePersonalTab {
     return Intl.message(
       'Personal Info',
@@ -1241,7 +1404,7 @@ class S {
     );
   }
 
-  
+  /// `My Resume`
   String get profileResumeTab {
     return Intl.message(
       'My Resume',
@@ -1251,6 +1414,7 @@ class S {
     );
   }
 
+  /// `Name (Arabic)`
   String get profileNameArabic {
     return Intl.message(
       'Name (Arabic)',
@@ -1260,6 +1424,7 @@ class S {
     );
   }
 
+  /// `Name (English)`
   String get profileNameEnglish {
     return Intl.message(
       'Name (English)',
@@ -1269,9 +1434,12 @@ class S {
     );
   }
 
+  /// `Address`
   String get profileAddress {
     return Intl.message('Address', name: 'profileAddress', desc: '', args: []);
   }
+
+  /// `Nationality`
   String get profileNationality {
     return Intl.message(
       'Nationality',
@@ -1281,6 +1449,7 @@ class S {
     );
   }
 
+  /// `City / Region`
   String get profileCity {
     return Intl.message(
       'City / Region',
@@ -1290,6 +1459,7 @@ class S {
     );
   }
 
+  /// `Phone Number`
   String get profilePhone {
     return Intl.message(
       'Phone Number',
@@ -1299,10 +1469,12 @@ class S {
     );
   }
 
+  /// `Email`
   String get profileEmail {
     return Intl.message('Email', name: 'profileEmail', desc: '', args: []);
   }
 
+  /// `Resume`
   String get profileResumeTitle {
     return Intl.message(
       'Resume',
@@ -1312,6 +1484,7 @@ class S {
     );
   }
 
+  /// `Personal information`
   String get editProfileTitle {
     return Intl.message(
       'Personal information',
@@ -1321,6 +1494,7 @@ class S {
     );
   }
 
+  /// `Full name`
   String get editProfileFullName {
     return Intl.message(
       'Full name',
@@ -1330,6 +1504,7 @@ class S {
     );
   }
 
+  /// `Phone number`
   String get editProfilePhone {
     return Intl.message(
       'Phone number',
@@ -1339,6 +1514,7 @@ class S {
     );
   }
 
+  /// `Email address`
   String get editProfileEmail {
     return Intl.message(
       'Email address',
@@ -1348,6 +1524,7 @@ class S {
     );
   }
 
+  /// `CV link`
   String get editProfileCv {
     return Intl.message('CV link', name: 'editProfileCv', desc: '', args: []);
   }
@@ -3054,12 +3231,13 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   }
 
   @override
+  bool isSupported(Locale locale) => _isSupported(locale);
+  @override
   Future<S> load(Locale locale) => S.load(locale);
   @override
   bool shouldReload(AppLocalizationDelegate old) => false;
 
-  @override
-  bool isSupported(Locale locale) {
+  bool _isSupported(Locale locale) {
     for (var supportedLocale in supportedLocales) {
       if (supportedLocale.languageCode == locale.languageCode) {
         return true;

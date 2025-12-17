@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/employer_session.dart';
 import 'package:work_hub/core/routes.dart';
@@ -13,10 +14,17 @@ import 'package:work_hub/features/auth/screens/welcome.dart';
 import 'package:work_hub/features/employer/screens/employer_dashboard_page.dart';
 import 'package:work_hub/features/home_screen/home_page.dart';
 import 'package:work_hub/generated/l10n.dart';
+import 'package:work_hub/networking/notification_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseAppCheck.instance.activate(
+    androidProvider:
+        AndroidProvider.debug, // change to playIntegrity for release
+    appleProvider:
+        AppleProvider.debug, // change to appAttest/deviceCheck for release
+  );
   runApp(const MyApp());
 }
 
@@ -105,11 +113,12 @@ class MyAppState extends State<MyApp> {
       ],
       supportedLocales: S.delegate.supportedLocales,
       routes: Approutes.routes,
-      home: showSplash
-          ? SplashMahanti(
-              onFinish: () => setState(() => showSplash = false),
-            )
-          : const AuthGate(),
+      home:
+          showSplash
+              ? SplashMahanti(
+                onFinish: () => setState(() => showSplash = false),
+              )
+              : const AuthGate(),
     );
   }
 }
@@ -131,6 +140,9 @@ class AuthGate extends StatelessWidget {
         if (!isAuthenticatedValue) {
           return const Welcome();
         }
+        NotificationService.instance.ensurePermissionsAndSaveToken(
+          FirebaseAuth.instance.currentUser!.uid,
+        );
         return FutureBuilder<bool>(
           future: EmployerSession.isEmployer(),
           builder: (context, employerSnapshotValue) {

@@ -5,6 +5,8 @@ import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
+import 'package:work_hub/features/employer/widgets/employer_about_header.dart';
+import 'package:work_hub/features/employer/widgets/employer_description_field.dart';
 
 class EmployerEditAboutPage extends StatefulWidget {
   const EmployerEditAboutPage({super.key, required this.initialData});
@@ -86,7 +88,9 @@ class EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
             backgroundColor: AppColors.purple,
             backgroundImage: AppAssets.headerLogo,
             showBackButton: true,
-            overlayChild: AboutHeader(title: s.employerEditAboutHeader),
+            overlayChild: EmployerAboutHeader(
+              title: s.employerEditAboutHeader,
+            ),
             overlayHeight: 80,
             height: 190,
           ),
@@ -98,13 +102,13 @@ class EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    DescriptionField(
+                    EmployerDescriptionField(
                       label: s.employerEditAboutLabelArabic,
                       controller: aboutArController,
                       textDirection: TextDirection.rtl,
                     ),
                     const SizedBox(height: 24),
-                    DescriptionField(
+                    EmployerDescriptionField(
                       label: s.employerEditAboutLabelEnglish,
                       controller: aboutEnController,
                       textDirection: TextDirection.ltr,
@@ -147,105 +151,6 @@ class EmployerEditAboutPageState extends State<EmployerEditAboutPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class AboutHeader extends StatelessWidget {
-  const AboutHeader({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 18),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(40),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(
-              alpha: theme.brightness == Brightness.dark ? 0.45 : 0.1,
-            ),
-            blurRadius: 14,
-          ),
-        ],
-      ),
-      child: Center(
-        child: Text(
-          title,
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class DescriptionField extends StatelessWidget {
-  const DescriptionField({
-    required this.label,
-    required this.controller,
-    required this.textDirection,
-  });
-
-  final String label;
-  final TextEditingController controller;
-  final TextDirection textDirection;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final borderColor = colorScheme.outline.withValues(
-      alpha: theme.brightness == Brightness.dark ? 0.5 : 0.25,
-    );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: controller,
-          maxLines: 6,
-          minLines: 4,
-          textDirection: textDirection,
-          textAlign:
-              textDirection == TextDirection.rtl
-                  ? TextAlign.right
-                  : TextAlign.left,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: theme.cardColor,
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 16,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: borderColor),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(28),
-              borderSide: BorderSide(color: borderColor),
-            ),
-          ),
-          validator:
-              (value) =>
-                  (value ?? '').trim().isEmpty
-                      ? S.of(context).employerEditAboutValidationRequired
-                      : null,
-        ),
-      ],
     );
   }
 }

@@ -15,58 +15,58 @@ class ContactUsPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _Header(colorScheme: colorScheme),
+            Header(colorScheme: colorScheme),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _SectionTitle('طرق التواصل'),
+                    SectionTitle('طرق التواصل'),
                     const SizedBox(height: 12),
-                    _InfoCard(
+                    InfoCard(
                       title: 'البريد الإلكتروني',
                       subtitle: 'support@mhnty.com',
                       icon: Icons.email_outlined,
                       color: colorScheme.primary,
                     ),
                     const SizedBox(height: 10),
-                    _InfoCard(
+                    InfoCard(
                       title: 'رقم الهاتف',
                       subtitle: '+218 91 234 5678',
                       icon: Icons.phone_outlined,
                       color: Colors.green.shade600,
                     ),
                     const SizedBox(height: 10),
-                    _InfoCard(
+                    InfoCard(
                       title: 'الموقع',
                       subtitle: 'طرابلس، ليبيا',
                       icon: Icons.place_outlined,
                       color: Colors.amber.shade700,
                     ),
                     const SizedBox(height: 24),
-                    _SectionTitle('أرسل رسالة'),
+                    SectionTitle('أرسل رسالة'),
                     const SizedBox(height: 12),
-                    const _TextFieldPill(
+                    const TextFieldPill(
                       label: 'الاسم',
                       hint: 'أدخل اسمك الكامل',
                       icon: Icons.person_outline,
                     ),
                     const SizedBox(height: 12),
-                    const _TextFieldPill(
+                    const TextFieldPill(
                       label: 'البريد الإلكتروني',
                       hint: 'example@email.com',
                       icon: Icons.email_outlined,
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 12),
-                    const _TextFieldPill(
+                    const TextFieldPill(
                       label: 'الموضوع',
                       hint: 'ما هو سبب تواصلك؟',
                       icon: Icons.subject_outlined,
                     ),
                     const SizedBox(height: 12),
-                    const _TextFieldPill(
+                    const TextFieldPill(
                       label: 'الرسالة',
                       hint: 'اكتب رسالتك هنا...',
                       icon: Icons.chat_bubble_outline,
@@ -94,9 +94,9 @@ class ContactUsPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 18),
-                    _SectionTitle('ساعات العمل'),
+                    SectionTitle('ساعات العمل'),
                     const SizedBox(height: 8),
-                    _ScheduleRow(
+                    ScheduleRow(
                       title: 'الأحد - الخميس',
                       time: '9:00 صباحاً - 6:00 مساءً',
                       color: isDark
@@ -104,7 +104,7 @@ class ContactUsPage extends StatelessWidget {
                           : colorScheme.primary,
                     ),
                     const SizedBox(height: 6),
-                    _ScheduleRow(
+                    ScheduleRow(
                       title: 'الجمعة - السبت',
                       time: 'دعم طارئ عبر البريد فقط',
                       color: Colors.orange.shade600,
@@ -120,8 +120,8 @@ class ContactUsPage extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header({required this.colorScheme});
+class Header extends StatelessWidget {
+  const Header({required this.colorScheme});
 
   final ColorScheme colorScheme;
 
@@ -210,8 +210,8 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _InfoCard extends StatelessWidget {
-  const _InfoCard({
+class InfoCard extends StatelessWidget {
+  const InfoCard({
     required this.title,
     required this.subtitle,
     required this.icon,
@@ -276,8 +276,8 @@ class _InfoCard extends StatelessWidget {
   }
 }
 
-class _TextFieldPill extends StatelessWidget {
-  const _TextFieldPill({
+class TextFieldPill extends StatelessWidget {
+  const TextFieldPill({
     required this.label,
     required this.hint,
     required this.icon,
@@ -341,8 +341,8 @@ class _TextFieldPill extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.title);
+class SectionTitle extends StatelessWidget {
+  const SectionTitle(this.title);
 
   final String title;
 
@@ -359,8 +359,8 @@ class _SectionTitle extends StatelessWidget {
   }
 }
 
-class _ScheduleRow extends StatelessWidget {
-  const _ScheduleRow({
+class ScheduleRow extends StatelessWidget {
+  const ScheduleRow({
     required this.title,
     required this.time,
     required this.color,

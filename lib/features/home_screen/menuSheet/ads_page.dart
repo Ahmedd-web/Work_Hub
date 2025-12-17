@@ -5,14 +5,14 @@ class AdsPage extends StatefulWidget {
   const AdsPage({super.key});
 
   @override
-  State<AdsPage> createState() => _AdsPageState();
+  State<AdsPage> createState() => AdsPageState();
 }
 
-class _AdsPageState extends State<AdsPage> {
-  int _selectedIndex = 1;
+class AdsPageState extends State<AdsPage> {
+  int selectedIndex = 1;
 
-  final List<_AdPackage> _packages = const [
-    _AdPackage(
+  final List<AdPackage> packages = const [
+    AdPackage(
       title: 'باقة 50 دينار',
       price: '50 دينار',
       perks: [
@@ -21,7 +21,7 @@ class _AdsPageState extends State<AdsPage> {
         'دعم عبر البريد',
       ],
     ),
-    _AdPackage(
+    AdPackage(
       title: 'باقة 100 دينار',
       price: '100 دينار',
       perks: [
@@ -30,7 +30,7 @@ class _AdsPageState extends State<AdsPage> {
         'نشر على القنوات الاجتماعية',
       ],
     ),
-    _AdPackage(
+    AdPackage(
       title: 'باقة 150 دينار',
       price: '150 دينار',
       perks: [
@@ -39,7 +39,7 @@ class _AdsPageState extends State<AdsPage> {
         'أولوية في نتائج البحث',
       ],
     ),
-    _AdPackage(
+    AdPackage(
       title: 'باقة 200 دينار',
       price: '200 دينار',
       perks: [
@@ -48,7 +48,7 @@ class _AdsPageState extends State<AdsPage> {
         'تقارير أسبوعية مفصلة',
       ],
     ),
-    _AdPackage(
+    AdPackage(
       title: 'باقة 250 دينار',
       price: '250 دينار',
       perks: [
@@ -70,16 +70,16 @@ class _AdsPageState extends State<AdsPage> {
       body: SafeArea(
         child: Column(
           children: [
-            _Header(colorScheme: colorScheme),
+            Header(colorScheme: colorScheme),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _SectionTitle('خدماتنا الإعلانية'),
+                    SectionTitle('خدماتنا الإعلانية'),
                     const SizedBox(height: 12),
-                    _InfoCard(
+                    InfoCard(
                       title: 'إعلان وظيفة مميز',
                       subtitle:
                           'يظهر في أعلى نتائج البحث مع شارة تمييز جذابة لجذب أفضل المرشحين.',
@@ -87,7 +87,7 @@ class _AdsPageState extends State<AdsPage> {
                       color: colorScheme.primary,
                     ),
                     const SizedBox(height: 12),
-                    _InfoCard(
+                    InfoCard(
                       title: 'حزمة تعزيز الانتشار',
                       subtitle:
                           'مشاركة الإعلان في القنوات التسويقية والتنبيهات للوصول لأكبر عدد من الباحثين.',
@@ -95,7 +95,7 @@ class _AdsPageState extends State<AdsPage> {
                       color: Colors.green.shade600,
                     ),
                     const SizedBox(height: 12),
-                    _InfoCard(
+                    InfoCard(
                       title: 'دعم إنشاء إعلان احترافي',
                       subtitle:
                           'فريقنا يساعدك في صياغة وصف الوظيفة وتنسيقها بصرياً لتحقيق أعلى تفاعل.',
@@ -103,24 +103,24 @@ class _AdsPageState extends State<AdsPage> {
                       color: Colors.amber.shade700,
                     ),
                     const SizedBox(height: 24),
-                    _SectionTitle('الباقات الإعلانية'),
+                    SectionTitle('الباقات الإعلانية'),
                     const SizedBox(height: 12),
-                    ...List.generate(_packages.length, (index) {
-                      final pack = _packages[index];
-                      final isSelected = _selectedIndex == index;
+                    ...List.generate(packages.length, (index) {
+                      final pack = packages[index];
+                      final isSelected = selectedIndex == index;
                       final baseAccent = isDark ? Colors.green.shade500 : colorScheme.primary;
                       final accent = isSelected
                           ? baseAccent
                           : (isDark ? Colors.green.shade400 : colorScheme.primary.withValues(alpha: 0.6));
                       return Padding(
-                        padding: EdgeInsets.only(bottom: index == _packages.length - 1 ? 0 : 12),
-                        child: _PackageCard(
+                        padding: EdgeInsets.only(bottom: index == packages.length - 1 ? 0 : 12),
+                        child: PackageCard(
                           title: pack.title,
                           price: pack.price,
                           perks: pack.perks,
                           accent: accent,
                           highlight: isSelected,
-                          onTap: () => setState(() => _selectedIndex = index),
+                          onTap: () => setState(() => selectedIndex = index),
                         ),
                       );
                     }),
@@ -153,8 +153,8 @@ class _AdsPageState extends State<AdsPage> {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header({required this.colorScheme});
+class Header extends StatelessWidget {
+  const Header({required this.colorScheme});
 
   final ColorScheme colorScheme;
 
@@ -243,8 +243,8 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _InfoCard extends StatelessWidget {
-  const _InfoCard({
+class InfoCard extends StatelessWidget {
+  const InfoCard({
     required this.title,
     required this.subtitle,
     required this.icon,
@@ -309,8 +309,8 @@ class _InfoCard extends StatelessWidget {
   }
 }
 
-class _PackageCard extends StatelessWidget {
-  const _PackageCard({
+class PackageCard extends StatelessWidget {
+  const PackageCard({
     required this.title,
     required this.price,
     required this.perks,
@@ -406,8 +406,8 @@ class _PackageCard extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle(this.title);
+class SectionTitle extends StatelessWidget {
+  const SectionTitle(this.title);
 
   final String title;
 
@@ -425,11 +425,11 @@ class _SectionTitle extends StatelessWidget {
   }
 }
 
-class _AdPackage {
+class AdPackage {
   final String title;
   final String price;
   final List<String> perks;
-  const _AdPackage({
+  const AdPackage({
     required this.title,
     required this.price,
     required this.perks,

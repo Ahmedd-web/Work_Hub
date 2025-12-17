@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/home_screen/models/job_post.dart';
+import 'package:work_hub/features/home_screen/pages/apply_job_page.dart';
 import 'package:work_hub/generated/l10n.dart';
 
 class JobDetailPage extends StatefulWidget {
@@ -73,12 +74,7 @@ class _JobDetailPageState extends State<JobDetailPage> {
           backgroundColor: colorScheme.surface,
           elevation: 0,
           foregroundColor: colorScheme.onSurface,
-          title: Text(
-            job.title,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          title: const SizedBox.shrink(),
           actions: [
             IconButton(
               icon: const Icon(Icons.share_outlined),
@@ -196,20 +192,26 @@ class _JobDetailPageState extends State<JobDetailPage> {
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
               child: SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.secondary,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorScheme.secondary,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
                   ),
-                  onPressed: () {},
-                  child: Text(
-                    s.applyNow,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => ApplyJobPage(job: job),
+                    ),
+                  );
+                },
+                child: Text(
+                  s.applyNow,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                     ),
                   ),
                 ),

@@ -61,10 +61,6 @@ class CustomHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(
-      backgroundImage != null && backgroundImage!.isNotEmpty,
-      'CustomHeader requires backgroundImage (color-only path removed).',
-    );
     final s = S.of(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -79,6 +75,8 @@ class CustomHeader extends StatelessWidget {
     const double defaultSearchBarHeight = 56;
     final bool hasOverlayChild = overlayChild != null || showSearchBar;
     final bool hasHeroChild = heroChild != null;
+    final bool useImageBackground =
+        backgroundImage != null && backgroundImage!.isNotEmpty;
     final double overlayChildHeight =
         overlayChild != null ? (overlayHeight ?? 120) : defaultSearchBarHeight;
     final double heroChildHeight = heroChild != null ? (heroHeight ?? 140) : 0;
@@ -96,7 +94,8 @@ class CustomHeader extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           CustomHeaderBackground(
-            backgroundImage: backgroundImage!,
+            useImageBackground: useImageBackground,
+            backgroundImage: backgroundImage,
             backgroundImageFit: backgroundImageFit,
             effectiveBackground: effectiveBackground,
           ),

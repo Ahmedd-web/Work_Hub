@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
+import 'package:work_hub/features/employer/widgets/employer_post_job_fields.dart';
+import 'package:work_hub/features/employer/widgets/employer_post_job_step_indicator.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class EmployerPostJobPage extends StatefulWidget {
@@ -86,7 +88,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                StepIndicator(
+                EmployerPostJobStepIndicator(
                   steps: stepTitles.length,
                   currentStep: currentStep,
                 ),
@@ -192,40 +194,40 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            FormFieldCard(
+            EmployerFormFieldCard(
               label: 'المسمى الوظيفي بالعربية',
-              child: PlainTextField(
+              child: EmployerPlainTextField(
                 controller: arabicTitle,
                 hint: 'ادخل المسمى الوظيفي بالعربية',
               ),
             ),
             const SizedBox(height: 16),
-            FormFieldCard(
+            EmployerFormFieldCard(
               label: 'المسمى الوظيفي بالإنجليزية',
-              child: PlainTextField(
+              child: EmployerPlainTextField(
                 controller: englishTitle,
                 hint: 'ادخل المسمى الوظيفي بالإنجليزية',
                 textDirection: TextDirection.ltr,
               ),
             ),
             const SizedBox(height: 16),
-            DropdownCard(
+            EmployerDropdownCard(
               label: 'المستوى التعليمي',
               value: educationLevel,
               items: const ['دبلوم', 'بكالوريوس', 'ماجستير'],
               onChanged: (value) => setState(() => educationLevel = value),
             ),
             const SizedBox(height: 16),
-            DropdownCard(
+            EmployerDropdownCard(
               label: 'القسم',
               value: department,
               items: const ['الموارد البشرية', 'التسويق', 'التصميم'],
               onChanged: (value) => setState(() => department = value),
             ),
             const SizedBox(height: 16),
-            FormFieldCard(
+            EmployerFormFieldCard(
               label: 'عدد سنوات الخبرة',
-              child: PlainTextField(
+              child: EmployerPlainTextField(
                 controller: experience,
                 hint: 'حدد عدد سنوات الخبرة',
                 keyboardType: TextInputType.number,
@@ -237,23 +239,23 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            DropdownCard(
+            EmployerDropdownCard(
               label: 'الجنسية',
               value: nationality,
               items: const ['ليبي', 'تونسي', 'سوداني'],
               onChanged: (value) => setState(() => nationality = value),
             ),
             const SizedBox(height: 16),
-            DropdownCard(
+            EmployerDropdownCard(
               label: 'مكان العمل',
               value: country,
               items: const ['ليبيا', 'مصر', 'السودان'],
               onChanged: (value) => setState(() => country = value),
             ),
             const SizedBox(height: 16),
-            FormFieldCard(
+            EmployerFormFieldCard(
               label: 'المدينة',
-              child: PlainTextField(
+              child: EmployerPlainTextField(
                 controller: cityController,
                 hint: 'حدد المدينة',
               ),
@@ -296,9 +298,9 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
               Row(
                 children: [
                   Expanded(
-                    child: FormFieldCard(
+                    child: EmployerFormFieldCard(
                       label: 'الراتب من',
-                      child: PlainTextField(
+                      child: EmployerPlainTextField(
                         controller: salaryFrom,
                         keyboardType: TextInputType.number,
                         hint: 'من',
@@ -307,9 +309,9 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: FormFieldCard(
+                    child: EmployerFormFieldCard(
                       label: 'الراتب إلى',
-                      child: PlainTextField(
+                      child: EmployerPlainTextField(
                         controller: salaryTo,
                         keyboardType: TextInputType.number,
                         hint: 'إلى',
@@ -319,7 +321,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                 ],
               ),
               const SizedBox(height: 12),
-              DropdownCard(
+              EmployerDropdownCard(
                 label: 'العملة',
                 value: currency,
                 items: const ['LYD', 'USD', 'EUR'],
@@ -332,17 +334,16 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            DropdownCard(
+            EmployerDropdownCard(
               label: 'لغة الوصف',
               value: descriptionLanguage,
               items: const ['العربية', 'الإنجليزية'],
-              onChanged:
-                  (value) => setState(() => descriptionLanguage = value),
+              onChanged: (value) => setState(() => descriptionLanguage = value),
             ),
             const SizedBox(height: 16),
-            FormFieldCard(
+            EmployerFormFieldCard(
               label: 'الوصف الوظيفي',
-              child: PlainTextField(
+              child: EmployerPlainTextField(
                 controller: description,
                 hint: 'اكتب نص الهدف الوظيفي',
                 maxLines: 4,
@@ -354,7 +355,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
-            DropdownCard(
+            EmployerDropdownCard(
               label: 'اختر مهارة من القائمة',
               value: selectedSkill,
               items: const ['القيادة', 'التواصل', 'التفاوض'],
@@ -366,9 +367,9 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
               },
             ),
             const SizedBox(height: 16),
-            FormFieldCard(
+            EmployerFormFieldCard(
               label: 'أضف مهارة يدوياً',
-              child: PlainTextField(
+              child: EmployerPlainTextField(
                 controller: skillController,
                 hint: 'اكتب اسم المهارة ثم اضغط إضافة',
               ),
@@ -415,9 +416,9 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            FormFieldCard(
+            EmployerFormFieldCard(
               label: 'موعد التقديم',
-              child: PlainTextField(
+              child: EmployerPlainTextField(
                 controller: deadline,
                 hint: 'حدد تاريخ نهاية التقديم',
                 readOnly: true,
@@ -465,15 +466,13 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                 CheckboxListTile(
                   value: applyViaEmail,
                   onChanged:
-                      (value) =>
-                          setState(() => applyViaEmail = value ?? false),
+                      (value) => setState(() => applyViaEmail = value ?? false),
                   title: const Text('التقديم عبر البريد الإلكتروني'),
                 ),
                 CheckboxListTile(
                   value: applyViaPhone,
                   onChanged:
-                      (value) =>
-                          setState(() => applyViaPhone = value ?? false),
+                      (value) => setState(() => applyViaPhone = value ?? false),
                   title: const Text('التقديم عبر الهاتف'),
                 ),
                 CheckboxListTile(
@@ -572,8 +571,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
         } else if (cityController.text.trim().isEmpty) {
           error = 'أدخل المدينة';
         } else if (salarySpecified) {
-          if (salaryFrom.text.trim().isEmpty ||
-              salaryTo.text.trim().isEmpty) {
+          if (salaryFrom.text.trim().isEmpty || salaryTo.text.trim().isEmpty) {
             error = 'أدخل نطاق الراتب';
           } else if (currency == null) {
             error = 'حدد العملة';
@@ -665,205 +663,5 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
     } finally {
       if (mounted) setState(() => isSubmitting = false);
     }
-  }
-}
-
-class StepIndicator extends StatelessWidget {
-  const StepIndicator({required this.steps, required this.currentStep});
-
-  final int steps;
-  final int currentStep;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(steps, (index) {
-        final isActive = index == currentStep;
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 6),
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            color: isActive ? AppColors.purple : Colors.grey.shade300,
-            shape: BoxShape.circle,
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            '${index + 1}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        );
-      }),
-    );
-  }
-}
-
-class FormFieldCard extends StatelessWidget {
-  const FormFieldCard({required this.label, required this.child});
-
-  final String label;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          label,
-          textAlign: TextAlign.right,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceVariant.withValues(
-              alpha: theme.brightness == Brightness.dark ? 0.25 : 0.6,
-            ),
-            borderRadius: BorderRadius.circular(34),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(
-                  alpha: theme.brightness == Brightness.dark ? 0.2 : 0.05,
-                ),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(4),
-          child: Container(
-            decoration: BoxDecoration(
-              color: theme.cardColor,
-              borderRadius: BorderRadius.circular(28),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-            child: child,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class PlainTextField extends StatelessWidget {
-  const PlainTextField({
-    required this.controller,
-    required this.hint,
-    this.keyboardType,
-    this.maxLines = 1,
-    this.readOnly = false,
-    this.onTap,
-    this.textDirection = TextDirection.rtl,
-  });
-
-  final TextEditingController controller;
-  final String hint;
-  final TextInputType? keyboardType;
-  final int maxLines;
-  final bool readOnly;
-  final VoidCallback? onTap;
-  final TextDirection textDirection;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      keyboardType: keyboardType,
-      maxLines: maxLines,
-      readOnly: readOnly,
-      onTap: onTap,
-      textDirection: textDirection,
-      textAlign:
-          textDirection == TextDirection.rtl ? TextAlign.right : TextAlign.left,
-      decoration: InputDecoration(
-        hintText: hint,
-        hintTextDirection: textDirection,
-        border: InputBorder.none,
-      ),
-    );
-  }
-}
-
-class DropdownCard extends StatelessWidget {
-  const DropdownCard({
-    required this.label,
-    required this.value,
-    required this.items,
-    required this.onChanged,
-  });
-
-  final String label;
-  final String? value;
-  final List<String> items;
-  final ValueChanged<String?> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          label,
-          textAlign: TextAlign.right,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceVariant.withValues(
-              alpha: theme.brightness == Brightness.dark ? 0.25 : 0.6,
-            ),
-            borderRadius: BorderRadius.circular(34),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(
-                  alpha: theme.brightness == Brightness.dark ? 0.2 : 0.05,
-                ),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(4),
-          child: Container(
-            decoration: BoxDecoration(
-              color: theme.cardColor,
-              borderRadius: BorderRadius.circular(28),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: DropdownButtonFormField<String>(
-              value: value,
-              onChanged: onChanged,
-              decoration: const InputDecoration(border: InputBorder.none),
-              hint: Text('حدد $label'),
-              icon: const Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: AppColors.purple,
-              ),
-              items:
-                  items
-                      .map(
-                        (item) =>
-                            DropdownMenuItem(value: item, child: Text(item)),
-                      )
-                      .toList(),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 }
