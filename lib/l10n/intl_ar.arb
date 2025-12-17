@@ -73,6 +73,7 @@
   "loginEmail": "البريد الإلكتروني",
   "loginEmailHint": "أدخل بريدك الإلكتروني...",
   "loginEmailRequired": "مطلوب",
+  "loginEmailInvalid": "البريد الإلكتروني غير صالح",
   "loginPassword": "كلمة المرور",
   "loginPasswordHint": "أدخل كلمة المرور...",
   "loginPasswordRequired": "كلمة المرور مطلوبة",

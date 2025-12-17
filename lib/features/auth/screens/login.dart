@@ -114,6 +114,8 @@ class LoginState extends State<Login> {
 
             ElevatedButton(
               onPressed: () async {
+                if (!formKey.currentState!.validate()) return;
+                setState(() => isLoading = true);
                 try {
                   final credential = await FirebaseAuth.instance
                       .signInWithEmailAndPassword(
@@ -125,24 +127,30 @@ class LoginState extends State<Login> {
                     MaterialPageRoute(builder: (context) => const HomePage()),
                   );
                 } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-not-found') {
-                    print('No user found for that email.');
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.error,
-                      animType: AnimType.rightSlide,
-                      title: s.dialogErrorTitle,
-                      desc: s.authErrorUserNotFound,
-                    ).show();
-                  } else if (e.code == 'wrong-password') {
-                    print('Wrong password provided for that user.');
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.error,
-                      animType: AnimType.rightSlide,
-                      title: s.dialogErrorTitle,
-                      desc: s.authErrorWrongPassword,
-                    ).show();
+                  final message =
+                      e.code == 'user-not-found'
+                          ? s.authErrorUserNotFound
+                          : e.code == 'wrong-password'
+                          ? s.authErrorWrongPassword
+                          : (e.message ?? s.dialogErrorTitle);
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.error,
+                    animType: AnimType.rightSlide,
+                    title: s.dialogErrorTitle,
+                    desc: message,
+                  ).show();
+                } catch (e) {
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.error,
+                    animType: AnimType.rightSlide,
+                    title: s.dialogErrorTitle,
+                    desc: e.toString(),
+                  ).show();
+                } finally {
+                  if (mounted) {
+                    setState(() => isLoading = false);
                   }
                 }
               },

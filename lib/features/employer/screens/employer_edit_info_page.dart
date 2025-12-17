@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/generated/l10n.dart';
+import 'package:work_hub/features/employer/widgets/employer_header_pill.dart';
+import 'package:work_hub/features/employer/widgets/employer_option_sheet.dart';
+import 'package:work_hub/features/employer/widgets/employer_rounded_dropdown.dart';
+import 'package:work_hub/features/employer/widgets/employer_rounded_field.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class EmployerEditInfoPage extends StatefulWidget {
@@ -127,7 +131,9 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
             showBackButton: true,
             showMenuButton: false,
             showNotificationButton: false,
-            overlayChild: HeaderPill(title: s.employerEditInfoHeader),
+            overlayChild: EmployerHeaderPill(
+              title: s.employerEditInfoHeader,
+            ),
             overlayHeight: 70,
             height: 190,
           ),
@@ -140,18 +146,18 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    RoundedField(
+                    EmployerRoundedField(
                       label: s.employerEditInfoLabelCompanyName,
                       controller: companyNameAr,
                     ),
                     const SizedBox(height: 20),
-                    RoundedField(
+                    EmployerRoundedField(
                       label: s.employerEditInfoLabelIndustry,
                       controller: industryAr,
                       maxLength: 25,
                     ),
                     const SizedBox(height: 20),
-                    RoundedField(
+                    EmployerRoundedField(
                       label: s.employerEditInfoLabelAdvertiserRole,
                       controller: advertiserRole,
                       suffixIcon: Icons.arrow_drop_down,
@@ -167,7 +173,7 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    RoundedField(
+                    EmployerRoundedField(
                       label: s.employerEditInfoLabelAddress,
                       controller: address,
                       suffixIcon: Icons.arrow_drop_down,
@@ -181,7 +187,7 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    RoundedField(
+                    EmployerRoundedField(
                       label: s.employerEditInfoLabelWebsite,
                       controller: website,
                     ),
@@ -206,7 +212,7 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: RoundedField(
+                          child: EmployerRoundedField(
                             controller: phoneNumber,
                             keyboardType: TextInputType.phone,
                             label: null,
@@ -216,7 +222,7 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                         const SizedBox(width: 12),
                         SizedBox(
                           width: 120,
-                          child: RoundedDropdown(
+                          child: EmployerRoundedDropdown(
                             value: phonePrefix,
                             onChanged:
                                 (value) => setState(() => phonePrefix = value),
@@ -230,13 +236,13 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    RoundedField(
+                    EmployerRoundedField(
                       label: s.employerEditInfoLabelPhoneSecondary,
                       controller: phoneNumberSecondary,
                       keyboardType: TextInputType.phone,
                     ),
                     const SizedBox(height: 20),
-                    RoundedField(
+                    EmployerRoundedField(
                       label: s.employerEditInfoLabelEmail,
                       controller: email,
                       keyboardType: TextInputType.emailAddress,
@@ -298,7 +304,7 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder:
-          (_) => OptionSheet(
+          (_) => EmployerOptionSheet(
             title: s.employerEditInfoSelectRoleTitle,
             options: options,
             current: current,
@@ -322,250 +328,11 @@ class EmployerEditInfoPageState extends State<EmployerEditInfoPage> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder:
-          (_) => OptionSheet(
+          (_) => EmployerOptionSheet(
             title: s.employerEditInfoSelectAddressTitle,
             options: options,
             current: current,
           ),
-    );
-  }
-}
-
-class HeaderPill extends StatelessWidget {
-  const HeaderPill({required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(40),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(
-              alpha: theme.brightness == Brightness.dark ? 0.45 : 0.1,
-            ),
-            blurRadius: 14,
-          ),
-        ],
-      ),
-      child: Center(
-        child: Text(
-          title,
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class RoundedField extends StatelessWidget {
-  const RoundedField({
-    this.label,
-    required this.controller,
-    this.keyboardType,
-    this.suffixIcon,
-    this.readOnly = false,
-    this.onTap,
-    this.hintText,
-    this.maxLength,
-  });
-
-  final String? label;
-  final TextEditingController controller;
-  final TextInputType? keyboardType;
-  final IconData? suffixIcon;
-  final bool readOnly;
-  final VoidCallback? onTap;
-  final String? hintText;
-  final int? maxLength;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final s = S.of(context);
-    final borderColor = colorScheme.outline.withValues(
-      alpha: theme.brightness == Brightness.dark ? 0.5 : 0.25,
-    );
-    final labelWidget =
-        label == null
-            ? const SizedBox.shrink()
-            : Padding(
-              padding: const EdgeInsets.only(bottom: 6),
-              child: Text(
-                label!,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.textTheme.bodySmall?.color?.withValues(
-                    alpha: 0.7,
-                  ),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            );
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        labelWidget,
-        GestureDetector(
-          onTap: readOnly ? onTap : null,
-          child: TextFormField(
-            controller: controller,
-            readOnly: readOnly,
-            onTap: readOnly ? onTap : null,
-            keyboardType: keyboardType,
-            maxLength: maxLength,
-            buildCounter:
-                maxLength == null
-                    ? null
-                    : (
-                      context, {
-                      required int currentLength,
-                      required bool isFocused,
-                      required int? maxLength,
-                    }) => Text(
-                      '$currentLength/$maxLength',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.textTheme.bodySmall?.color?.withValues(
-                          alpha: 0.6,
-                        ),
-                      ),
-                    ),
-            validator: (value) {
-              if ((value ?? '').trim().isEmpty) {
-                return s.employerEditInfoValidationRequired;
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-              hintText: hintText,
-              filled: true,
-              fillColor: theme.cardColor,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 14,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: borderColor),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(32),
-                borderSide: BorderSide(color: borderColor),
-              ),
-              suffixIcon:
-                  suffixIcon != null
-                      ? Icon(
-                        suffixIcon,
-                        color: colorScheme.outline.withValues(alpha: 0.7),
-                      )
-                      : null,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class RoundedDropdown extends StatelessWidget {
-  const RoundedDropdown({
-    required this.value,
-    required this.onChanged,
-    required this.options,
-  });
-
-  final String value;
-  final List<String> options;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final borderColor = colorScheme.outline.withValues(
-      alpha: theme.brightness == Brightness.dark ? 0.5 : 0.25,
-    );
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: borderColor),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: value,
-          isExpanded: true,
-          items:
-              options
-                  .map(
-                    (item) => DropdownMenuItem(value: item, child: Text(item)),
-                  )
-                  .toList(),
-          onChanged: (val) {
-            if (val != null) onChanged(val);
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class OptionSheet extends StatelessWidget {
-  const OptionSheet({
-    required this.title,
-    required this.options,
-    required this.current,
-  });
-
-  final String title;
-  final List<String> options;
-  final String current;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          color: theme.cardColor,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            ...options.map(
-              (option) => ListTile(
-                title: Text(option),
-                trailing:
-                    option == current
-                        ? Icon(Icons.check, color: colorScheme.primary)
-                        : null,
-                onTap: () => Navigator.of(context).pop(option),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -32,9 +32,9 @@ class JobsTab extends StatelessWidget {
   final ValueChanged<String> onCategoryChanged;
   final VoidCallback? onFilterPressed;
 
-  static const double _headerBaseHeight = 130;
-  static const double _searchOverlap = 28;
-  static const double _headerExtent = _headerBaseHeight + _searchOverlap;
+  static const double headerBaseHeight = 130;
+  static const double searchOverlap = 28;
+  static const double headerExtent = headerBaseHeight + searchOverlap;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +46,8 @@ class JobsTab extends StatelessWidget {
         SliverPersistentHeader(
           pinned: true,
           delegate: HeaderSliverDelegate(
-            minHeight: _headerExtent,
-            maxHeight: _headerExtent,
+            minHeight: headerExtent,
+            maxHeight: headerExtent,
             builder: (context, shrinkOffset, overlapsContent) {
               return SizedBox.expand(
                 child: CustomHeader(
@@ -61,7 +61,7 @@ class JobsTab extends StatelessWidget {
                   backgroundColor: AppColors.purple,
                   backgroundImage: AppAssets.headerLogo,
                   searchController: searchController,
-                  height: _headerBaseHeight,
+                  height: headerBaseHeight,
                 ),
               );
             },
@@ -75,10 +75,10 @@ class JobsTab extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    _IconPillButton(icon: Icons.tune, onTap: onFilterPressed),
+                    IconPillButton(icon: Icons.tune, onTap: onFilterPressed),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: _FilterDropdownPill(
+                      child: FilterDropdownPill(
                         icon: Icons.access_time,
                         value: selectedTimeValue,
                         options: timeOptions,
@@ -87,7 +87,7 @@ class JobsTab extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: _FilterDropdownPill(
+                      child: FilterDropdownPill(
                         icon: Icons.work_outline,
                         value: selectedCategoryValue,
                         options: categoryOptions,
@@ -102,7 +102,7 @@ class JobsTab extends StatelessWidget {
                       .map(
                         (job) => Padding(
                           padding: const EdgeInsets.only(bottom: 16),
-                          child: _JobCard(
+                          child: JobCard(
                             job: job,
                             onTap: () => onJobSelected(job),
                           ),
@@ -120,8 +120,8 @@ class JobsTab extends StatelessWidget {
   }
 }
 
-class _IconPillButton extends StatelessWidget {
-  const _IconPillButton({required this.icon, required this.onTap});
+class IconPillButton extends StatelessWidget {
+  const IconPillButton({required this.icon, required this.onTap});
 
   final IconData icon;
   final VoidCallback? onTap;
@@ -154,8 +154,8 @@ class _IconPillButton extends StatelessWidget {
   }
 }
 
-class _FilterDropdownPill extends StatelessWidget {
-  const _FilterDropdownPill({
+class FilterDropdownPill extends StatelessWidget {
+  const FilterDropdownPill({
     required this.icon,
     required this.value,
     required this.options,
@@ -227,8 +227,8 @@ class FilterOption {
   final String label;
 }
 
-class _JobCard extends StatelessWidget {
-  const _JobCard({required this.job, required this.onTap});
+class JobCard extends StatelessWidget {
+  const JobCard({required this.job, required this.onTap});
 
   final JobPost job;
   final VoidCallback onTap;
@@ -265,7 +265,7 @@ class _JobCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const _LogoBadge(),
+                const LogoBadge(),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -376,8 +376,8 @@ class _JobCard extends StatelessWidget {
   }
 }
 
-class _LogoBadge extends StatelessWidget {
-  const _LogoBadge();
+class LogoBadge extends StatelessWidget {
+  const LogoBadge();
 
   @override
   Widget build(BuildContext context) {

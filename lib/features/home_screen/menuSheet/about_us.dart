@@ -41,7 +41,7 @@ class AboutUsPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  _HeroCard(colorScheme: colorScheme),
+                  HeroCard(colorScheme: colorScheme),
                 ],
               ),
             ),
@@ -51,9 +51,9 @@ class AboutUsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _SectionTitle(title: 'من نحن'),
+                    SectionTitle(title: 'من نحن'),
                     const SizedBox(height: 14),
-                    _InfoCard(
+                    InfoCard(
                       title: 'رسالتنا',
                       description:
                           'نربط أصحاب العمل مع أفضل المواهب، ونساعد الباحثين عن عمل على العثور على الفرصة المثالية بسرعة وثقة.',
@@ -61,7 +61,7 @@ class AboutUsPage extends StatelessWidget {
                       color: colorScheme.primary,
                     ),
                     const SizedBox(height: 12),
-                    _InfoCard(
+                    InfoCard(
                       title: 'رؤيتنا',
                       description:
                           'منصة توظيف عربية حديثة تدعم التوظيف الذكي، وتوفر تجربة سلسة وممتعة لكل من الشركات والباحثين عن العمل.',
@@ -69,7 +69,7 @@ class AboutUsPage extends StatelessWidget {
                       color: Colors.green.shade500,
                     ),
                     const SizedBox(height: 12),
-                    _InfoCard(
+                    InfoCard(
                       title: 'قيمنا',
                       description:
                           'الشفافية، السرعة، والجودة. نهتم بتجربة المستخدم ونضمن أن تكون خطوات النشر والتقديم واضحة وبسيطة.',
@@ -77,16 +77,16 @@ class AboutUsPage extends StatelessWidget {
                       color: Colors.amber.shade700,
                     ),
                     const SizedBox(height: 24),
-                    _SectionTitle(title: 'لماذا مهنتي-Mhnty؟'),
+                    SectionTitle(title: 'لماذا مهنتي-Mhnty؟'),
                     const SizedBox(height: 12),
                     Wrap(
                       spacing: 12,
                       runSpacing: 12,
                       children: const [
-                        _ChipPoint(text: 'واجهة عربية سهلة'),
-                        _ChipPoint(text: 'إعلانات سريعة الانتشار'),
-                        _ChipPoint(text: 'بحث متقدم عن السير الذاتية'),
-                        _ChipPoint(text: 'دعم فني سريع'),
+                        ChipPoint(text: 'واجهة عربية سهلة'),
+                        ChipPoint(text: 'إعلانات سريعة الانتشار'),
+                        ChipPoint(text: 'بحث متقدم عن السير الذاتية'),
+                        ChipPoint(text: 'دعم فني سريع'),
                       ],
                     ),
                   ],
@@ -100,8 +100,8 @@ class AboutUsPage extends StatelessWidget {
   }
 }
 
-class _HeroCard extends StatelessWidget {
-  const _HeroCard({required this.colorScheme});
+class HeroCard extends StatelessWidget {
+  const HeroCard({required this.colorScheme});
 
   final ColorScheme colorScheme;
 
@@ -160,8 +160,8 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-class _InfoCard extends StatelessWidget {
-  const _InfoCard({
+class InfoCard extends StatelessWidget {
+  const InfoCard({
     required this.title,
     required this.description,
     required this.icon,
@@ -226,8 +226,8 @@ class _InfoCard extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.title});
+class SectionTitle extends StatelessWidget {
+  const SectionTitle({required this.title});
 
   final String title;
 
@@ -245,8 +245,8 @@ class _SectionTitle extends StatelessWidget {
   }
 }
 
-class _ChipPoint extends StatelessWidget {
-  const _ChipPoint({required this.text});
+class ChipPoint extends StatelessWidget {
+  const ChipPoint({required this.text});
 
   final String text;
 

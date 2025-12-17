@@ -92,6 +92,7 @@
   "loginEmail": "Email",
   "loginEmailHint": "Enter your email...",
   "loginEmailRequired": "Required",
+  "loginEmailInvalid": "Invalid email address",
   "loginPassword": "Password",
   "loginPasswordHint": "Enter your password...",
   "loginPasswordRequired": "Password is required",

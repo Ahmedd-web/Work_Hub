@@ -1,8 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/employer/screens/employer_membership_page.dart';
+import 'package:work_hub/features/employer/widgets/employer_job_action_button.dart';
+import 'package:work_hub/features/employer/widgets/employer_job_info_card.dart';
+import 'package:work_hub/features/employer/widgets/employer_job_metric_chip.dart';
+import 'package:work_hub/features/employer/widgets/employer_job_section_tabs.dart';
 
 class EmployerJobDetailPage extends StatefulWidget {
   const EmployerJobDetailPage({
@@ -116,17 +119,17 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        MetricChip(
+                        EmployerJobMetricChip(
                           icon: Icons.attach_money,
                           label: 'الراتب',
                           value: salaryText,
                         ),
-                        MetricChip(
+                        EmployerJobMetricChip(
                           icon: Icons.timelapse_outlined,
                           label: 'الخبرة',
                           value: '$experience سنوات',
                         ),
-                        MetricChip(
+                        EmployerJobMetricChip(
                           icon: Icons.location_on_outlined,
                           label: 'الموقع',
                           value: country,
@@ -136,14 +139,14 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                   ),
                   const SizedBox(height: 18),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      RoundedActionButton(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                      EmployerJobActionButton(
                         text: 'تمييز الإعلان',
                         icon: Icons.star_border,
                         onTap: () {},
                       ),
-                      RoundedActionButton(
+                      EmployerJobActionButton(
                         text: 'إظهار المتقدمين',
                         icon: Icons.visibility_outlined,
                         onTap: () {},
@@ -151,7 +154,7 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  SectionTabs(
+                  EmployerJobSectionTabs(
                     index: sectionIndex,
                     onChanged: (index) => setState(() => sectionIndex = index),
                   ),
@@ -192,29 +195,29 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
   Widget buildSectionContent() {
     switch (sectionIndex) {
       case 0:
-        return InfoCard(
+        return EmployerJobInfoCard(
           title: 'معلومات الوظيفة',
           items: [
-            InfoRow(
+            EmployerJobInfoRow(
               label: 'المسمى الوظيفي',
               value: job['arabic_title'] ?? '-',
             ),
-            InfoRow(
+            EmployerJobInfoRow(
               label: 'سنوات الخبرة',
               value: job['experience_years'] ?? '-',
             ),
-            InfoRow(
+            EmployerJobInfoRow(
               label: 'مستوى التعليم',
               value: job['education_level'] ?? '-',
             ),
-            InfoRow(label: 'القسم', value: job['department'] ?? '-'),
-            InfoRow(label: 'الجنسية', value: job['nationality'] ?? '-'),
-            InfoRow(label: 'مكان العمل', value: job['country'] ?? '-'),
-            InfoRow(label: 'المدينة', value: job['city'] ?? '-'),
+            EmployerJobInfoRow(label: 'القسم', value: job['department'] ?? '-'),
+            EmployerJobInfoRow(label: 'الجنسية', value: job['nationality'] ?? '-'),
+            EmployerJobInfoRow(label: 'مكان العمل', value: job['country'] ?? '-'),
+            EmployerJobInfoRow(label: 'المدينة', value: job['city'] ?? '-'),
           ],
         );
       case 1:
-        return InfoCard(
+        return EmployerJobInfoCard(
           title: 'وصف الوظيفة',
           description:
               (job['description'] as String?)?.trim().isEmpty ?? true
@@ -222,7 +225,7 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                   : job['description'],
         );
       default:
-        return InfoCard(
+        return EmployerJobInfoCard(
           title: 'صورة الإعلان',
           description: 'لم يتم تحميل صورة للإعلان حتى الآن.',
         );
@@ -244,189 +247,4 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
       btnOkColor: AppColors.bannerGreen,
     ).show();
   }
-}
-
-class MetricChip extends StatelessWidget {
-  const MetricChip({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(icon, color: AppColors.purple),
-        const SizedBox(height: 6),
-        Text(label, style: const TextStyle(color: Colors.grey)),
-        Text(value, style: const TextStyle(fontWeight: FontWeight.w700)),
-      ],
-    );
-  }
-}
-
-class RoundedActionButton extends StatelessWidget {
-  const RoundedActionButton({
-    required this.text,
-    required this.icon,
-    required this.onTap,
-  });
-
-  final String text;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          height: 48,
-          margin: const EdgeInsets.symmetric(horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: AppColors.purple),
-            color: Colors.white,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: AppColors.purple),
-              const SizedBox(width: 8),
-              Text(
-                text,
-                style: const TextStyle(
-                  color: AppColors.purple,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SectionTabs extends StatelessWidget {
-  const SectionTabs({required this.index, required this.onChanged});
-
-  final int index;
-  final ValueChanged<int> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final tabs = ['معلومات الوظيفة', 'وصف الوظيفة', 'صورة الإعلان'];
-    return Row(
-      children: List.generate(tabs.length, (i) {
-        final active = i == index;
-        return Expanded(
-          child: GestureDetector(
-            onTap: () => onChanged(i),
-            child: Container(
-              margin: EdgeInsets.only(right: i == tabs.length - 1 ? 0 : 8),
-              height: 44,
-              decoration: BoxDecoration(
-                color: active ? AppColors.purple : Colors.white,
-                borderRadius: BorderRadius.circular(28),
-                border: Border.all(
-                  color: active ? Colors.transparent : AppColors.purple,
-                ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                tabs[i],
-                style: TextStyle(
-                  color: active ? Colors.white : AppColors.purple,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        );
-      }),
-    );
-  }
-}
-
-class InfoCard extends StatelessWidget {
-  const InfoCard({required this.title, this.items, this.description});
-
-  final String title;
-  final List<InfoRow>? items;
-  final String? description;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(28),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 12),
-          if (items != null)
-            ...items!.map(
-              (item) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        item.label,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      item.value,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          else if (description != null)
-            Text(
-              description!,
-              style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class InfoRow {
-  const InfoRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
 }
