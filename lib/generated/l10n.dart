@@ -129,6 +129,236 @@ class S {
     );
   }
 
+  /// `Back`
+  String get commonBack {
+    return Intl.message('Back', name: 'commonBack', desc: '', args: []);
+  }
+
+  /// `Next`
+  String get commonNext {
+    return Intl.message('Next', name: 'commonNext', desc: '', args: []);
+  }
+
+  /// `Edit job`
+  String get employerPostJobEditTitle {
+    return Intl.message(
+      'Edit job',
+      name: 'employerPostJobEditTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save and publish`
+  String get employerPostJobSubmit {
+    return Intl.message(
+      'Save and publish',
+      name: 'employerPostJobSubmit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in to view notifications`
+  String get applicantNotifsLogin {
+    return Intl.message(
+      'Sign in to view notifications',
+      name: 'applicantNotifsLogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading notifications`
+  String get applicantNotifsLoadError {
+    return Intl.message(
+      'Error loading notifications',
+      name: 'applicantNotifsLoadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No notifications`
+  String get applicantNotifsEmpty {
+    return Intl.message(
+      'No notifications',
+      name: 'applicantNotifsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your application was accepted`
+  String get applicantNotifsAcceptedTitle {
+    return Intl.message(
+      'Your application was accepted',
+      name: 'applicantNotifsAcceptedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your application was rejected`
+  String get applicantNotifsRejectedTitle {
+    return Intl.message(
+      'Your application was rejected',
+      name: 'applicantNotifsRejectedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You were accepted for the job {jobTitle}. Please contact the company.`
+  String applicantNotifsAcceptedBody(Object jobTitle) {
+    return Intl.message(
+      'You were accepted for the job $jobTitle. Please contact the company.',
+      name: 'applicantNotifsAcceptedBody',
+      desc: '',
+      args: [jobTitle],
+    );
+  }
+
+  /// `Your application for {jobTitle} was declined.`
+  String applicantNotifsRejectedBody(Object jobTitle) {
+    return Intl.message(
+      'Your application for $jobTitle was declined.',
+      name: 'applicantNotifsRejectedBody',
+      desc: '',
+      args: [jobTitle],
+    );
+  }
+
+  /// `Job info`
+  String get employerPostJobStepInfo {
+    return Intl.message(
+      'Job info',
+      name: 'employerPostJobStepInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location`
+  String get employerPostJobStepLocation {
+    return Intl.message(
+      'Location',
+      name: 'employerPostJobStepLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get employerPostJobStepDescription {
+    return Intl.message(
+      'Description',
+      name: 'employerPostJobStepDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Application`
+  String get employerPostJobStepApply {
+    return Intl.message(
+      'Application',
+      name: 'employerPostJobStepApply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name in Arabic`
+  String get applyNameArLabel {
+    return Intl.message(
+      'Name in Arabic',
+      name: 'applyNameArLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your name in Arabic`
+  String get applyNameArHint {
+    return Intl.message(
+      'Enter your name in Arabic',
+      name: 'applyNameArHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name in English`
+  String get applyNameEnLabel {
+    return Intl.message(
+      'Name in English',
+      name: 'applyNameEnLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your name in English`
+  String get applyNameEnHint {
+    return Intl.message(
+      'Enter your name in English',
+      name: 'applyNameEnHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get applyPhoneLabel {
+    return Intl.message(
+      'Phone number',
+      name: 'applyPhoneLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your phone number`
+  String get applyPhoneHint {
+    return Intl.message(
+      'Enter your phone number',
+      name: 'applyPhoneHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resume (PDF)`
+  String get applyCvLabel {
+    return Intl.message(
+      'Resume (PDF)',
+      name: 'applyCvLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload resume file`
+  String get applyCvButton {
+    return Intl.message(
+      'Upload resume file',
+      name: 'applyCvButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please attach a PDF resume`
+  String get applyCvRequired {
+    return Intl.message(
+      'Please attach a PDF resume',
+      name: 'applyCvRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Free`
   String get menuMembershipStatusFree {
     return Intl.message(
@@ -269,176 +499,6 @@ class S {
     return Intl.message(
       'See all roles',
       name: 'bannerRemoteBadge',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Explore CVs`
-  String get employerResumesTitle {
-    return Intl.message(
-      'Explore CVs',
-      name: 'employerResumesTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Filter resumes by time and specialty to pick the best fit.`
-  String get employerResumesSubtitle {
-    return Intl.message(
-      'Filter resumes by time and specialty to pick the best fit.',
-      name: 'employerResumesSubtitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Time`
-  String get employerResumesTimeLabel {
-    return Intl.message(
-      'Time',
-      name: 'employerResumesTimeLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Category`
-  String get employerResumesCategoryLabel {
-    return Intl.message(
-      'Category',
-      name: 'employerResumesCategoryLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Last 24h`
-  String get employerResumesTime24h {
-    return Intl.message(
-      'Last 24h',
-      name: 'employerResumesTime24h',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Last 7 days`
-  String get employerResumesTime7d {
-    return Intl.message(
-      'Last 7 days',
-      name: 'employerResumesTime7d',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Last 30 days`
-  String get employerResumesTime30d {
-    return Intl.message(
-      'Last 30 days',
-      name: 'employerResumesTime30d',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Anytime`
-  String get employerResumesTimeAny {
-    return Intl.message(
-      'Anytime',
-      name: 'employerResumesTimeAny',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `All categories`
-  String get employerResumesCatAll {
-    return Intl.message(
-      'All categories',
-      name: 'employerResumesCatAll',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Tech`
-  String get employerResumesCatTech {
-    return Intl.message(
-      'Tech',
-      name: 'employerResumesCatTech',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Marketing`
-  String get employerResumesCatMarketing {
-    return Intl.message(
-      'Marketing',
-      name: 'employerResumesCatMarketing',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Administration`
-  String get employerResumesCatAdmin {
-    return Intl.message(
-      'Administration',
-      name: 'employerResumesCatAdmin',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Engineering`
-  String get employerResumesCatEngineering {
-    return Intl.message(
-      'Engineering',
-      name: 'employerResumesCatEngineering',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Latest resumes`
-  String get employerDashboardLatestResumes {
-    return Intl.message(
-      'Latest resumes',
-      name: 'employerDashboardLatestResumes',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `See more`
-  String get employerDashboardSeeMore {
-    return Intl.message(
-      'See more',
-      name: 'employerDashboardSeeMore',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No data`
-  String get employerDashboardNoData {
-    return Intl.message(
-      'No data',
-      name: 'employerDashboardNoData',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Post your job for free`
-  String get employerPostJobCta {
-    return Intl.message(
-      'Post your job for free',
-      name: 'employerPostJobCta',
       desc: '',
       args: [],
     );
@@ -1597,11 +1657,6 @@ class S {
       desc: '',
       args: [],
     );
-  }
-
-  /// `Error`
-  String get dialogErrorTitle {
-    return Intl.message('Error', name: 'dialogErrorTitle', desc: '', args: []);
   }
 
   /// `No user found for that email`
@@ -3149,6 +3204,176 @@ class S {
     );
   }
 
+  /// `Explore CVs`
+  String get employerResumesTitle {
+    return Intl.message(
+      'Explore CVs',
+      name: 'employerResumesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter resumes by time and specialty to pick the best fit.`
+  String get employerResumesSubtitle {
+    return Intl.message(
+      'Filter resumes by time and specialty to pick the best fit.',
+      name: 'employerResumesSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get employerResumesTimeLabel {
+    return Intl.message(
+      'Time',
+      name: 'employerResumesTimeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get employerResumesCategoryLabel {
+    return Intl.message(
+      'Category',
+      name: 'employerResumesCategoryLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 24h`
+  String get employerResumesTime24h {
+    return Intl.message(
+      'Last 24h',
+      name: 'employerResumesTime24h',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 7 days`
+  String get employerResumesTime7d {
+    return Intl.message(
+      'Last 7 days',
+      name: 'employerResumesTime7d',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 30 days`
+  String get employerResumesTime30d {
+    return Intl.message(
+      'Last 30 days',
+      name: 'employerResumesTime30d',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Anytime`
+  String get employerResumesTimeAny {
+    return Intl.message(
+      'Anytime',
+      name: 'employerResumesTimeAny',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All categories`
+  String get employerResumesCatAll {
+    return Intl.message(
+      'All categories',
+      name: 'employerResumesCatAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tech`
+  String get employerResumesCatTech {
+    return Intl.message(
+      'Tech',
+      name: 'employerResumesCatTech',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Marketing`
+  String get employerResumesCatMarketing {
+    return Intl.message(
+      'Marketing',
+      name: 'employerResumesCatMarketing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Administration`
+  String get employerResumesCatAdmin {
+    return Intl.message(
+      'Administration',
+      name: 'employerResumesCatAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Engineering`
+  String get employerResumesCatEngineering {
+    return Intl.message(
+      'Engineering',
+      name: 'employerResumesCatEngineering',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latest resumes`
+  String get employerDashboardLatestResumes {
+    return Intl.message(
+      'Latest resumes',
+      name: 'employerDashboardLatestResumes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See more`
+  String get employerDashboardSeeMore {
+    return Intl.message(
+      'See more',
+      name: 'employerDashboardSeeMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No data`
+  String get employerDashboardNoData {
+    return Intl.message(
+      'No data',
+      name: 'employerDashboardNoData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post your job for free`
+  String get employerPostJobCta {
+    return Intl.message(
+      'Post your job for free',
+      name: 'employerPostJobCta',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Account created`
   String get registerSuccessTitle {
     return Intl.message(
@@ -3166,6 +3391,81 @@ class S {
       name: 'registerSuccessDesc',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Warning`
+  String get dialogWarningTitle {
+    return Intl.message(
+      'Warning',
+      name: 'dialogWarningTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Success`
+  String get dialogSuccessTitle {
+    return Intl.message(
+      'Success',
+      name: 'dialogSuccessTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get dialogErrorTitle {
+    return Intl.message('Error', name: 'dialogErrorTitle', desc: '', args: []);
+  }
+
+  /// `OK`
+  String get dialogOk {
+    return Intl.message('OK', name: 'dialogOk', desc: '', args: []);
+  }
+
+  /// `Close`
+  String get dialogClose {
+    return Intl.message('Close', name: 'dialogClose', desc: '', args: []);
+  }
+
+  /// `Please sign in to continue publishing`
+  String get dialogLoginRequiredDesc {
+    return Intl.message(
+      'Please sign in to continue publishing',
+      name: 'dialogLoginRequiredDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job updated successfully`
+  String get jobPostUpdateSuccess {
+    return Intl.message(
+      'Job updated successfully',
+      name: 'jobPostUpdateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job published successfully`
+  String get jobPostPublishSuccess {
+    return Intl.message(
+      'Job published successfully',
+      name: 'jobPostPublishSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error saving data: {error}`
+  String jobPostSaveError(Object error) {
+    return Intl.message(
+      'Error saving data: $error',
+      name: 'jobPostSaveError',
+      desc: '',
+      args: [error],
     );
   }
 
@@ -3214,6 +3514,1576 @@ class S {
     return Intl.message(
       'This field is required',
       name: 'employerEditAboutValidationRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Employer Login`
+  String get employerCompanyLoginTitle {
+    return Intl.message(
+      'Employer Login',
+      name: 'employerCompanyLoginTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications`
+  String get notifTitle {
+    return Intl.message(
+      'Notifications',
+      name: 'notifTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please sign in to view notifications.`
+  String get notifLoginRequired {
+    return Intl.message(
+      'Please sign in to view notifications.',
+      name: 'notifLoginRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error: {error}`
+  String notifError(String error) {
+    return Intl.message(
+      'Error: $error',
+      name: 'notifError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `No notifications yet`
+  String get notifEmpty {
+    return Intl.message(
+      'No notifications yet',
+      name: 'notifEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New application`
+  String get notifNewApplication {
+    return Intl.message(
+      'New application',
+      name: 'notifNewApplication',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Untitled job`
+  String get notifUntitledJob {
+    return Intl.message(
+      'Untitled job',
+      name: 'notifUntitledJob',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Application not found`
+  String get notifApplicantNotFound {
+    return Intl.message(
+      'Application not found',
+      name: 'notifApplicantNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No saved resume for this applicant.`
+  String get notifCvMissing {
+    return Intl.message(
+      'No saved resume for this applicant.',
+      name: 'notifCvMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept`
+  String get notifAccept {
+    return Intl.message('Accept', name: 'notifAccept', desc: '', args: []);
+  }
+
+  /// `Reject`
+  String get notifReject {
+    return Intl.message('Reject', name: 'notifReject', desc: '', args: []);
+  }
+
+  /// `Application accepted successfully`
+  String get notifSuccessAccept {
+    return Intl.message(
+      'Application accepted successfully',
+      name: 'notifSuccessAccept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Application rejected successfully`
+  String get notifSuccessReject {
+    return Intl.message(
+      'Application rejected successfully',
+      name: 'notifSuccessReject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy link`
+  String get notifCopyCv {
+    return Intl.message('Copy link', name: 'notifCopyCv', desc: '', args: []);
+  }
+
+  /// `Open file`
+  String get notifOpenCv {
+    return Intl.message('Open file', name: 'notifOpenCv', desc: '', args: []);
+  }
+
+  /// `Phone`
+  String get notifPhone {
+    return Intl.message('Phone', name: 'notifPhone', desc: '', args: []);
+  }
+
+  /// `Email`
+  String get notifEmail {
+    return Intl.message('Email', name: 'notifEmail', desc: '', args: []);
+  }
+
+  /// `Job title (Arabic)`
+  String get postJobTitleArLabel {
+    return Intl.message(
+      'Job title (Arabic)',
+      name: 'postJobTitleArLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the Arabic job title`
+  String get postJobTitleArHint {
+    return Intl.message(
+      'Enter the Arabic job title',
+      name: 'postJobTitleArHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job title (English)`
+  String get postJobTitleEnLabel {
+    return Intl.message(
+      'Job title (English)',
+      name: 'postJobTitleEnLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the English job title`
+  String get postJobTitleEnHint {
+    return Intl.message(
+      'Enter the English job title',
+      name: 'postJobTitleEnHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Education level`
+  String get postJobEducationLabel {
+    return Intl.message(
+      'Education level',
+      name: 'postJobEducationLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department`
+  String get postJobDepartmentLabel {
+    return Intl.message(
+      'Department',
+      name: 'postJobDepartmentLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Years of experience`
+  String get postJobExperienceLabel {
+    return Intl.message(
+      'Years of experience',
+      name: 'postJobExperienceLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter years of experience`
+  String get postJobExperienceHint {
+    return Intl.message(
+      'Enter years of experience',
+      name: 'postJobExperienceHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get postJobCityLabel {
+    return Intl.message('City', name: 'postJobCityLabel', desc: '', args: []);
+  }
+
+  /// `Company location`
+  String get postJobCompanyLocationLabel {
+    return Intl.message(
+      'Company location',
+      name: 'postJobCompanyLocationLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company location`
+  String get postJobCompanyLocationHint {
+    return Intl.message(
+      'Enter company location',
+      name: 'postJobCompanyLocationHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Listed salary`
+  String get postJobSalaryTitle {
+    return Intl.message(
+      'Listed salary',
+      name: 'postJobSalaryTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get postJobSalaryYes {
+    return Intl.message('Yes', name: 'postJobSalaryYes', desc: '', args: []);
+  }
+
+  /// `Not specified`
+  String get postJobSalaryNo {
+    return Intl.message(
+      'Not specified',
+      name: 'postJobSalaryNo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salary from`
+  String get postJobSalaryFrom {
+    return Intl.message(
+      'Salary from',
+      name: 'postJobSalaryFrom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salary to`
+  String get postJobSalaryTo {
+    return Intl.message(
+      'Salary to',
+      name: 'postJobSalaryTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From`
+  String get postJobSalaryHintFrom {
+    return Intl.message(
+      'From',
+      name: 'postJobSalaryHintFrom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To`
+  String get postJobSalaryHintTo {
+    return Intl.message('To', name: 'postJobSalaryHintTo', desc: '', args: []);
+  }
+
+  /// `Currency`
+  String get postJobCurrency {
+    return Intl.message(
+      'Currency',
+      name: 'postJobCurrency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description language`
+  String get postJobDescriptionLanguage {
+    return Intl.message(
+      'Description language',
+      name: 'postJobDescriptionLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Job description`
+  String get postJobDescriptionLabel {
+    return Intl.message(
+      'Job description',
+      name: 'postJobDescriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write the job objective`
+  String get postJobDescriptionHint {
+    return Intl.message(
+      'Write the job objective',
+      name: 'postJobDescriptionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal skills`
+  String get postJobSkillsTitle {
+    return Intl.message(
+      'Personal skills',
+      name: 'postJobSkillsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a skill`
+  String get postJobSkillSelect {
+    return Intl.message(
+      'Select a skill',
+      name: 'postJobSkillSelect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a custom skill`
+  String get postJobSkillCustomLabel {
+    return Intl.message(
+      'Add a custom skill',
+      name: 'postJobSkillCustomLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type the skill then tap add`
+  String get postJobSkillCustomHint {
+    return Intl.message(
+      'Type the skill then tap add',
+      name: 'postJobSkillCustomHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get postJobAdd {
+    return Intl.message('Add', name: 'postJobAdd', desc: '', args: []);
+  }
+
+  /// `Application deadline`
+  String get postJobDeadlineLabel {
+    return Intl.message(
+      'Application deadline',
+      name: 'postJobDeadlineLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pick the application end date`
+  String get postJobDeadlineHint {
+    return Intl.message(
+      'Pick the application end date',
+      name: 'postJobDeadlineHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ad image`
+  String get postJobImageLabel {
+    return Intl.message(
+      'Ad image',
+      name: 'postJobImageLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Application methods`
+  String get postJobApplyMethods {
+    return Intl.message(
+      'Application methods',
+      name: 'postJobApplyMethods',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply via email`
+  String get postJobApplyEmail {
+    return Intl.message(
+      'Apply via email',
+      name: 'postJobApplyEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply via phone`
+  String get postJobApplyPhone {
+    return Intl.message(
+      'Apply via phone',
+      name: 'postJobApplyPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply with CV upload`
+  String get postJobApplyCv {
+    return Intl.message(
+      'Apply with CV upload',
+      name: 'postJobApplyCv',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Highlight the job posting?`
+  String get postJobHighlight {
+    return Intl.message(
+      'Highlight the job posting?',
+      name: 'postJobHighlight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show company info?`
+  String get postJobShowCompany {
+    return Intl.message(
+      'Show company info?',
+      name: 'postJobShowCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the Arabic title`
+  String get postJobErrorTitleRequired {
+    return Intl.message(
+      'Enter the Arabic title',
+      name: 'postJobErrorTitleRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select education level`
+  String get postJobErrorEducation {
+    return Intl.message(
+      'Select education level',
+      name: 'postJobErrorEducation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select department`
+  String get postJobErrorDepartment {
+    return Intl.message(
+      'Select department',
+      name: 'postJobErrorDepartment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter years of experience`
+  String get postJobErrorExperience {
+    return Intl.message(
+      'Enter years of experience',
+      name: 'postJobErrorExperience',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select city`
+  String get postJobErrorCity {
+    return Intl.message(
+      'Select city',
+      name: 'postJobErrorCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company location`
+  String get postJobErrorCompanyLocation {
+    return Intl.message(
+      'Enter company location',
+      name: 'postJobErrorCompanyLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter salary range`
+  String get postJobErrorSalaryRange {
+    return Intl.message(
+      'Enter salary range',
+      name: 'postJobErrorSalaryRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select currency`
+  String get postJobErrorCurrency {
+    return Intl.message(
+      'Select currency',
+      name: 'postJobErrorCurrency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select description language`
+  String get postJobErrorDescriptionLang {
+    return Intl.message(
+      'Select description language',
+      name: 'postJobErrorDescriptionLang',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter job description`
+  String get postJobErrorDescription {
+    return Intl.message(
+      'Enter job description',
+      name: 'postJobErrorDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter application deadline`
+  String get postJobErrorDeadline {
+    return Intl.message(
+      'Enter application deadline',
+      name: 'postJobErrorDeadline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Advertising services`
+  String get servicesHeaderTitle {
+    return Intl.message(
+      'Advertising services',
+      name: 'servicesHeaderTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Promote your jobs with flexible plans tailored to your needs.`
+  String get servicesHeaderSubtitle {
+    return Intl.message(
+      'Promote your jobs with flexible plans tailored to your needs.',
+      name: 'servicesHeaderSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ad services`
+  String get servicesSectionTitle {
+    return Intl.message(
+      'Ad services',
+      name: 'servicesSectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Packages`
+  String get servicesPackagesTitle {
+    return Intl.message(
+      'Packages',
+      name: 'servicesPackagesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose this plan`
+  String get servicesChoosePlan {
+    return Intl.message(
+      'Choose this plan',
+      name: 'servicesChoosePlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fast posting`
+  String get servicesInfo1Title {
+    return Intl.message(
+      'Fast posting',
+      name: 'servicesInfo1Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reach candidates quickly with highlighted ads.`
+  String get servicesInfo1Desc {
+    return Intl.message(
+      'Reach candidates quickly with highlighted ads.',
+      name: 'servicesInfo1Desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wider reach`
+  String get servicesInfo2Title {
+    return Intl.message(
+      'Wider reach',
+      name: 'servicesInfo2Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Boost visibility across categories and filters.`
+  String get servicesInfo2Desc {
+    return Intl.message(
+      'Boost visibility across categories and filters.',
+      name: 'servicesInfo2Desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Brand presence`
+  String get servicesInfo3Title {
+    return Intl.message(
+      'Brand presence',
+      name: 'servicesInfo3Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Showcase your company with richer visuals.`
+  String get servicesInfo3Desc {
+    return Intl.message(
+      'Showcase your company with richer visuals.',
+      name: 'servicesInfo3Desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan 50 Dinar`
+  String get servicesPkg50Title {
+    return Intl.message(
+      'Plan 50 Dinar',
+      name: 'servicesPkg50Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `50 Dinar`
+  String get servicesPkg50Price {
+    return Intl.message(
+      '50 Dinar',
+      name: 'servicesPkg50Price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Listing visible for 7 days`
+  String get servicesPerkVis7 {
+    return Intl.message(
+      'Listing visible for 7 days',
+      name: 'servicesPerkVis7',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `20 resume views`
+  String get servicesPerkResume20 {
+    return Intl.message(
+      '20 resume views',
+      name: 'servicesPerkResume20',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 ad edit`
+  String get servicesPerkEdits1 {
+    return Intl.message(
+      '1 ad edit',
+      name: 'servicesPerkEdits1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan 100 Dinar`
+  String get servicesPkg100Title {
+    return Intl.message(
+      'Plan 100 Dinar',
+      name: 'servicesPkg100Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `100 Dinar`
+  String get servicesPkg100Price {
+    return Intl.message(
+      '100 Dinar',
+      name: 'servicesPkg100Price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3 job posts for 14 days`
+  String get servicesPerkPosts3 {
+    return Intl.message(
+      '3 job posts for 14 days',
+      name: 'servicesPerkPosts3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Featured + priority listing`
+  String get servicesPerkFeatured3 {
+    return Intl.message(
+      'Featured + priority listing',
+      name: 'servicesPerkFeatured3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `25 resume views`
+  String get servicesPerkResume25 {
+    return Intl.message(
+      '25 resume views',
+      name: 'servicesPerkResume25',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan 150 Dinar`
+  String get servicesPkg150Title {
+    return Intl.message(
+      'Plan 150 Dinar',
+      name: 'servicesPkg150Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `150 Dinar`
+  String get servicesPkg150Price {
+    return Intl.message(
+      '150 Dinar',
+      name: 'servicesPkg150Price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `5 job posts for 21 days`
+  String get servicesPerkPosts5 {
+    return Intl.message(
+      '5 job posts for 21 days',
+      name: 'servicesPerkPosts5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Boosted placement`
+  String get servicesPerkBoosted {
+    return Intl.message(
+      'Boosted placement',
+      name: 'servicesPerkBoosted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Priority support`
+  String get servicesPerkSupport {
+    return Intl.message(
+      'Priority support',
+      name: 'servicesPerkSupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan 200 Dinar`
+  String get servicesPkg200Title {
+    return Intl.message(
+      'Plan 200 Dinar',
+      name: 'servicesPkg200Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `200 Dinar`
+  String get servicesPkg200Price {
+    return Intl.message(
+      '200 Dinar',
+      name: 'servicesPkg200Price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `8 job posts per month`
+  String get servicesPerkPosts8 {
+    return Intl.message(
+      '8 job posts per month',
+      name: 'servicesPerkPosts8',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Featured + boosted ads`
+  String get servicesPerkFeaturedBoost {
+    return Intl.message(
+      'Featured + boosted ads',
+      name: 'servicesPerkFeaturedBoost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra resume views`
+  String get servicesPerkResumeViews {
+    return Intl.message(
+      'Extra resume views',
+      name: 'servicesPerkResumeViews',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan 250 Dinar`
+  String get servicesPkg250Title {
+    return Intl.message(
+      'Plan 250 Dinar',
+      name: 'servicesPkg250Title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `250 Dinar`
+  String get servicesPkg250Price {
+    return Intl.message(
+      '250 Dinar',
+      name: 'servicesPkg250Price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `12 job posts per month`
+  String get servicesPerkPosts12 {
+    return Intl.message(
+      '12 job posts per month',
+      name: 'servicesPerkPosts12',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dedicated account manager`
+  String get servicesPerkDedicatedMgr {
+    return Intl.message(
+      'Dedicated account manager',
+      name: 'servicesPerkDedicatedMgr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `VIP placement`
+  String get servicesPerkVip {
+    return Intl.message(
+      'VIP placement',
+      name: 'servicesPerkVip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About Mhnty`
+  String get aboutHeaderTitle {
+    return Intl.message(
+      'About Mhnty',
+      name: 'aboutHeaderTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connecting employers and job seekers with a clear, modern hiring experience.`
+  String get aboutHeaderSubtitle {
+    return Intl.message(
+      'Connecting employers and job seekers with a clear, modern hiring experience.',
+      name: 'aboutHeaderSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Who we are`
+  String get aboutWhoTitle {
+    return Intl.message(
+      'Who we are',
+      name: 'aboutWhoTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Our mission`
+  String get aboutMissionTitle {
+    return Intl.message(
+      'Our mission',
+      name: 'aboutMissionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We connect employers with top talent and help job seekers reach the right opportunity quickly and confidently.`
+  String get aboutMissionDesc {
+    return Intl.message(
+      'We connect employers with top talent and help job seekers reach the right opportunity quickly and confidently.',
+      name: 'aboutMissionDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Our vision`
+  String get aboutVisionTitle {
+    return Intl.message(
+      'Our vision',
+      name: 'aboutVisionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A modern Arabic hiring platform that supports smart recruitment and provides a smooth experience for companies and candidates.`
+  String get aboutVisionDesc {
+    return Intl.message(
+      'A modern Arabic hiring platform that supports smart recruitment and provides a smooth experience for companies and candidates.',
+      name: 'aboutVisionDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Our values`
+  String get aboutValuesTitle {
+    return Intl.message(
+      'Our values',
+      name: 'aboutValuesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transparency, speed, and quality. We care about user experience and keep posting and applying simple and clear.`
+  String get aboutValuesDesc {
+    return Intl.message(
+      'Transparency, speed, and quality. We care about user experience and keep posting and applying simple and clear.',
+      name: 'aboutValuesDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Why Mhnty?`
+  String get aboutWhyTitle {
+    return Intl.message(
+      'Why Mhnty?',
+      name: 'aboutWhyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accurate job postings`
+  String get aboutWhyPoint1 {
+    return Intl.message(
+      'Accurate job postings',
+      name: 'aboutWhyPoint1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Easy Arabic interface`
+  String get aboutWhyPoint2 {
+    return Intl.message(
+      'Easy Arabic interface',
+      name: 'aboutWhyPoint2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fast, clear support`
+  String get aboutWhyPoint3 {
+    return Intl.message(
+      'Fast, clear support',
+      name: 'aboutWhyPoint3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flexible posting options`
+  String get aboutWhyPoint4 {
+    return Intl.message(
+      'Flexible posting options',
+      name: 'aboutWhyPoint4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact us`
+  String get contactHeaderTitle {
+    return Intl.message(
+      'Contact us',
+      name: 'contactHeaderTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We are here to support your hiring journey.`
+  String get contactHeaderSubtitle {
+    return Intl.message(
+      'We are here to support your hiring journey.',
+      name: 'contactHeaderSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact details`
+  String get contactSectionContact {
+    return Intl.message(
+      'Contact details',
+      name: 'contactSectionContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Support email`
+  String get contactEmailTitle {
+    return Intl.message(
+      'Support email',
+      name: 'contactEmailTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `support@mhnty.com`
+  String get contactEmailValue {
+    return Intl.message(
+      'support@mhnty.com',
+      name: 'contactEmailValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone`
+  String get contactPhoneTitle {
+    return Intl.message('Phone', name: 'contactPhoneTitle', desc: '', args: []);
+  }
+
+  /// `+218 91 234 5678`
+  String get contactPhoneValue {
+    return Intl.message(
+      '+218 91 234 5678',
+      name: 'contactPhoneValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get contactAddressTitle {
+    return Intl.message(
+      'Address',
+      name: 'contactAddressTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tripoli, Libya`
+  String get contactAddressValue {
+    return Intl.message(
+      'Tripoli, Libya',
+      name: 'contactAddressValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact form`
+  String get contactFormTitle {
+    return Intl.message(
+      'Contact form',
+      name: 'contactFormTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get contactNameLabel {
+    return Intl.message('Name', name: 'contactNameLabel', desc: '', args: []);
+  }
+
+  /// `Enter your name`
+  String get contactNameHint {
+    return Intl.message(
+      'Enter your name',
+      name: 'contactNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get contactEmailLabel {
+    return Intl.message('Email', name: 'contactEmailLabel', desc: '', args: []);
+  }
+
+  /// `example@email.com`
+  String get contactEmailHint {
+    return Intl.message(
+      'example@email.com',
+      name: 'contactEmailHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subject`
+  String get contactSubjectLabel {
+    return Intl.message(
+      'Subject',
+      name: 'contactSubjectLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What is your inquiry?`
+  String get contactSubjectHint {
+    return Intl.message(
+      'What is your inquiry?',
+      name: 'contactSubjectHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message`
+  String get contactMessageLabel {
+    return Intl.message(
+      'Message',
+      name: 'contactMessageLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write your message here...`
+  String get contactMessageHint {
+    return Intl.message(
+      'Write your message here...',
+      name: 'contactMessageHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get contactSendButton {
+    return Intl.message('Send', name: 'contactSendButton', desc: '', args: []);
+  }
+
+  /// `Working hours`
+  String get contactScheduleTitle {
+    return Intl.message(
+      'Working hours',
+      name: 'contactScheduleTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sunday - Thursday`
+  String get contactWorkdaysTitle {
+    return Intl.message(
+      'Sunday - Thursday',
+      name: 'contactWorkdaysTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `9:00 AM - 6:00 PM`
+  String get contactWorkdaysTime {
+    return Intl.message(
+      '9:00 AM - 6:00 PM',
+      name: 'contactWorkdaysTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Friday - Saturday`
+  String get contactWeekendTitle {
+    return Intl.message(
+      'Friday - Saturday',
+      name: 'contactWeekendTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed`
+  String get contactWeekendTime {
+    return Intl.message(
+      'Closed',
+      name: 'contactWeekendTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Policy`
+  String get privacyHeaderTitle {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacyHeaderTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We explain how we keep your data safe inside Mhnty.`
+  String get privacyHeaderSubtitle {
+    return Intl.message(
+      'We explain how we keep your data safe inside Mhnty.',
+      name: 'privacyHeaderSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Policy`
+  String get privacyIntroTitle {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacyIntroTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data protection`
+  String get privacyDataTitle {
+    return Intl.message(
+      'Data protection',
+      name: 'privacyDataTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We protect your personal information and only ask for what we need to serve you.`
+  String get privacyDataDesc {
+    return Intl.message(
+      'We protect your personal information and only ask for what we need to serve you.',
+      name: 'privacyDataDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification & security`
+  String get privacySecurityTitle {
+    return Intl.message(
+      'Verification & security',
+      name: 'privacySecurityTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We verify accounts and use secure channels to protect your data during transfer and storage.`
+  String get privacySecurityDesc {
+    return Intl.message(
+      'We verify accounts and use secure channels to protect your data during transfer and storage.',
+      name: 'privacySecurityDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data retention`
+  String get privacyRetentionTitle {
+    return Intl.message(
+      'Data retention',
+      name: 'privacyRetentionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We keep data only as long as needed for hiring and comply with requests to delete it.`
+  String get privacyRetentionDesc {
+    return Intl.message(
+      'We keep data only as long as needed for hiring and comply with requests to delete it.',
+      name: 'privacyRetentionDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Principles`
+  String get privacyPrinciplesTitle {
+    return Intl.message(
+      'Principles',
+      name: 'privacyPrinciplesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We never sell your data`
+  String get privacyPrinciple1 {
+    return Intl.message(
+      'We never sell your data',
+      name: 'privacyPrinciple1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can request deletion`
+  String get privacyPrinciple2 {
+    return Intl.message(
+      'You can request deletion',
+      name: 'privacyPrinciple2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We respect message privacy`
+  String get privacyPrinciple3 {
+    return Intl.message(
+      'We respect message privacy',
+      name: 'privacyPrinciple3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transparent permissions`
+  String get privacyPrinciple4 {
+    return Intl.message(
+      'Transparent permissions',
+      name: 'privacyPrinciple4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How we use data`
+  String get privacyUseTitle {
+    return Intl.message(
+      'How we use data',
+      name: 'privacyUseTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Improve matching between jobs and applicants.`
+  String get privacyUseItem1 {
+    return Intl.message(
+      'Improve matching between jobs and applicants.',
+      name: 'privacyUseItem1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send important updates about applications.`
+  String get privacyUseItem2 {
+    return Intl.message(
+      'Send important updates about applications.',
+      name: 'privacyUseItem2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detect abuse and keep the platform safe.`
+  String get privacyUseItem3 {
+    return Intl.message(
+      'Detect abuse and keep the platform safe.',
+      name: 'privacyUseItem3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What we don’t do`
+  String get privacyNotTitle {
+    return Intl.message(
+      'What we don’t do',
+      name: 'privacyNotTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No hidden sharing with third parties.`
+  String get privacyNotItem1 {
+    return Intl.message(
+      'No hidden sharing with third parties.',
+      name: 'privacyNotItem1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No marketing spam without consent.`
+  String get privacyNotItem2 {
+    return Intl.message(
+      'No marketing spam without consent.',
+      name: 'privacyNotItem2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No access to private files without permission.`
+  String get privacyNotItem3 {
+    return Intl.message(
+      'No access to private files without permission.',
+      name: 'privacyNotItem3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Need help?`
+  String get privacyActionTitle {
+    return Intl.message(
+      'Need help?',
+      name: 'privacyActionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact us via the support form or email. We respond as soon as possible.`
+  String get privacyActionDesc {
+    return Intl.message(
+      'Contact us via the support form or email. We respond as soon as possible.',
+      name: 'privacyActionDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get privacyActionButton {
+    return Intl.message(
+      'Close',
+      name: 'privacyActionButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your company credentials to access the dashboard.`
+  String get employerLoginIntro {
+    return Intl.message(
+      'Enter your company credentials to access the dashboard.',
+      name: 'employerLoginIntro',
       desc: '',
       args: [],
     );

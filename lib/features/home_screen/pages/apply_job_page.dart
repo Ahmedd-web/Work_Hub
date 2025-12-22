@@ -1,8 +1,12 @@
-import 'dart:typed_data';
-
+﻿import 'dart:typed_data';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/home_screen/models/job_post.dart';
+import 'package:work_hub/features/home_screen/widgets/apply_job_helpers.dart';
 import 'package:work_hub/generated/l10n.dart';
 
 class ApplyJobPage extends StatefulWidget {
@@ -11,26 +15,26 @@ class ApplyJobPage extends StatefulWidget {
   final JobPost job;
 
   @override
-  State<ApplyJobPage> createState() => _ApplyJobPageState();
+  State<ApplyJobPage> createState() => ApplyJobPageState();
 }
 
-class _ApplyJobPageState extends State<ApplyJobPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameArController = TextEditingController();
-  final _nameEnController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
-  String _phoneCode = '+218';
-  Uint8List? _cvBytes;
-  String? _cvFileName;
-  bool _isPickingCv = false;
+class ApplyJobPageState extends State<ApplyJobPage> {
+  final formKey = GlobalKey<FormState>();
+  final nameArController = TextEditingController();
+  final nameEnController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
+  String phoneCode = '+218';
+  Uint8List? cvBytes;
+  String? cvFileName;
+  bool isPickingCv = false;
 
   @override
   void dispose() {
-    _nameArController.dispose();
-    _nameEnController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
+    nameArController.dispose();
+    nameEnController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
@@ -49,21 +53,16 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
     );
     final surfaceFill = theme.inputDecorationTheme.fillColor ?? theme.cardColor;
 
-    final nameArLabel = isArabic ? 'الاسم بالعربية' : 'Name in Arabic';
-    final nameArHint = isArabic ? 'اكتب الاسم بالعربية' : 'Name in Arabic';
-    final nameEnLabel = isArabic ? 'الاسم بالإنجليزية' : 'Name in English';
-    final nameEnHint = isArabic ? 'اكتب الاسم بالإنجليزية' : 'Name in English';
-    final phoneLabel = isArabic ? 'رقم الهاتف' : 'Phone Number';
-    final phoneHint = isArabic ? 'رقم الهاتف' : 'Phone number';
-    final phoneRequired = isArabic ? 'هذا الحقل مطلوب' : s.fieldRequired;
-    final cvLabel = isArabic ? 'السيرة الذاتية (PDF)' : 'Resume (PDF)';
-    final cvButtonText =
-        isArabic ? 'رفع ملف السيرة الذاتية' : 'Upload resume file';
-    final cvRequired =
-        isArabic
-            ? 'يرجى إرفاق ملف PDF للسيرة الذاتية'
-            : 'Please attach a PDF resume';
-
+    final nameArLabel = s.applyNameArLabel;
+    final nameArHint = s.applyNameArHint;
+    final nameEnLabel = s.applyNameEnLabel;
+    final nameEnHint = s.applyNameEnHint;
+    final phoneLabel = s.applyPhoneLabel;
+    final phoneHint = s.applyPhoneHint;
+    final phoneRequired = s.fieldRequired;
+    final cvLabel = s.applyCvLabel;
+    final cvButtonText = s.applyCvButton;
+    final cvRequired = s.applyCvRequired;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -76,7 +75,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -96,7 +95,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                _LabeledField(
+                LabeledField(
                   showLabel: false,
                   label: nameArLabel,
                   alignment:
@@ -104,8 +103,8 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                           ? CrossAxisAlignment.end
                           : CrossAxisAlignment.start,
                   labelAlign: isArabic ? TextAlign.right : TextAlign.left,
-                  child: _AlignedTextField(
-                    controller: _nameArController,
+                  child: AlignedTextField(
+                    controller: nameArController,
                     isArabic: isArabic,
                     decoration: InputDecoration(
                       labelText: nameArLabel,
@@ -134,7 +133,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                   ),
                 ),
                 const SizedBox(height: 18),
-                _LabeledField(
+                LabeledField(
                   showLabel: false,
                   label: nameEnLabel,
                   alignment:
@@ -142,8 +141,8 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                           ? CrossAxisAlignment.end
                           : CrossAxisAlignment.start,
                   labelAlign: isArabic ? TextAlign.right : TextAlign.left,
-                  child: _AlignedTextField(
-                    controller: _nameEnController,
+                  child: AlignedTextField(
+                    controller: nameEnController,
                     isArabic: isArabic,
                     decoration: InputDecoration(
                       labelText: nameEnLabel,
@@ -167,7 +166,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                   ),
                 ),
                 const SizedBox(height: 18),
-                _LabeledField(
+                LabeledField(
                   showLabel: false,
                   label: phoneLabel,
                   alignment:
@@ -180,21 +179,21 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                       if (isArabic) ...[
                         Expanded(
                           flex: 6,
-                          child: _PhoneCodeField(
+                          child: PhoneCodeField(
                             border: border,
                             colorScheme: colorScheme,
                             textDirection: fieldDirection,
-                            value: _phoneCode,
+                            value: phoneCode,
                             onChanged: (val) {
-                              if (val != null) setState(() => _phoneCode = val);
+                              if (val != null) setState(() => phoneCode = val);
                             },
                           ),
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           flex: 10,
-                          child: _PhoneNumberField(
-                            controller: _phoneController,
+                          child: PhoneNumberField(
+                            controller: phoneController,
                             border: border,
                             colorScheme: colorScheme,
                             isArabic: isArabic,
@@ -206,8 +205,8 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                       ] else ...[
                         Expanded(
                           flex: 10,
-                          child: _PhoneNumberField(
-                            controller: _phoneController,
+                          child: PhoneNumberField(
+                            controller: phoneController,
                             border: border,
                             colorScheme: colorScheme,
                             isArabic: isArabic,
@@ -219,13 +218,13 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                         const SizedBox(width: 8),
                         Expanded(
                           flex: 6,
-                          child: _PhoneCodeField(
+                          child: PhoneCodeField(
                             border: border,
                             colorScheme: colorScheme,
                             textDirection: fieldDirection,
-                            value: _phoneCode,
+                            value: phoneCode,
                             onChanged: (val) {
-                              if (val != null) setState(() => _phoneCode = val);
+                              if (val != null) setState(() => phoneCode = val);
                             },
                           ),
                         ),
@@ -234,7 +233,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                   ),
                 ),
                 const SizedBox(height: 18),
-                _LabeledField(
+                LabeledField(
                   showLabel: false,
                   label: s.loginEmail,
                   alignment:
@@ -242,8 +241,8 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                           ? CrossAxisAlignment.end
                           : CrossAxisAlignment.start,
                   labelAlign: isArabic ? TextAlign.right : TextAlign.left,
-                  child: _AlignedTextField(
-                    controller: _emailController,
+                  child: AlignedTextField(
+                    controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     isArabic: isArabic,
                     decoration: InputDecoration(
@@ -269,9 +268,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                       if (val == null || val.trim().isEmpty) {
                         return s.loginEmailRequired;
                       }
-                      final emailRegex = RegExp(
-                        r'^[\\w\\.-]+@[\\w\\.-]+\\.[a-zA-Z]{2,}$',
-                      );
+                      final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
                       if (!emailRegex.hasMatch(val.trim())) {
                         return s.loginEmailInvalid;
                       }
@@ -280,7 +277,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                   ),
                 ),
                 const SizedBox(height: 18),
-                _LabeledField(
+                LabeledField(
                   label: cvLabel,
                   alignment: CrossAxisAlignment.center,
                   labelAlign: TextAlign.center,
@@ -301,9 +298,9 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                           ),
                         ),
                         onPressed:
-                            _isPickingCv ? null : () => _pickCv(cvRequired),
+                            isPickingCv ? null : () => pickCv(cvRequired),
                         icon:
-                            _isPickingCv
+                            isPickingCv
                                 ? SizedBox(
                                   width: 18,
                                   height: 18,
@@ -317,7 +314,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                                   color: colorScheme.primary,
                                 ),
                         label: Text(
-                          _cvFileName ?? cvButtonText,
+                          cvFileName ?? cvButtonText,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: colorScheme.primary,
@@ -325,10 +322,10 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                           ),
                         ),
                       ),
-                      if (_cvFileName != null) ...[
+                      if (cvFileName != null) ...[
                         const SizedBox(height: 8),
                         Text(
-                          _cvFileName!,
+                          cvFileName!,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onSurface.withValues(alpha: 0.7),
@@ -349,7 +346,7 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    onPressed: _submit,
+                    onPressed: submit,
                     child: Text(
                       s.applyNow,
                       style: const TextStyle(
@@ -368,8 +365,8 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
     );
   }
 
-  Future<void> _pickCv(String errorText) async {
-    setState(() => _isPickingCv = true);
+  Future<void> pickCv(String errorText) async {
+    setState(() => isPickingCv = true);
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -379,218 +376,173 @@ class _ApplyJobPageState extends State<ApplyJobPage> {
       if (result != null && result.files.single.bytes != null) {
         final file = result.files.single;
         setState(() {
-          _cvBytes = file.bytes;
-          _cvFileName = file.name;
+          cvBytes = file.bytes;
+          cvFileName = file.name;
         });
       } else if (result != null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(errorText)));
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.warning,
+          animType: AnimType.bottomSlide,
+          title: S.of(context).dialogWarningTitle,
+          desc: errorText,
+          btnOkText: S.of(context).dialogOk,
+          btnOkOnPress: () {},
+        ).show();
       }
     } catch (_) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(errorText)));
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.bottomSlide,
+        title: S.of(context).dialogErrorTitle,
+        desc: errorText,
+        btnOkText: S.of(context).dialogClose,
+        btnOkOnPress: () {},
+      ).show();
     } finally {
-      if (mounted) setState(() => _isPickingCv = false);
+      if (mounted) setState(() => isPickingCv = false);
     }
   }
 
-  void _submit() {
-    if (!_formKey.currentState!.validate()) return;
-    if (_cvBytes == null) {
-      final locale = Localizations.localeOf(context);
-      final isArabic = locale.languageCode == 'ar';
-      final cvRequired =
-          isArabic
-              ? 'يرجى إرفاق ملف PDF للسيرة الذاتية'
-              : 'Please attach a PDF resume';
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(cvRequired)));
+  void submit() {
+    if (!formKey.currentState!.validate()) return;
+    // PDF optional (temporarily disabled)
+    FocusScope.of(context).unfocus();
+    submitApplication();
+  }
+
+  Future<void> submitApplication() async {
+    final s = S.of(context);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.warning,
+        animType: AnimType.bottomSlide,
+        title: s.dialogWarningTitle,
+        desc: s.dialogLoginRequiredDesc,
+        btnOkText: s.dialogOk,
+        btnOkOnPress: () {},
+      ).show();
       return;
     }
-    FocusScope.of(context).unfocus();
+
+    final data = {
+      'job_id': widget.job.id,
+      'employer_id': widget.job.ownerId,
+      'applicant_uid': user.uid,
+      'name_ar': nameArController.text.trim(),
+      'name_en': nameEnController.text.trim(),
+      'phone_code': phoneCode,
+      'phone': phoneController.text.trim(),
+      'email': emailController.text.trim(),
+      'cv_file_name': cvFileName,
+      'status': 'pending',
+      'sent_at': FieldValue.serverTimestamp(),
+    };
+
     final locale = Localizations.localeOf(context);
     final isArabic = locale.languageCode == 'ar';
-    final applySuccess =
-        isArabic
-            ? 'تم إرسال طلبك لوظيفة ${widget.job.title}'
-            : 'Application sent for ${widget.job.title}';
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(applySuccess)));
-    Navigator.of(context).maybePop();
-  }
-}
 
-class _LabeledField extends StatelessWidget {
-  const _LabeledField({
-    required this.label,
-    required this.child,
-    this.alignment = CrossAxisAlignment.end,
-    this.labelAlign = TextAlign.right,
-    this.showLabel = true,
-  });
+    try {
+      if (cvBytes != null && cvFileName != null) {
+        final jobIdSafe = (widget.job.id.isNotEmpty ? widget.job.id : user.uid)
+            .replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
+        final safeName = (cvFileName!.trim().isEmpty ? 'resume' : cvFileName!)
+            .replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
+        if (cvBytes!.isEmpty) {
+          await AwesomeDialog(
+            context: context,
+            dialogType: DialogType.warning,
+            animType: AnimType.bottomSlide,
+            title: s.dialogWarningTitle,
+            desc: s.applyCvRequired,
+            btnOkText: s.dialogOk,
+            btnOkOnPress: () {},
+          ).show();
+          return;
+        }
 
-  final String label;
-  final Widget child;
-  final CrossAxisAlignment alignment;
-  final TextAlign labelAlign;
-  final bool showLabel;
+        final storageRef = FirebaseStorage.instance.ref().child(
+          'applications/$jobIdSafe/${user.uid}/${DateTime.now().millisecondsSinceEpoch}_$safeName.pdf',
+        );
+        debugPrint('Uploading CV to: ${storageRef.fullPath}');
+        try {
+          await storageRef.putData(
+            cvBytes!,
+            SettableMetadata(contentType: 'application/pdf'),
+          );
+          try {
+            final cvUrl = await storageRef.getDownloadURL();
+            data['cv_url'] = cvUrl;
+            data['cv_path'] = storageRef.fullPath;
+          } on FirebaseException catch (e) {
+            await AwesomeDialog(
+              context: context,
+              dialogType: DialogType.error,
+              animType: AnimType.bottomSlide,
+              title: s.dialogErrorTitle,
+              desc: s.applyCvRequired,
+              btnOkText: s.dialogClose,
+              btnOkOnPress: () {},
+            ).show();
+            return;
+          }
+        } on FirebaseException catch (e) {
+          await AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            animType: AnimType.bottomSlide,
+            title: s.dialogErrorTitle,
+            desc: s.applyCvRequired,
+            btnOkText: s.dialogClose,
+            btnOkOnPress: () {},
+          ).show();
+          return;
+        }
+      }
 
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: alignment,
-      children: [
-        if (showLabel) ...[
-          Text(
-            label,
-            style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-            textAlign: labelAlign,
-          ),
-          const SizedBox(height: 8),
-        ],
-        child,
-      ],
-    );
-  }
-}
+      final apps = FirebaseFirestore.instance.collection('job_applications');
+      final notif = FirebaseFirestore.instance.collection(
+        'employer_notifications',
+      );
+      final appRef = await apps.add(data);
+      if (widget.job.ownerId.isNotEmpty) {
+        await notif.add({
+          'employer_id': widget.job.ownerId,
+          'type': 'application',
+          'application_id': appRef.id,
+          'job_id': widget.job.id,
+          'job_title': widget.job.title,
+          'seen': false,
+          'created_at': FieldValue.serverTimestamp(),
+        });
+      }
 
-class _AlignedTextField extends StatelessWidget {
-  const _AlignedTextField({
-    required this.controller,
-    required this.isArabic,
-    required this.decoration,
-    this.keyboardType,
-    this.validator,
-  });
-
-  final TextEditingController controller;
-  final bool isArabic;
-  final InputDecoration decoration;
-  final TextInputType? keyboardType;
-  final String? Function(String?)? validator;
-
-  @override
-  Widget build(BuildContext context) {
-    final textDirection = isArabic ? TextDirection.rtl : TextDirection.ltr;
-    final textAlign = isArabic ? TextAlign.right : TextAlign.left;
-    return Directionality(
-      textDirection: textDirection,
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        textAlign: textAlign,
-        decoration: decoration,
-        validator: validator,
-      ),
-    );
-  }
-}
-
-class _PhoneNumberField extends StatelessWidget {
-  const _PhoneNumberField({
-    required this.controller,
-    required this.border,
-    required this.colorScheme,
-    required this.isArabic,
-    required this.hintText,
-    required this.requiredText,
-    required this.labelText,
-  });
-
-  final TextEditingController controller;
-  final OutlineInputBorder border;
-  final ColorScheme colorScheme;
-  final bool isArabic;
-  final String hintText;
-  final String requiredText;
-  final String labelText;
-
-  @override
-  Widget build(BuildContext context) {
-    final textDirection = isArabic ? TextDirection.rtl : TextDirection.ltr;
-    final textAlign = isArabic ? TextAlign.right : TextAlign.left;
-    return Directionality(
-      textDirection: textDirection,
-      child: TextFormField(
-        controller: controller,
-        keyboardType: TextInputType.phone,
-        textAlign: textAlign,
-        decoration: InputDecoration(
-          labelText: labelText,
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          hintText: hintText,
-          border: border,
-          enabledBorder: border,
-          focusedBorder: border.copyWith(
-            borderSide: BorderSide(color: colorScheme.primary),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
-        ),
-        validator:
-            (val) => val == null || val.trim().isEmpty ? requiredText : null,
-      ),
-    );
-  }
-}
-
-class _PhoneCodeField extends StatelessWidget {
-  const _PhoneCodeField({
-    required this.border,
-    required this.colorScheme,
-    required this.textDirection,
-    required this.value,
-    required this.onChanged,
-  });
-
-  final OutlineInputBorder border;
-  final ColorScheme colorScheme;
-  final TextDirection textDirection;
-  final String value;
-  final ValueChanged<String?> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final isArabic = textDirection == TextDirection.rtl;
-    return Directionality(
-      textDirection: textDirection,
-      child: DropdownButtonFormField<String>(
-        value: value,
-        isExpanded: true,
-        decoration: InputDecoration(
-          border: border,
-          enabledBorder: border,
-          focusedBorder: border.copyWith(
-            borderSide: BorderSide(color: colorScheme.primary),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 8,
-          ),
-        ),
-        items: [
-          DropdownMenuItem(
-            value: '+218',
-            child: Text(isArabic ? '+218 ليبيا' : '+218 Libya'),
-          ),
-          DropdownMenuItem(
-            value: '+20',
-            child: Text(isArabic ? '+20 مصر' : '+20 Egypt'),
-          ),
-          DropdownMenuItem(
-            value: '+971',
-            child: Text(isArabic ? '+971 الإمارات' : '+971 UAE'),
-          ),
-        ],
-        onChanged: onChanged,
-      ),
-    );
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        title: s.dialogSuccessTitle,
+        desc:
+            isArabic
+                ? 'تم إرسال طلبك بنجاح.'
+                : 'Your application was sent successfully.',
+        btnOkText: s.dialogOk,
+        btnOkOnPress: () {},
+      ).show();
+      if (mounted) Navigator.of(context).maybePop();
+    } catch (e) {
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.bottomSlide,
+        title: s.dialogErrorTitle,
+        desc: e.toString(),
+        btnOkText: s.dialogClose,
+        btnOkOnPress: () {},
+      ).show();
+    }
   }
 }

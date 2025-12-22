@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
+import 'package:work_hub/generated/l10n.dart';
 
 /// Header with gradient and logo used at top of PrivacyPage.
 class PrivacyHeader extends StatelessWidget {
@@ -10,6 +11,7 @@ class PrivacyHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final s = S.of(context);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -67,7 +69,7 @@ class PrivacyHeader extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'سياسة الخصوصية',
+                        s.privacyHeaderTitle,
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w800,
                           color: colorScheme.primary,
@@ -75,7 +77,7 @@ class PrivacyHeader extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'نوضح لك كيف نحافظ على بياناتك داخل منصة مهنتي-Mhnty.',
+                        s.privacyHeaderSubtitle,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           height: 1.3,
                         ),

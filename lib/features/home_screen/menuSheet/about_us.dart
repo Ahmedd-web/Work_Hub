@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
+import 'package:work_hub/generated/l10n.dart';
 
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
@@ -8,6 +9,7 @@ class AboutUsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final s = S.of(context);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -41,7 +43,11 @@ class AboutUsPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  HeroCard(colorScheme: colorScheme),
+                  HeroCard(
+                    colorScheme: colorScheme,
+                    title: s.aboutHeaderTitle,
+                    subtitle: s.aboutHeaderSubtitle,
+                  ),
                 ],
               ),
             ),
@@ -51,42 +57,39 @@ class AboutUsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SectionTitle(title: 'من نحن'),
+                    SectionTitle(title: s.aboutWhoTitle),
                     const SizedBox(height: 14),
                     InfoCard(
-                      title: 'رسالتنا',
-                      description:
-                          'نربط أصحاب العمل مع أفضل المواهب، ونساعد الباحثين عن عمل على العثور على الفرصة المثالية بسرعة وثقة.',
+                      title: s.aboutMissionTitle,
+                      description: s.aboutMissionDesc,
                       icon: Icons.bolt_outlined,
                       color: colorScheme.primary,
                     ),
                     const SizedBox(height: 12),
                     InfoCard(
-                      title: 'رؤيتنا',
-                      description:
-                          'منصة توظيف عربية حديثة تدعم التوظيف الذكي، وتوفر تجربة سلسة وممتعة لكل من الشركات والباحثين عن العمل.',
+                      title: s.aboutVisionTitle,
+                      description: s.aboutVisionDesc,
                       icon: Icons.remove_red_eye_outlined,
                       color: Colors.green.shade500,
                     ),
                     const SizedBox(height: 12),
                     InfoCard(
-                      title: 'قيمنا',
-                      description:
-                          'الشفافية، السرعة، والجودة. نهتم بتجربة المستخدم ونضمن أن تكون خطوات النشر والتقديم واضحة وبسيطة.',
+                      title: s.aboutValuesTitle,
+                      description: s.aboutValuesDesc,
                       icon: Icons.star_border_rounded,
                       color: Colors.amber.shade700,
                     ),
                     const SizedBox(height: 24),
-                    SectionTitle(title: 'لماذا مهنتي-Mhnty؟'),
+                    SectionTitle(title: s.aboutWhyTitle),
                     const SizedBox(height: 12),
                     Wrap(
                       spacing: 12,
                       runSpacing: 12,
                       children: const [
-                        ChipPoint(text: 'واجهة عربية سهلة'),
-                        ChipPoint(text: 'إعلانات سريعة الانتشار'),
-                        ChipPoint(text: 'بحث متقدم عن السير الذاتية'),
-                        ChipPoint(text: 'دعم فني سريع'),
+                        ChipPoint(text: 'why_point_1'),
+                        ChipPoint(text: 'why_point_2'),
+                        ChipPoint(text: 'why_point_3'),
+                        ChipPoint(text: 'why_point_4'),
                       ],
                     ),
                   ],
@@ -101,9 +104,16 @@ class AboutUsPage extends StatelessWidget {
 }
 
 class HeroCard extends StatelessWidget {
-  const HeroCard({required this.colorScheme});
+  const HeroCard({
+    super.key,
+    required this.colorScheme,
+    required this.title,
+    required this.subtitle,
+  });
 
   final ColorScheme colorScheme;
+  final String title;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +148,7 @@ class HeroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'مهنتي-Mhnty',
+                  title,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w800,
                     color: colorScheme.primary,
@@ -146,7 +156,7 @@ class HeroCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'منصة تجمع أصحاب العمل والباحثين عن العمل في تجربة توظيف حديثة وسلسة.',
+                  subtitle,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     height: 1.4,
                   ),
@@ -162,6 +172,7 @@ class HeroCard extends StatelessWidget {
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
+    super.key,
     required this.title,
     required this.description,
     required this.icon,
@@ -227,7 +238,7 @@ class InfoCard extends StatelessWidget {
 }
 
 class SectionTitle extends StatelessWidget {
-  const SectionTitle({required this.title});
+  const SectionTitle({super.key, required this.title});
 
   final String title;
 
@@ -246,13 +257,14 @@ class SectionTitle extends StatelessWidget {
 }
 
 class ChipPoint extends StatelessWidget {
-  const ChipPoint({required this.text});
+  const ChipPoint({super.key, required this.text});
 
   final String text;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final label = _resolveText(context, text);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
@@ -267,11 +279,27 @@ class ChipPoint extends StatelessWidget {
         ],
       ),
       child: Text(
-        text,
+        label,
         style: theme.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.w600,
         ),
       ),
     );
+  }
+
+  String _resolveText(BuildContext context, String key) {
+    final s = S.of(context);
+    switch (key) {
+      case 'why_point_1':
+        return s.aboutWhyPoint1;
+      case 'why_point_2':
+        return s.aboutWhyPoint2;
+      case 'why_point_3':
+        return s.aboutWhyPoint3;
+      case 'why_point_4':
+        return s.aboutWhyPoint4;
+      default:
+        return key;
+    }
   }
 }

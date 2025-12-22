@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
@@ -10,6 +12,7 @@ import 'package:work_hub/features/employer/widgets/employer_dashboard_search_fie
 import 'package:work_hub/features/employer/widgets/employer_promo_banner.dart';
 import 'package:work_hub/features/employer/widgets/employer_post_job_button.dart';
 import 'package:work_hub/features/employer/widgets/employer_empty_state_card.dart';
+import 'package:work_hub/features/employer/screens/employer_notifications_page.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
 class EmployerDashboardPage extends StatefulWidget {
@@ -33,22 +36,45 @@ class EmployerDashboardPageState extends State<EmployerDashboardPage> {
     final theme = Theme.of(context);
     final colorscheme = theme.colorScheme;
     final isarabic = Localizations.localeOf(context).languageCode == 'ar';
+    final uid = FirebaseAuth.instance.currentUser?.uid;
     String t(String ar, String en) => isarabic ? ar : en;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
-          CustomHeader(
-            title: '',
-            titleWidget: const SizedBox.shrink(),
-            backgroundColor: AppColors.purple,
-            backgroundImage: AppAssets.headerLogo,
-            showMenuButton: true,
-            showNotificationButton: true,
-            showSearchBar: false,
-            overlayChild: EmployerDashboardSearchField(onTap: openresumespage),
-            overlayHeight: 70,
-            height: 160,
+          StreamBuilder<int>(
+            stream: uid == null
+                ? const Stream.empty()
+                : FirebaseFirestore.instance
+                    .collection('employer_notifications')
+                    .where('employer_id', isEqualTo: uid)
+                    .where('seen', isEqualTo: false)
+                    .snapshots()
+                    .map((snap) => snap.size),
+            builder: (context, snapshot) {
+              final count = snapshot.data ?? 0;
+              return CustomHeader(
+                title: '',
+                titleWidget: const SizedBox.shrink(),
+                backgroundColor: AppColors.purple,
+                backgroundImage: AppAssets.headerLogo,
+                showMenuButton: true,
+                showNotificationButton: true,
+                notificationCount: count > 0 ? count : null,
+                onNotificationPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const EmployerNotificationsPage(),
+                    ),
+                  );
+                },
+                showSearchBar: false,
+                overlayChild:
+                    EmployerDashboardSearchField(onTap: openresumespage),
+                overlayHeight: 70,
+                height: 160,
+              );
+            },
           ),
           SizedBox(height: 23),
           Expanded(

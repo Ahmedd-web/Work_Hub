@@ -20,36 +20,76 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(error) => "An error occurred while loading data: ${error}";
+  static String m0(jobTitle) =>
+      "You were accepted for the job ${jobTitle}. Please contact the company.";
 
-  static String m1(error) => "Failed to save bio: ${error}";
+  static String m1(jobTitle) =>
+      "Your application for ${jobTitle} was declined.";
 
-  static String m2(error) => "Failed to save: ${error}";
+  static String m2(error) => "An error occurred while loading data: ${error}";
 
-  static String m3(value) => "Education level: ${value}";
+  static String m3(error) => "Failed to save bio: ${error}";
 
-  static String m4(value) => "Experience: ${value}";
+  static String m4(error) => "Failed to save: ${error}";
 
-  static String m5(error) => "Couldn\'t load jobs: ${error}";
+  static String m5(value) => "Education level: ${value}";
 
-  static String m6(count) => "${count} ad edits";
+  static String m6(value) => "Experience: ${value}";
 
-  static String m7(count) => "${count} featured boosts";
+  static String m7(error) => "Couldn\'t load jobs: ${error}";
 
-  static String m8(count) => "${count} job posts";
+  static String m8(count) => "${count} ad edits";
 
-  static String m9(count) => "${count} resume views";
+  static String m9(count) => "${count} featured boosts";
 
-  static String m10(days) => "Listing visible for ${days} days";
+  static String m10(count) => "${count} job posts";
 
-  static String m11(price) => "Subscribe now (${price}\\\$)";
+  static String m11(count) => "${count} resume views";
 
-  static String m12(days) => "posted at: ${days} days ago";
+  static String m12(days) => "Listing visible for ${days} days";
 
-  static String m13(tab) => "${tab} tab coming soon";
+  static String m13(price) => "Subscribe now (${price}\\\$)";
+
+  static String m14(error) => "Error saving data: ${error}";
+
+  static String m15(days) => "posted at: ${days} days ago";
+
+  static String m16(error) => "Error: ${error}";
+
+  static String m17(tab) => "${tab} tab coming soon";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "aboutHeaderSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Connecting employers and job seekers with a clear, modern hiring experience.",
+    ),
+    "aboutHeaderTitle": MessageLookupByLibrary.simpleMessage("About Mhnty"),
+    "aboutMissionDesc": MessageLookupByLibrary.simpleMessage(
+      "We connect employers with top talent and help job seekers reach the right opportunity quickly and confidently.",
+    ),
+    "aboutMissionTitle": MessageLookupByLibrary.simpleMessage("Our mission"),
+    "aboutValuesDesc": MessageLookupByLibrary.simpleMessage(
+      "Transparency, speed, and quality. We care about user experience and keep posting and applying simple and clear.",
+    ),
+    "aboutValuesTitle": MessageLookupByLibrary.simpleMessage("Our values"),
+    "aboutVisionDesc": MessageLookupByLibrary.simpleMessage(
+      "A modern Arabic hiring platform that supports smart recruitment and provides a smooth experience for companies and candidates.",
+    ),
+    "aboutVisionTitle": MessageLookupByLibrary.simpleMessage("Our vision"),
+    "aboutWhoTitle": MessageLookupByLibrary.simpleMessage("Who we are"),
+    "aboutWhyPoint1": MessageLookupByLibrary.simpleMessage(
+      "Accurate job postings",
+    ),
+    "aboutWhyPoint2": MessageLookupByLibrary.simpleMessage(
+      "Easy Arabic interface",
+    ),
+    "aboutWhyPoint3": MessageLookupByLibrary.simpleMessage(
+      "Fast, clear support",
+    ),
+    "aboutWhyPoint4": MessageLookupByLibrary.simpleMessage(
+      "Flexible posting options",
+    ),
+    "aboutWhyTitle": MessageLookupByLibrary.simpleMessage("Why Mhnty?"),
     "actionCreateResume": MessageLookupByLibrary.simpleMessage(
       "Create your resume",
     ),
@@ -59,7 +99,41 @@ class MessageLookup extends MessageLookupByLibrary {
     "actionSeeMore": MessageLookupByLibrary.simpleMessage("See more"),
     "appLoading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "appTitle": MessageLookupByLibrary.simpleMessage("Mhnty"),
+    "applicantNotifsAcceptedBody": m0,
+    "applicantNotifsAcceptedTitle": MessageLookupByLibrary.simpleMessage(
+      "Your application was accepted",
+    ),
+    "applicantNotifsEmpty": MessageLookupByLibrary.simpleMessage(
+      "No notifications",
+    ),
+    "applicantNotifsLoadError": MessageLookupByLibrary.simpleMessage(
+      "Error loading notifications",
+    ),
+    "applicantNotifsLogin": MessageLookupByLibrary.simpleMessage(
+      "Sign in to view notifications",
+    ),
+    "applicantNotifsRejectedBody": m1,
+    "applicantNotifsRejectedTitle": MessageLookupByLibrary.simpleMessage(
+      "Your application was rejected",
+    ),
+    "applyCvButton": MessageLookupByLibrary.simpleMessage("Upload resume file"),
+    "applyCvLabel": MessageLookupByLibrary.simpleMessage("Resume (PDF)"),
+    "applyCvRequired": MessageLookupByLibrary.simpleMessage(
+      "Please attach a PDF resume",
+    ),
+    "applyNameArHint": MessageLookupByLibrary.simpleMessage(
+      "Enter your name in Arabic",
+    ),
+    "applyNameArLabel": MessageLookupByLibrary.simpleMessage("Name in Arabic"),
+    "applyNameEnHint": MessageLookupByLibrary.simpleMessage(
+      "Enter your name in English",
+    ),
+    "applyNameEnLabel": MessageLookupByLibrary.simpleMessage("Name in English"),
     "applyNow": MessageLookupByLibrary.simpleMessage("Apply Now"),
+    "applyPhoneHint": MessageLookupByLibrary.simpleMessage(
+      "Enter your phone number",
+    ),
+    "applyPhoneLabel": MessageLookupByLibrary.simpleMessage("Phone number"),
     "authErrorEmailInUse": MessageLookupByLibrary.simpleMessage(
       "The account already exists for that email",
     ),
@@ -107,12 +181,62 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryMarketing": MessageLookupByLibrary.simpleMessage("Marketing"),
     "categoryProgramming": MessageLookupByLibrary.simpleMessage("Programming"),
     "categorySales": MessageLookupByLibrary.simpleMessage("Sales"),
+    "commonBack": MessageLookupByLibrary.simpleMessage("Back"),
     "commonCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "commonNext": MessageLookupByLibrary.simpleMessage("Next"),
     "commonOk": MessageLookupByLibrary.simpleMessage("OK"),
     "companyInfoSectionTitle": MessageLookupByLibrary.simpleMessage(
       "Company Information",
     ),
     "companyInfoTab": MessageLookupByLibrary.simpleMessage("Company Info"),
+    "contactAddressTitle": MessageLookupByLibrary.simpleMessage("Address"),
+    "contactAddressValue": MessageLookupByLibrary.simpleMessage(
+      "Tripoli, Libya",
+    ),
+    "contactEmailHint": MessageLookupByLibrary.simpleMessage(
+      "example@email.com",
+    ),
+    "contactEmailLabel": MessageLookupByLibrary.simpleMessage("Email"),
+    "contactEmailTitle": MessageLookupByLibrary.simpleMessage("Support email"),
+    "contactEmailValue": MessageLookupByLibrary.simpleMessage(
+      "support@mhnty.com",
+    ),
+    "contactFormTitle": MessageLookupByLibrary.simpleMessage("Contact form"),
+    "contactHeaderSubtitle": MessageLookupByLibrary.simpleMessage(
+      "We are here to support your hiring journey.",
+    ),
+    "contactHeaderTitle": MessageLookupByLibrary.simpleMessage("Contact us"),
+    "contactMessageHint": MessageLookupByLibrary.simpleMessage(
+      "Write your message here...",
+    ),
+    "contactMessageLabel": MessageLookupByLibrary.simpleMessage("Message"),
+    "contactNameHint": MessageLookupByLibrary.simpleMessage("Enter your name"),
+    "contactNameLabel": MessageLookupByLibrary.simpleMessage("Name"),
+    "contactPhoneTitle": MessageLookupByLibrary.simpleMessage("Phone"),
+    "contactPhoneValue": MessageLookupByLibrary.simpleMessage(
+      "+218 91 234 5678",
+    ),
+    "contactScheduleTitle": MessageLookupByLibrary.simpleMessage(
+      "Working hours",
+    ),
+    "contactSectionContact": MessageLookupByLibrary.simpleMessage(
+      "Contact details",
+    ),
+    "contactSendButton": MessageLookupByLibrary.simpleMessage("Send"),
+    "contactSubjectHint": MessageLookupByLibrary.simpleMessage(
+      "What is your inquiry?",
+    ),
+    "contactSubjectLabel": MessageLookupByLibrary.simpleMessage("Subject"),
+    "contactWeekendTime": MessageLookupByLibrary.simpleMessage("Closed"),
+    "contactWeekendTitle": MessageLookupByLibrary.simpleMessage(
+      "Friday - Saturday",
+    ),
+    "contactWorkdaysTime": MessageLookupByLibrary.simpleMessage(
+      "9:00 AM - 6:00 PM",
+    ),
+    "contactWorkdaysTitle": MessageLookupByLibrary.simpleMessage(
+      "Sunday - Thursday",
+    ),
     "cvAddSkill": MessageLookupByLibrary.simpleMessage("Add skill"),
     "cvButtonAdd": MessageLookupByLibrary.simpleMessage("Add"),
     "cvButtonFinish": MessageLookupByLibrary.simpleMessage("Finish"),
@@ -263,7 +387,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteAccountTitle": MessageLookupByLibrary.simpleMessage(
       "Delete account?",
     ),
+    "dialogClose": MessageLookupByLibrary.simpleMessage("Close"),
     "dialogErrorTitle": MessageLookupByLibrary.simpleMessage("Error"),
+    "dialogLoginRequiredDesc": MessageLookupByLibrary.simpleMessage(
+      "Please sign in to continue publishing",
+    ),
+    "dialogOk": MessageLookupByLibrary.simpleMessage("OK"),
+    "dialogSuccessTitle": MessageLookupByLibrary.simpleMessage("Success"),
+    "dialogWarningTitle": MessageLookupByLibrary.simpleMessage("Warning"),
     "editProfileCv": MessageLookupByLibrary.simpleMessage("CV link"),
     "editProfileEmail": MessageLookupByLibrary.simpleMessage("Email address"),
     "editProfileFullName": MessageLookupByLibrary.simpleMessage("Full name"),
@@ -309,7 +440,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "employerAccountIndustryPlaceholder": MessageLookupByLibrary.simpleMessage(
       "Select your company industry",
     ),
-    "employerAccountLoadError": m0,
+    "employerAccountLoadError": m2,
     "employerAccountLoginRequired": MessageLookupByLibrary.simpleMessage(
       "Please sign in as an employer to view this page.",
     ),
@@ -326,6 +457,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Account info",
     ),
     "employerAccountTitle": MessageLookupByLibrary.simpleMessage("Account"),
+    "employerCompanyLoginTitle": MessageLookupByLibrary.simpleMessage(
+      "Employer Login",
+    ),
     "employerDashboardLatestResumes": MessageLookupByLibrary.simpleMessage(
       "Latest resumes",
     ),
@@ -333,7 +467,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "employerDashboardSeeMore": MessageLookupByLibrary.simpleMessage(
       "See more",
     ),
-    "employerEditAboutFailure": m1,
+    "employerEditAboutFailure": m3,
     "employerEditAboutHeader": MessageLookupByLibrary.simpleMessage(
       "Company bio",
     ),
@@ -368,7 +502,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "employerEditInfoAddressTripoli": MessageLookupByLibrary.simpleMessage(
       "Tripoli",
     ),
-    "employerEditInfoFailure": m2,
+    "employerEditInfoFailure": m4,
     "employerEditInfoHeader": MessageLookupByLibrary.simpleMessage(
       "Company information",
     ),
@@ -426,10 +560,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "employerJobsActionLabel": MessageLookupByLibrary.simpleMessage("Active"),
     "employerJobsDefaultTitle": MessageLookupByLibrary.simpleMessage("Job"),
-    "employerJobsEducationLabel": m3,
+    "employerJobsEducationLabel": m5,
     "employerJobsEmpty": MessageLookupByLibrary.simpleMessage("No jobs found."),
-    "employerJobsExperienceLabel": m4,
-    "employerJobsLoadError": m5,
+    "employerJobsExperienceLabel": m6,
+    "employerJobsLoadError": m7,
     "employerJobsLoginPrompt": MessageLookupByLibrary.simpleMessage(
       "Please sign in to view your jobs.",
     ),
@@ -443,18 +577,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "employerJobsStatusDeleted": MessageLookupByLibrary.simpleMessage(
       "Deleted",
     ),
+    "employerLoginIntro": MessageLookupByLibrary.simpleMessage(
+      "Enter your company credentials to access the dashboard.",
+    ),
     "employerNavAccount": MessageLookupByLibrary.simpleMessage("Account"),
     "employerNavHome": MessageLookupByLibrary.simpleMessage("Home"),
     "employerNavJobs": MessageLookupByLibrary.simpleMessage("Jobs"),
     "employerNavResumes": MessageLookupByLibrary.simpleMessage("Resumes"),
-    "employerPlanBenefitEdits": m6,
+    "employerPlanBenefitEdits": m8,
     "employerPlanBenefitEditsUnlimited": MessageLookupByLibrary.simpleMessage(
       "Unlimited ad edits",
     ),
-    "employerPlanBenefitFeaturedAds": m7,
-    "employerPlanBenefitJobPosts": m8,
-    "employerPlanBenefitResumeViews": m9,
-    "employerPlanBenefitVisibilityDays": m10,
+    "employerPlanBenefitFeaturedAds": m9,
+    "employerPlanBenefitJobPosts": m10,
+    "employerPlanBenefitResumeViews": m11,
+    "employerPlanBenefitVisibilityDays": m12,
     "employerPlanLabelMonth": MessageLookupByLibrary.simpleMessage(
       "Duration 1 month",
     ),
@@ -473,6 +610,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "employerPostJobCta": MessageLookupByLibrary.simpleMessage(
       "Post your job for free",
     ),
+    "employerPostJobEditTitle": MessageLookupByLibrary.simpleMessage(
+      "Edit job",
+    ),
+    "employerPostJobStepApply": MessageLookupByLibrary.simpleMessage(
+      "Application",
+    ),
+    "employerPostJobStepDescription": MessageLookupByLibrary.simpleMessage(
+      "Description",
+    ),
+    "employerPostJobStepInfo": MessageLookupByLibrary.simpleMessage("Job info"),
+    "employerPostJobStepLocation": MessageLookupByLibrary.simpleMessage(
+      "Location",
+    ),
+    "employerPostJobSubmit": MessageLookupByLibrary.simpleMessage(
+      "Save and publish",
+    ),
     "employerPremiumChooseDuration": MessageLookupByLibrary.simpleMessage(
       "Choose subscription duration",
     ),
@@ -488,7 +641,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "employerPremiumPopularBadge": MessageLookupByLibrary.simpleMessage(
       "Most popular 🔥",
     ),
-    "employerPremiumSubscribeNow": m11,
+    "employerPremiumSubscribeNow": m13,
     "employerResumesCatAdmin": MessageLookupByLibrary.simpleMessage(
       "Administration",
     ),
@@ -582,7 +735,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "jobInfoTab": MessageLookupByLibrary.simpleMessage("Job Info"),
     "jobLocationJordan": MessageLookupByLibrary.simpleMessage("Tripoli"),
     "jobLocationSaudi": MessageLookupByLibrary.simpleMessage("Benghazi"),
-    "jobPostedAt": m12,
+    "jobPostPublishSuccess": MessageLookupByLibrary.simpleMessage(
+      "Job published successfully",
+    ),
+    "jobPostSaveError": m14,
+    "jobPostUpdateSuccess": MessageLookupByLibrary.simpleMessage(
+      "Job updated successfully",
+    ),
+    "jobPostedAt": m15,
     "jobTitleAdminOfficer": MessageLookupByLibrary.simpleMessage(
       "Admin Officer",
     ),
@@ -641,6 +801,34 @@ class MessageLookup extends MessageLookupByLibrary {
     "navJobs": MessageLookupByLibrary.simpleMessage("Jobs"),
     "navProfile": MessageLookupByLibrary.simpleMessage("Profile"),
     "navSaved": MessageLookupByLibrary.simpleMessage("Saved"),
+    "notifAccept": MessageLookupByLibrary.simpleMessage("Accept"),
+    "notifApplicantNotFound": MessageLookupByLibrary.simpleMessage(
+      "Application not found",
+    ),
+    "notifCopyCv": MessageLookupByLibrary.simpleMessage("Copy link"),
+    "notifCvMissing": MessageLookupByLibrary.simpleMessage(
+      "No saved resume for this applicant.",
+    ),
+    "notifEmail": MessageLookupByLibrary.simpleMessage("Email"),
+    "notifEmpty": MessageLookupByLibrary.simpleMessage("No notifications yet"),
+    "notifError": m16,
+    "notifLoginRequired": MessageLookupByLibrary.simpleMessage(
+      "Please sign in to view notifications.",
+    ),
+    "notifNewApplication": MessageLookupByLibrary.simpleMessage(
+      "New application",
+    ),
+    "notifOpenCv": MessageLookupByLibrary.simpleMessage("Open file"),
+    "notifPhone": MessageLookupByLibrary.simpleMessage("Phone"),
+    "notifReject": MessageLookupByLibrary.simpleMessage("Reject"),
+    "notifSuccessAccept": MessageLookupByLibrary.simpleMessage(
+      "Application accepted successfully",
+    ),
+    "notifSuccessReject": MessageLookupByLibrary.simpleMessage(
+      "Application rejected successfully",
+    ),
+    "notifTitle": MessageLookupByLibrary.simpleMessage("Notifications"),
+    "notifUntitledJob": MessageLookupByLibrary.simpleMessage("Untitled job"),
     "offerBoostedBadge": MessageLookupByLibrary.simpleMessage("Premium"),
     "offerBoostedSubtitle": MessageLookupByLibrary.simpleMessage(
       "Appear at the top of every search for 7 days.",
@@ -660,7 +848,187 @@ class MessageLookup extends MessageLookupByLibrary {
       "Highlight your role with an urgent badge and alert.",
     ),
     "offerUrgentTitle": MessageLookupByLibrary.simpleMessage("Urgent Hire"),
-    "placeholderTab": m13,
+    "placeholderTab": m17,
+    "postJobAdd": MessageLookupByLibrary.simpleMessage("Add"),
+    "postJobApplyCv": MessageLookupByLibrary.simpleMessage(
+      "Apply with CV upload",
+    ),
+    "postJobApplyEmail": MessageLookupByLibrary.simpleMessage(
+      "Apply via email",
+    ),
+    "postJobApplyMethods": MessageLookupByLibrary.simpleMessage(
+      "Application methods",
+    ),
+    "postJobApplyPhone": MessageLookupByLibrary.simpleMessage(
+      "Apply via phone",
+    ),
+    "postJobCityLabel": MessageLookupByLibrary.simpleMessage("City"),
+    "postJobCompanyLocationHint": MessageLookupByLibrary.simpleMessage(
+      "Enter company location",
+    ),
+    "postJobCompanyLocationLabel": MessageLookupByLibrary.simpleMessage(
+      "Company location",
+    ),
+    "postJobCurrency": MessageLookupByLibrary.simpleMessage("Currency"),
+    "postJobDeadlineHint": MessageLookupByLibrary.simpleMessage(
+      "Pick the application end date",
+    ),
+    "postJobDeadlineLabel": MessageLookupByLibrary.simpleMessage(
+      "Application deadline",
+    ),
+    "postJobDepartmentLabel": MessageLookupByLibrary.simpleMessage(
+      "Department",
+    ),
+    "postJobDescriptionHint": MessageLookupByLibrary.simpleMessage(
+      "Write the job objective",
+    ),
+    "postJobDescriptionLabel": MessageLookupByLibrary.simpleMessage(
+      "Job description",
+    ),
+    "postJobDescriptionLanguage": MessageLookupByLibrary.simpleMessage(
+      "Description language",
+    ),
+    "postJobEducationLabel": MessageLookupByLibrary.simpleMessage(
+      "Education level",
+    ),
+    "postJobErrorCity": MessageLookupByLibrary.simpleMessage("Select city"),
+    "postJobErrorCompanyLocation": MessageLookupByLibrary.simpleMessage(
+      "Enter company location",
+    ),
+    "postJobErrorCurrency": MessageLookupByLibrary.simpleMessage(
+      "Select currency",
+    ),
+    "postJobErrorDeadline": MessageLookupByLibrary.simpleMessage(
+      "Enter application deadline",
+    ),
+    "postJobErrorDepartment": MessageLookupByLibrary.simpleMessage(
+      "Select department",
+    ),
+    "postJobErrorDescription": MessageLookupByLibrary.simpleMessage(
+      "Enter job description",
+    ),
+    "postJobErrorDescriptionLang": MessageLookupByLibrary.simpleMessage(
+      "Select description language",
+    ),
+    "postJobErrorEducation": MessageLookupByLibrary.simpleMessage(
+      "Select education level",
+    ),
+    "postJobErrorExperience": MessageLookupByLibrary.simpleMessage(
+      "Enter years of experience",
+    ),
+    "postJobErrorSalaryRange": MessageLookupByLibrary.simpleMessage(
+      "Enter salary range",
+    ),
+    "postJobErrorTitleRequired": MessageLookupByLibrary.simpleMessage(
+      "Enter the Arabic title",
+    ),
+    "postJobExperienceHint": MessageLookupByLibrary.simpleMessage(
+      "Enter years of experience",
+    ),
+    "postJobExperienceLabel": MessageLookupByLibrary.simpleMessage(
+      "Years of experience",
+    ),
+    "postJobHighlight": MessageLookupByLibrary.simpleMessage(
+      "Highlight the job posting?",
+    ),
+    "postJobImageLabel": MessageLookupByLibrary.simpleMessage("Ad image"),
+    "postJobSalaryFrom": MessageLookupByLibrary.simpleMessage("Salary from"),
+    "postJobSalaryHintFrom": MessageLookupByLibrary.simpleMessage("From"),
+    "postJobSalaryHintTo": MessageLookupByLibrary.simpleMessage("To"),
+    "postJobSalaryNo": MessageLookupByLibrary.simpleMessage("Not specified"),
+    "postJobSalaryTitle": MessageLookupByLibrary.simpleMessage("Listed salary"),
+    "postJobSalaryTo": MessageLookupByLibrary.simpleMessage("Salary to"),
+    "postJobSalaryYes": MessageLookupByLibrary.simpleMessage("Yes"),
+    "postJobShowCompany": MessageLookupByLibrary.simpleMessage(
+      "Show company info?",
+    ),
+    "postJobSkillCustomHint": MessageLookupByLibrary.simpleMessage(
+      "Type the skill then tap add",
+    ),
+    "postJobSkillCustomLabel": MessageLookupByLibrary.simpleMessage(
+      "Add a custom skill",
+    ),
+    "postJobSkillSelect": MessageLookupByLibrary.simpleMessage(
+      "Select a skill",
+    ),
+    "postJobSkillsTitle": MessageLookupByLibrary.simpleMessage(
+      "Personal skills",
+    ),
+    "postJobTitleArHint": MessageLookupByLibrary.simpleMessage(
+      "Enter the Arabic job title",
+    ),
+    "postJobTitleArLabel": MessageLookupByLibrary.simpleMessage(
+      "Job title (Arabic)",
+    ),
+    "postJobTitleEnHint": MessageLookupByLibrary.simpleMessage(
+      "Enter the English job title",
+    ),
+    "postJobTitleEnLabel": MessageLookupByLibrary.simpleMessage(
+      "Job title (English)",
+    ),
+    "privacyActionButton": MessageLookupByLibrary.simpleMessage("Close"),
+    "privacyActionDesc": MessageLookupByLibrary.simpleMessage(
+      "Contact us via the support form or email. We respond as soon as possible.",
+    ),
+    "privacyActionTitle": MessageLookupByLibrary.simpleMessage("Need help?"),
+    "privacyDataDesc": MessageLookupByLibrary.simpleMessage(
+      "We protect your personal information and only ask for what we need to serve you.",
+    ),
+    "privacyDataTitle": MessageLookupByLibrary.simpleMessage("Data protection"),
+    "privacyHeaderSubtitle": MessageLookupByLibrary.simpleMessage(
+      "We explain how we keep your data safe inside Mhnty.",
+    ),
+    "privacyHeaderTitle": MessageLookupByLibrary.simpleMessage(
+      "Privacy Policy",
+    ),
+    "privacyIntroTitle": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
+    "privacyNotItem1": MessageLookupByLibrary.simpleMessage(
+      "No hidden sharing with third parties.",
+    ),
+    "privacyNotItem2": MessageLookupByLibrary.simpleMessage(
+      "No marketing spam without consent.",
+    ),
+    "privacyNotItem3": MessageLookupByLibrary.simpleMessage(
+      "No access to private files without permission.",
+    ),
+    "privacyNotTitle": MessageLookupByLibrary.simpleMessage("What we don’t do"),
+    "privacyPrinciple1": MessageLookupByLibrary.simpleMessage(
+      "We never sell your data",
+    ),
+    "privacyPrinciple2": MessageLookupByLibrary.simpleMessage(
+      "You can request deletion",
+    ),
+    "privacyPrinciple3": MessageLookupByLibrary.simpleMessage(
+      "We respect message privacy",
+    ),
+    "privacyPrinciple4": MessageLookupByLibrary.simpleMessage(
+      "Transparent permissions",
+    ),
+    "privacyPrinciplesTitle": MessageLookupByLibrary.simpleMessage(
+      "Principles",
+    ),
+    "privacyRetentionDesc": MessageLookupByLibrary.simpleMessage(
+      "We keep data only as long as needed for hiring and comply with requests to delete it.",
+    ),
+    "privacyRetentionTitle": MessageLookupByLibrary.simpleMessage(
+      "Data retention",
+    ),
+    "privacySecurityDesc": MessageLookupByLibrary.simpleMessage(
+      "We verify accounts and use secure channels to protect your data during transfer and storage.",
+    ),
+    "privacySecurityTitle": MessageLookupByLibrary.simpleMessage(
+      "Verification & security",
+    ),
+    "privacyUseItem1": MessageLookupByLibrary.simpleMessage(
+      "Improve matching between jobs and applicants.",
+    ),
+    "privacyUseItem2": MessageLookupByLibrary.simpleMessage(
+      "Send important updates about applications.",
+    ),
+    "privacyUseItem3": MessageLookupByLibrary.simpleMessage(
+      "Detect abuse and keep the platform safe.",
+    ),
+    "privacyUseTitle": MessageLookupByLibrary.simpleMessage("How we use data"),
     "profileAddress": MessageLookupByLibrary.simpleMessage("Address"),
     "profileCity": MessageLookupByLibrary.simpleMessage("City / Region"),
     "profileEmail": MessageLookupByLibrary.simpleMessage("Email"),
@@ -748,6 +1116,90 @@ class MessageLookup extends MessageLookupByLibrary {
     "sectionJobCategories": MessageLookupByLibrary.simpleMessage(
       "Job Categories",
     ),
+    "servicesChoosePlan": MessageLookupByLibrary.simpleMessage(
+      "Choose this plan",
+    ),
+    "servicesHeaderSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Promote your jobs with flexible plans tailored to your needs.",
+    ),
+    "servicesHeaderTitle": MessageLookupByLibrary.simpleMessage(
+      "Advertising services",
+    ),
+    "servicesInfo1Desc": MessageLookupByLibrary.simpleMessage(
+      "Reach candidates quickly with highlighted ads.",
+    ),
+    "servicesInfo1Title": MessageLookupByLibrary.simpleMessage("Fast posting"),
+    "servicesInfo2Desc": MessageLookupByLibrary.simpleMessage(
+      "Boost visibility across categories and filters.",
+    ),
+    "servicesInfo2Title": MessageLookupByLibrary.simpleMessage("Wider reach"),
+    "servicesInfo3Desc": MessageLookupByLibrary.simpleMessage(
+      "Showcase your company with richer visuals.",
+    ),
+    "servicesInfo3Title": MessageLookupByLibrary.simpleMessage(
+      "Brand presence",
+    ),
+    "servicesPackagesTitle": MessageLookupByLibrary.simpleMessage("Packages"),
+    "servicesPerkBoosted": MessageLookupByLibrary.simpleMessage(
+      "Boosted placement",
+    ),
+    "servicesPerkDedicatedMgr": MessageLookupByLibrary.simpleMessage(
+      "Dedicated account manager",
+    ),
+    "servicesPerkEdits1": MessageLookupByLibrary.simpleMessage("1 ad edit"),
+    "servicesPerkFeatured3": MessageLookupByLibrary.simpleMessage(
+      "Featured + priority listing",
+    ),
+    "servicesPerkFeaturedBoost": MessageLookupByLibrary.simpleMessage(
+      "Featured + boosted ads",
+    ),
+    "servicesPerkPosts12": MessageLookupByLibrary.simpleMessage(
+      "12 job posts per month",
+    ),
+    "servicesPerkPosts3": MessageLookupByLibrary.simpleMessage(
+      "3 job posts for 14 days",
+    ),
+    "servicesPerkPosts5": MessageLookupByLibrary.simpleMessage(
+      "5 job posts for 21 days",
+    ),
+    "servicesPerkPosts8": MessageLookupByLibrary.simpleMessage(
+      "8 job posts per month",
+    ),
+    "servicesPerkResume20": MessageLookupByLibrary.simpleMessage(
+      "20 resume views",
+    ),
+    "servicesPerkResume25": MessageLookupByLibrary.simpleMessage(
+      "25 resume views",
+    ),
+    "servicesPerkResumeViews": MessageLookupByLibrary.simpleMessage(
+      "Extra resume views",
+    ),
+    "servicesPerkSupport": MessageLookupByLibrary.simpleMessage(
+      "Priority support",
+    ),
+    "servicesPerkVip": MessageLookupByLibrary.simpleMessage("VIP placement"),
+    "servicesPerkVis7": MessageLookupByLibrary.simpleMessage(
+      "Listing visible for 7 days",
+    ),
+    "servicesPkg100Price": MessageLookupByLibrary.simpleMessage("100 Dinar"),
+    "servicesPkg100Title": MessageLookupByLibrary.simpleMessage(
+      "Plan 100 Dinar",
+    ),
+    "servicesPkg150Price": MessageLookupByLibrary.simpleMessage("150 Dinar"),
+    "servicesPkg150Title": MessageLookupByLibrary.simpleMessage(
+      "Plan 150 Dinar",
+    ),
+    "servicesPkg200Price": MessageLookupByLibrary.simpleMessage("200 Dinar"),
+    "servicesPkg200Title": MessageLookupByLibrary.simpleMessage(
+      "Plan 200 Dinar",
+    ),
+    "servicesPkg250Price": MessageLookupByLibrary.simpleMessage("250 Dinar"),
+    "servicesPkg250Title": MessageLookupByLibrary.simpleMessage(
+      "Plan 250 Dinar",
+    ),
+    "servicesPkg50Price": MessageLookupByLibrary.simpleMessage("50 Dinar"),
+    "servicesPkg50Title": MessageLookupByLibrary.simpleMessage("Plan 50 Dinar"),
+    "servicesSectionTitle": MessageLookupByLibrary.simpleMessage("Ad services"),
     "themeDarkModeLabel": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "welcomeBrowseAsGuest": MessageLookupByLibrary.simpleMessage(
       "Or you can browse as a guest",

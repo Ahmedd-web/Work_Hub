@@ -14,6 +14,7 @@ import 'package:work_hub/features/employer/widgets/employer_job_card_shimmer.dar
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/networking/notification_service.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
+import 'package:work_hub/features/employer/screens/employer_notifications_page.dart';
 
 class EmployerJobsPage extends StatefulWidget {
   const EmployerJobsPage({super.key});
@@ -90,27 +91,49 @@ class EmployerJobsPageState extends State<EmployerJobsPage> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final user = FirebaseAuth.instance.currentUser;
+    final uid = user?.uid;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
-          CustomHeader(
-            title: '',
-            titleWidget: const SizedBox.shrink(),
-            backgroundColor: AppColors.purple,
-            backgroundImage: AppAssets.headerLogo,
-            showBackButton: false,
-            showMenuButton: true,
-            showNotificationButton: true,
-            showSearchBar: false,
-            overlayChild: EmployerJobsSearchField(
-              initialValue: searchQuery,
-              hintText: s.employerJobsSearchHint,
-              onChanged: (value) => setState(() => searchQuery = value),
-            ),
-            overlayHeight: 70,
-            height: 160,
+          StreamBuilder<int>(
+            stream: uid == null
+                ? const Stream.empty()
+                : FirebaseFirestore.instance
+                    .collection('employer_notifications')
+                    .where('employer_id', isEqualTo: uid)
+                    .where('seen', isEqualTo: false)
+                    .snapshots()
+                    .map((snap) => snap.size),
+            builder: (context, snapshot) {
+              final count = snapshot.data ?? 0;
+              return CustomHeader(
+                title: '',
+                titleWidget: const SizedBox.shrink(),
+                backgroundColor: AppColors.purple,
+                backgroundImage: AppAssets.headerLogo,
+                showBackButton: false,
+                showMenuButton: true,
+                showNotificationButton: true,
+                notificationCount: count > 0 ? count : null,
+                onNotificationPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const EmployerNotificationsPage(),
+                    ),
+                  );
+                },
+                showSearchBar: false,
+                overlayChild: EmployerJobsSearchField(
+                  initialValue: searchQuery,
+                  hintText: s.employerJobsSearchHint,
+                  onChanged: (value) => setState(() => searchQuery = value),
+                ),
+                overlayHeight: 70,
+                height: 160,
+              );
+            },
           ),
           Expanded(
             child:
@@ -167,6 +190,19 @@ class EmployerJobsPageState extends State<EmployerJobsPage> {
                           final createdAt = data['created_at'] as Timestamp?;
                           final ownerUid =
                               (data['owner_uid'] as String?) ?? user.uid;
+
+                          // إذا كان الإعلان غير نشط (مؤرشف/محذوف) نتجاهل منطق الانتهاء.
+                          if (status != 'active') {
+                            final matchesStatus = status == statusKey;
+                            final matchesSearch =
+                                query.isEmpty
+                                    ? true
+                                    : title.toLowerCase().contains(query);
+                            if (matchesStatus && matchesSearch) {
+                              jobs.add(JobEntry(id: doc.id, data: data));
+                            }
+                            continue;
+                          }
                           final expired =
                               status != 'deleted' && hasExpired(createdAt, now);
                           final effectiveStatus = expired ? 'deleted' : status;

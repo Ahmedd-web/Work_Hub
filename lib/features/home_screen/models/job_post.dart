@@ -6,6 +6,7 @@ class JobPost {
     required this.postedAt,
     required this.location,
     this.isFeatured = false,
+    this.ownerId = '',
     this.salary,
     this.experience,
     this.department,
@@ -25,6 +26,7 @@ class JobPost {
   final String postedAt;
   final String location;
   final bool isFeatured;
+  final String ownerId;
   final int postedDaysAgo;
   final String categoryId;
 

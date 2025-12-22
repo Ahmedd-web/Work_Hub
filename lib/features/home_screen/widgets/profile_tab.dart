@@ -7,6 +7,7 @@ import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/cv_data.dart';
 import 'package:work_hub/features/home_screen/models/profile_data.dart';
+import 'package:work_hub/features/home_screen/pages/applicant_notifications_page.dart';
 import 'package:work_hub/features/home_screen/pages/edit_profile_page.dart';
 import 'package:work_hub/features/home_screen/pages/cv_wizard_page.dart';
 import 'package:work_hub/features/home_screen/services/cv_repository.dart';
@@ -148,6 +149,13 @@ class _ProfileScaffold extends StatelessWidget {
           backgroundImage: AppAssets.headerLogo,
           showMenuButton: true,
           showNotificationButton: true,
+          onNotificationPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const ApplicantNotificationsPage(),
+              ),
+            );
+          },
           showSearchBar: false,
           overlayChild: overlayCard,
           overlayHeight: 70,

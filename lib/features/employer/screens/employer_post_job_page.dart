@@ -1,15 +1,24 @@
+import 'dart:io' as io;
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/employer/widgets/employer_post_job_fields.dart';
 import 'package:work_hub/features/employer/widgets/employer_post_job_step_indicator.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
+import 'package:work_hub/generated/l10n.dart';
 
 class EmployerPostJobPage extends StatefulWidget {
-  const EmployerPostJobPage({super.key});
+  const EmployerPostJobPage({super.key, this.initialData, this.jobId});
+
+  final Map<String, dynamic>? initialData;
+  final String? jobId;
 
   @override
   State<EmployerPostJobPage> createState() => EmployerPostJobPageState();
@@ -41,7 +50,16 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
   bool applyViaCv = true;
   bool highlight = false;
   bool showCompany = true;
+  String? coverImageUrl;
+  bool isUploadingImage = false;
   bool isSubmitting = false;
+  bool get isEdit => widget.jobId != null && widget.initialData != null;
+
+  @override
+  void initState() {
+    super.initState();
+    prefillIfNeeded();
+  }
 
   @override
   void dispose() {
@@ -60,6 +78,10 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final s = S.of(context);
+    final headerTitle =
+        isEdit ? s.employerPostJobEditTitle : stepTitles[currentStep];
+
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
@@ -80,9 +102,9 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
               children: [
                 Text(
-                  stepTitles[currentStep],
+                  headerTitle,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: AppColors.purple,
                   ),
@@ -136,7 +158,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                    child: const Text('السابق'),
+                    child: Text(s.commonBack),
                   ),
                 ),
               if (currentStep > 0) const SizedBox(width: 12),
@@ -176,8 +198,8 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                           )
                           : Text(
                             currentStep == stepTitles.length - 1
-                                ? 'حفظ ونشر الإعلان'
-                                : 'التالي',
+                                ? s.employerPostJobSubmit
+                                : s.commonNext,
                           ),
                 ),
               ),
@@ -189,48 +211,71 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
   }
 
   Widget buildStepContent() {
+    final s = S.of(context);
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    descriptionLanguage ??= isArabic ? 'العربية' : 'English';
+    final educationOptions =
+        isArabic
+            ? ['دبلوم', 'بكالوريوس', 'ماجستير']
+            : ['Diploma', 'Bachelor', 'Master'];
+    final departmentOptions =
+        isArabic
+            ? ['الموارد البشرية', 'التسويق', 'التصميم']
+            : ['HR', 'Marketing', 'Design'];
+    final cityOptions =
+        isArabic
+            ? ['طرابلس', 'مصراتة', 'بنغازي']
+            : ['Tripoli', 'Misrata', 'Benghazi'];
+    final skillOptions =
+        isArabic
+            ? ['القيادة', 'التواصل', 'التفاوض']
+            : ['Leadership', 'Communication', 'Negotiation'];
+    final currencyOptions = isArabic ? ['دينار', 'دولار'] : ['Dinar', 'Dollar'];
     switch (currentStep) {
       case 0:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             EmployerFormFieldCard(
-              label: 'المسمى الوظيفي بالعربية',
+              label: s.postJobTitleArLabel,
               child: EmployerPlainTextField(
                 controller: arabicTitle,
-                hint: 'ادخل المسمى الوظيفي بالعربية',
+                hint: s.postJobTitleArHint,
               ),
             ),
             const SizedBox(height: 16),
             EmployerFormFieldCard(
-              label: 'المسمى الوظيفي بالإنجليزية',
+              label: s.postJobTitleEnLabel,
               child: EmployerPlainTextField(
                 controller: englishTitle,
-                hint: 'ادخل المسمى الوظيفي بالإنجليزية',
+                hint: s.postJobTitleEnHint,
                 textDirection: TextDirection.ltr,
               ),
             ),
             const SizedBox(height: 16),
             EmployerDropdownCard(
-              label: 'المستوى التعليمي',
+              label: s.postJobEducationLabel,
               value: educationLevel,
-              items: const ['دبلوم', 'بكالوريوس', 'ماجستير'],
+              items: educationOptions,
+              hint: s.postJobEducationLabel,
               onChanged: (value) => setState(() => educationLevel = value),
             ),
             const SizedBox(height: 16),
             EmployerDropdownCard(
-              label: 'القسم',
+              label: s.postJobDepartmentLabel,
               value: department,
-              items: const ['الموارد البشرية', 'التسويق', 'التصميم'],
+              items: departmentOptions,
+              hint: s.postJobDepartmentLabel,
               onChanged: (value) => setState(() => department = value),
             ),
             const SizedBox(height: 16),
             EmployerFormFieldCard(
-              label: 'عدد سنوات الخبرة',
+              label: s.postJobExperienceLabel,
               child: EmployerPlainTextField(
                 controller: experience,
-                hint: 'حدد عدد سنوات الخبرة',
+                hint: s.postJobExperienceHint,
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
             ),
           ],
@@ -240,29 +285,23 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             EmployerDropdownCard(
-              label: 'الجنسية',
-              value: nationality,
-              items: const ['ليبي', 'تونسي', 'سوداني'],
-              onChanged: (value) => setState(() => nationality = value),
-            ),
-            const SizedBox(height: 16),
-            EmployerDropdownCard(
-              label: 'مكان العمل',
+              label: s.postJobCityLabel,
               value: country,
-              items: const ['ليبيا', 'مصر', 'السودان'],
+              items: cityOptions,
+              hint: s.postJobCityLabel,
               onChanged: (value) => setState(() => country = value),
             ),
             const SizedBox(height: 16),
             EmployerFormFieldCard(
-              label: 'المدينة',
+              label: s.postJobCompanyLocationLabel,
               child: EmployerPlainTextField(
                 controller: cityController,
-                hint: 'حدد المدينة',
+                hint: s.postJobCompanyLocationHint,
               ),
             ),
             const SizedBox(height: 16),
             Text(
-              'الراتب والعملة',
+              s.postJobSalaryTitle,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Colors.grey.shade800,
@@ -278,7 +317,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                     onChanged:
                         (value) =>
                             setState(() => salarySpecified = value ?? true),
-                    title: const Text('محدد'),
+                    title: Text(s.postJobSalaryYes),
                   ),
                 ),
                 Expanded(
@@ -288,7 +327,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                     onChanged:
                         (value) =>
                             setState(() => salarySpecified = value ?? false),
-                    title: const Text('غير محدد'),
+                    title: Text(s.postJobSalaryNo),
                   ),
                 ),
               ],
@@ -299,22 +338,22 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                 children: [
                   Expanded(
                     child: EmployerFormFieldCard(
-                      label: 'الراتب من',
+                      label: s.postJobSalaryFrom,
                       child: EmployerPlainTextField(
                         controller: salaryFrom,
                         keyboardType: TextInputType.number,
-                        hint: 'من',
+                        hint: s.postJobSalaryHintFrom,
                       ),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: EmployerFormFieldCard(
-                      label: 'الراتب إلى',
+                      label: s.postJobSalaryTo,
                       child: EmployerPlainTextField(
                         controller: salaryTo,
                         keyboardType: TextInputType.number,
-                        hint: 'إلى',
+                        hint: s.postJobSalaryHintTo,
                       ),
                     ),
                   ),
@@ -322,9 +361,10 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
               ),
               const SizedBox(height: 12),
               EmployerDropdownCard(
-                label: 'العملة',
+                label: s.postJobCurrency,
                 value: currency,
-                items: const ['LYD', 'USD', 'EUR'],
+                items: currencyOptions,
+                hint: s.postJobCurrency,
                 onChanged: (value) => setState(() => currency = value),
               ),
             ],
@@ -334,31 +374,26 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            EmployerDropdownCard(
-              label: 'لغة الوصف',
-              value: descriptionLanguage,
-              items: const ['العربية', 'الإنجليزية'],
-              onChanged: (value) => setState(() => descriptionLanguage = value),
-            ),
             const SizedBox(height: 16),
             EmployerFormFieldCard(
-              label: 'الوصف الوظيفي',
+              label: s.postJobDescriptionLabel,
               child: EmployerPlainTextField(
                 controller: description,
-                hint: 'اكتب نص الهدف الوظيفي',
+                hint: s.postJobDescriptionHint,
                 maxLines: 4,
               ),
             ),
             const SizedBox(height: 16),
             Text(
-              'المهارات الشخصية',
+              s.postJobSkillsTitle,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             EmployerDropdownCard(
-              label: 'اختر مهارة من القائمة',
+              label: s.postJobSkillSelect,
               value: selectedSkill,
-              items: const ['القيادة', 'التواصل', 'التفاوض'],
+              items: skillOptions,
+              hint: s.postJobSkillSelect,
               onChanged: (value) {
                 if (value != null && !skills.contains(value)) {
                   setState(() => skills.add(value));
@@ -368,10 +403,10 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
             ),
             const SizedBox(height: 16),
             EmployerFormFieldCard(
-              label: 'أضف مهارة يدوياً',
+              label: s.postJobSkillCustomLabel,
               child: EmployerPlainTextField(
                 controller: skillController,
-                hint: 'اكتب اسم المهارة ثم اضغط إضافة',
+                hint: s.postJobSkillCustomHint,
               ),
             ),
             const SizedBox(height: 8),
@@ -390,7 +425,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: const Text('إضافة'),
+                child: Text(s.postJobAdd),
               ),
             ),
             if (skills.isNotEmpty) ...[
@@ -417,10 +452,10 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             EmployerFormFieldCard(
-              label: 'موعد التقديم',
+              label: s.postJobDeadlineLabel,
               child: EmployerPlainTextField(
                 controller: deadline,
-                hint: 'حدد تاريخ نهاية التقديم',
+                hint: s.postJobDeadlineHint,
                 readOnly: true,
                 onTap: () async {
                   final date = await showDatePicker(
@@ -437,27 +472,54 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
             ),
             const SizedBox(height: 16),
             Text(
-              'صورة الإعلان',
+              s.postJobImageLabel,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
-            Container(
-              height: 110,
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.add_photo_alternate_outlined,
-                  color: AppColors.purple,
-                  size: 48,
+            GestureDetector(
+              onTap: isUploadingImage ? null : pickCoverImage,
+              child: Container(
+                height: 140,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: Theme.of(context).dividerColor),
                 ),
+                clipBehavior: Clip.antiAlias,
+                child:
+                    isUploadingImage
+                        ? const Center(
+                          child: SizedBox(
+                            width: 28,
+                            height: 28,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        )
+                        : coverImageUrl != null
+                        ? Image.network(
+                          coverImageUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder:
+                              (context, _, __) => const Center(
+                                child: Icon(
+                                  Icons.broken_image_outlined,
+                                  color: AppColors.purple,
+                                  size: 42,
+                                ),
+                              ),
+                        )
+                        : const Center(
+                          child: Icon(
+                            Icons.add_photo_alternate_outlined,
+                            color: AppColors.purple,
+                            size: 48,
+                          ),
+                        ),
               ),
             ),
             const SizedBox(height: 16),
             Text(
-              'طريقة التقديم للوظيفة',
+              s.postJobApplyMethods,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
@@ -467,25 +529,25 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                   value: applyViaEmail,
                   onChanged:
                       (value) => setState(() => applyViaEmail = value ?? false),
-                  title: const Text('التقديم عبر البريد الإلكتروني'),
+                  title: Text(s.postJobApplyEmail),
                 ),
                 CheckboxListTile(
                   value: applyViaPhone,
                   onChanged:
                       (value) => setState(() => applyViaPhone = value ?? false),
-                  title: const Text('التقديم عبر الهاتف'),
+                  title: Text(s.postJobApplyPhone),
                 ),
                 CheckboxListTile(
                   value: applyViaCv,
                   onChanged:
                       (value) => setState(() => applyViaCv = value ?? true),
-                  title: const Text('التقديم مباشرة عن طريق السيرة الذاتية'),
+                  title: Text(s.postJobApplyCv),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
-              'هل تود تمييز الإعلان؟',
+              s.postJobHighlight,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Row(
@@ -496,7 +558,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                     groupValue: highlight,
                     onChanged:
                         (value) => setState(() => highlight = value ?? false),
-                    title: const Text('نعم'),
+                    title: Text(s.postJobSalaryYes),
                   ),
                 ),
                 Expanded(
@@ -505,14 +567,14 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                     groupValue: highlight,
                     onChanged:
                         (value) => setState(() => highlight = value ?? false),
-                    title: const Text('لا'),
+                    title: Text(s.postJobSalaryNo),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
-              'هل ترغب في إظهار معلومات الشركة؟',
+              s.postJobShowCompany,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Row(
@@ -523,7 +585,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                     groupValue: showCompany,
                     onChanged:
                         (value) => setState(() => showCompany = value ?? true),
-                    title: const Text('نعم'),
+                    title: Text(s.postJobSalaryYes),
                   ),
                 ),
                 Expanded(
@@ -532,7 +594,7 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
                     groupValue: showCompany,
                     onChanged:
                         (value) => setState(() => showCompany = value ?? true),
-                    title: const Text('لا'),
+                    title: Text(s.postJobSalaryNo),
                   ),
                 ),
               ],
@@ -542,52 +604,49 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
     }
   }
 
-  List<String> get stepTitles => const [
-    'إنشاء وظيفة جديدة',
-    'معلومات الوظيفة',
-    'وصف الوظيفة',
-    'معلومات التقديم',
+  List<String> get stepTitles => [
+    S.of(context).employerPostJobStepInfo,
+    S.of(context).employerPostJobStepLocation,
+    S.of(context).employerPostJobStepDescription,
+    S.of(context).employerPostJobStepApply,
   ];
 
   bool validateStep(int step) {
+    final s = S.of(context);
     String? error;
     switch (step) {
       case 0:
         if (arabicTitle.text.trim().isEmpty) {
-          error = 'يرجى إدخال المسمى الوظيفي بالعربية';
+          error = s.postJobErrorTitleRequired;
         } else if (educationLevel == null) {
-          error = 'اختر المستوى التعليمي';
+          error = s.postJobErrorEducation;
         } else if (department == null) {
-          error = 'اختر القسم';
+          error = s.postJobErrorDepartment;
         } else if (experience.text.trim().isEmpty) {
-          error = 'حدد عدد سنوات الخبرة';
+          error = s.postJobErrorExperience;
         }
         break;
       case 1:
-        if (nationality == null) {
-          error = 'حدد الجنسية المطلوبة';
-        } else if (country == null) {
-          error = 'حدد مكان العمل';
+        if (country == null) {
+          error = s.postJobErrorCity;
         } else if (cityController.text.trim().isEmpty) {
-          error = 'أدخل المدينة';
+          error = s.postJobErrorCompanyLocation;
         } else if (salarySpecified) {
           if (salaryFrom.text.trim().isEmpty || salaryTo.text.trim().isEmpty) {
-            error = 'أدخل نطاق الراتب';
+            error = s.postJobErrorSalaryRange;
           } else if (currency == null) {
-            error = 'حدد العملة';
+            error = s.postJobErrorCurrency;
           }
         }
         break;
       case 2:
-        if (descriptionLanguage == null) {
-          error = 'اختر لغة الوصف';
-        } else if (description.text.trim().isEmpty) {
-          error = 'اكتب الوصف الوظيفي';
+        if (description.text.trim().isEmpty) {
+          error = s.postJobErrorDescription;
         }
         break;
       case 3:
         if (deadline.text.trim().isEmpty) {
-          error = 'حدد تاريخ نهاية التقديم';
+          error = s.postJobErrorDeadline;
         }
         break;
     }
@@ -600,43 +659,55 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
 
   void showErrorDialog(String message) {
     if (!mounted) return;
+    final s = S.of(context);
     AwesomeDialog(
       context: context,
       dialogType: DialogType.warning,
       animType: AnimType.bottomSlide,
-      title: 'تنبيه',
+      title: s.dialogWarningTitle,
       desc: message,
-      btnOkText: 'حسناً',
+      btnOkText: s.dialogOk,
       btnOkOnPress: () {},
     ).show();
   }
 
   Future<void> submitJob() async {
+    final s = S.of(context);
     if (!validateStep(currentStep)) return;
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('يجب تسجيل الدخول قبل إضافة إعلان')),
-      );
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.warning,
+        animType: AnimType.bottomSlide,
+        title: s.dialogWarningTitle,
+        desc: s.dialogLoginRequiredDesc,
+        btnOkText: s.dialogOk,
+        btnOkOnPress: () {},
+      ).show();
       return;
     }
     setState(() => isSubmitting = true);
     try {
-      await FirebaseFirestore.instance.collection('job_posts').add({
+      final status = widget.initialData?['status'] as String? ?? 'active';
+      final data = {
         'owner_uid': user.uid,
         'arabic_title': arabicTitle.text.trim(),
         'english_title': englishTitle.text.trim(),
         'education_level': educationLevel,
         'department': department,
         'experience_years': experience.text.trim(),
-        'nationality': nationality,
         'country': country,
         'city': cityController.text.trim(),
         'salary_specified': salarySpecified,
         'salary_from': salarySpecified ? salaryFrom.text.trim() : null,
         'salary_to': salarySpecified ? salaryTo.text.trim() : null,
         'currency': salarySpecified ? currency : null,
-        'description_language': descriptionLanguage,
+        'description_language':
+            descriptionLanguage ??
+            (Localizations.localeOf(context).languageCode == 'ar'
+                ? 'العربية'
+                : 'English'),
         'description': description.text.trim(),
         'skills': skills,
         'application_channels': {
@@ -647,21 +718,144 @@ class EmployerPostJobPageState extends State<EmployerPostJobPage> {
         'deadline': deadline.text.trim(),
         'highlight': highlight,
         'show_company': showCompany,
-        'status': 'active',
-        'created_at': FieldValue.serverTimestamp(),
-      });
+        'cover_image_url': coverImageUrl,
+        'status': status,
+        'updated_at': FieldValue.serverTimestamp(),
+      };
+
+      final collection = FirebaseFirestore.instance.collection('job_posts');
+      if (isEdit) {
+        await collection.doc(widget.jobId).update(data);
+      } else {
+        await collection.add({
+          ...data,
+          'created_at': FieldValue.serverTimestamp(),
+        });
+      }
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('تم حفظ الإعلان بنجاح')));
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        title: s.dialogSuccessTitle,
+        desc: isEdit ? s.jobPostUpdateSuccess : s.jobPostPublishSuccess,
+        btnOkText: s.dialogOk,
+        btnOkOnPress: () {},
+      ).show();
+      if (!mounted) return;
       Navigator.of(context).pop();
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('تعذر حفظ الإعلان: $e')));
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.bottomSlide,
+        title: s.dialogErrorTitle,
+        desc: s.jobPostSaveError('$e'),
+        btnOkText: s.dialogClose,
+        btnOkOnPress: () {},
+      ).show();
     } finally {
       if (mounted) setState(() => isSubmitting = false);
+    }
+  }
+
+  void prefillIfNeeded() {
+    final data = widget.initialData;
+    if (data == null) return;
+    arabicTitle.text = (data['arabic_title'] as String?) ?? '';
+    englishTitle.text = (data['english_title'] as String?) ?? '';
+    educationLevel = data['education_level'] as String?;
+    department = data['department'] as String?;
+    experience.text = (data['experience_years'] as String?) ?? '';
+    nationality = data['nationality'] as String?;
+    country = data['country'] as String?;
+    cityController.text = (data['city'] as String?) ?? '';
+    salarySpecified = (data['salary_specified'] as bool?) ?? true;
+    salaryFrom.text = (data['salary_from'] as String?) ?? '';
+    salaryTo.text = (data['salary_to'] as String?) ?? '';
+    currency = data['currency'] as String?;
+    descriptionLanguage = data['description_language'] as String?;
+    description.text = (data['description'] as String?) ?? '';
+    skills
+      ..clear()
+      ..addAll(List<String>.from(data['skills'] as List? ?? const []));
+    final channels =
+        data['application_channels'] as Map<String, dynamic>? ?? {};
+    applyViaEmail = channels['email'] as bool? ?? false;
+    applyViaPhone = channels['phone'] as bool? ?? false;
+    applyViaCv = channels['cv'] as bool? ?? true;
+    deadline.text = (data['deadline'] as String?) ?? '';
+    highlight = (data['highlight'] as bool?) ?? false;
+    showCompany = (data['show_company'] as bool?) ?? true;
+    setState(() {});
+  }
+
+  Future<void> pickCoverImage() async {
+    final s = S.of(context);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.warning,
+        animType: AnimType.bottomSlide,
+        title: s.dialogWarningTitle,
+        desc: s.dialogLoginRequiredDesc,
+        btnOkText: s.dialogOk,
+        btnOkOnPress: () {},
+      ).show();
+      return;
+    }
+    try {
+      setState(() => isUploadingImage = true);
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        withData: true,
+      );
+      if (result == null || result.files.isEmpty) return;
+      final picked = result.files.single;
+      final cleaned = (picked.name.isEmpty ? 'cover' : picked.name).replaceAll(
+        RegExp(r'[^A-Za-z0-9._-]'),
+        '_',
+      );
+      final filename =
+          cleaned.contains('.')
+              ? cleaned
+              : '${DateTime.now().millisecondsSinceEpoch}_$cleaned.png';
+      final path = 'job_images/${user.uid}/$filename';
+      final ref = FirebaseStorage.instance.ref(path);
+      final ext = picked.extension?.toLowerCase();
+      final contentType = switch (ext) {
+        'jpg' || 'jpeg' => 'image/jpeg',
+        'png' => 'image/png',
+        'gif' => 'image/gif',
+        'webp' => 'image/webp',
+        _ => 'application/octet-stream',
+      };
+      final metadata = SettableMetadata(contentType: contentType);
+      if (picked.bytes != null) {
+        await ref.putData(picked.bytes!, metadata);
+      } else if (picked.path != null) {
+        await ref.putFile(io.File(picked.path!), metadata);
+      } else {
+        throw Exception(s.dialogErrorTitle);
+      }
+      final url = await ref.getDownloadURL();
+      if (!mounted) return;
+      setState(() => coverImageUrl = url);
+    } catch (e) {
+      if (!mounted) return;
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.bottomSlide,
+        title: s.dialogErrorTitle,
+        desc: e.toString(),
+        btnOkText: s.dialogClose,
+        btnOkOnPress: () {},
+      ).show();
+    } finally {
+      if (mounted) setState(() => isUploadingImage = false);
     }
   }
 }

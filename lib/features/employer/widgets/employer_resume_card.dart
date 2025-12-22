@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
-import 'package:work_hub/features/employer/screens/employer_chat_page.dart';
 import 'package:work_hub/features/employer/screens/employer_resumes_page.dart';
 
-/// CV card used in resumes list.
+/// CV card used in resumes list (view-only; messaging removed).
 class EmployerResumeCard extends StatelessWidget {
   const EmployerResumeCard({super.key, required this.data});
 
@@ -17,10 +16,10 @@ class EmployerResumeCard extends StatelessWidget {
     String t(String ar, String en) => isArabic ? ar : en;
     final bool isDark = theme.brightness == Brightness.dark;
     final Color cardFill = isDark ? const Color(0xFF111111) : theme.cardColor;
-    final Color borderColor =
-        isDark
-            ? Colors.white.withValues(alpha: 0.06)
-            : theme.colorScheme.outline.withValues(alpha: 0.15);
+    final Color borderColor = isDark
+        ? Colors.white.withValues(alpha: 0.06)
+        : theme.colorScheme.outline.withValues(alpha: 0.15);
+
     return Material(
       color: cardFill,
       borderRadius: BorderRadius.circular(28),
@@ -117,31 +116,30 @@ class EmployerResumeCard extends StatelessWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children:
-                  skills
-                      .map(
-                        (skill) => Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF5F1FF),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: AppColors.purple.withValues(alpha: 0.25),
-                            ),
-                          ),
-                          child: Text(
-                            skill,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: AppColors.purple,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+              children: skills
+                  .map(
+                    (skill) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF5F1FF),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: AppColors.purple.withValues(alpha: 0.25),
                         ),
-                      )
-                      .toList(),
+                      ),
+                      child: Text(
+                        skill,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: AppColors.purple,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
             const SizedBox(height: 16),
             Row(
@@ -156,47 +154,12 @@ class EmployerResumeCard extends StatelessWidget {
                       );
                     },
                     icon: const Icon(Icons.remove_red_eye_outlined),
-                    label: Text(t('عرض السيرة', 'View CV')),
+                    label: Text(t('عرض السيرة الذاتية', 'View CV')),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.purple,
                       side: BorderSide(
                         color: AppColors.purple.withValues(alpha: 0.4),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      final applicantId =
-                          (data['email'] as String?) ??
-                          (data['name'] as String?) ??
-                          'applicant';
-                      final jobId =
-                          (data['job_id'] as String?) ?? 'resume_chat';
-                      final jobTitle = (data['role'] as String?) ?? 'وظيفة';
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder:
-                              (_) => EmployerChatPage(
-                                applicantId: applicantId,
-                                applicantName:
-                                    data['name'] as String? ?? 'متقدم',
-                                jobId: jobId,
-                                jobTitle: jobTitle,
-                              ),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Icons.message_outlined),
-                    label: Text(t('تواصل معه', 'Contact')),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.bannerGreen,
-                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
