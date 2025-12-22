@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/job_post.dart';
+import 'package:work_hub/features/home_screen/pages/applicant_notifications_page.dart';
 import 'package:work_hub/features/home_screen/widgets/header_sliver_delegate.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
@@ -56,6 +57,13 @@ class JobsTab extends StatelessWidget {
                   showBackButton: false,
                   showMenuButton: true,
                   showNotificationButton: true,
+                  onNotificationPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const ApplicantNotificationsPage(),
+                      ),
+                    );
+                  },
                   showSearchBar: true,
                   searchHint: s.searchHint,
                   backgroundColor: AppColors.purple,
@@ -97,19 +105,33 @@ class JobsTab extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-                Column(
-                  children: jobPosts
-                      .map(
-                        (job) => Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: JobCard(
-                            job: job,
-                            onTap: () => onJobSelected(job),
+                if (jobPosts.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 40),
+                    child: Text(
+                      S.of(context).employerDashboardNoData,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: AppColors.bannerGreen,
+                            fontWeight: FontWeight.w700,
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                else
+                  Column(
+                    children:
+                        jobPosts
+                            .map(
+                              (job) => Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: JobCard(
+                                  job: job,
+                                  onTap: () => onJobSelected(job),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                  ),
                 const SizedBox(height: 32),
               ],
             ),
@@ -195,19 +217,23 @@ class FilterDropdownPill extends StatelessWidget {
               child: DropdownButton<String>(
                 value: value,
                 isExpanded: true,
-                icon: const Icon(Icons.keyboard_arrow_down, color: AppColors.textSecondary),
+                icon: const Icon(
+                  Icons.keyboard_arrow_down,
+                  color: AppColors.textSecondary,
+                ),
                 style: textTheme.bodyMedium?.copyWith(
                   color: textTheme.titleMedium?.color,
                   fontWeight: FontWeight.w600,
                 ),
-                items: options
-                    .map(
-                      (option) => DropdownMenuItem<String>(
-                        value: option.value,
-                        child: Text(option.label),
-                      ),
-                    )
-                    .toList(),
+                items:
+                    options
+                        .map(
+                          (option) => DropdownMenuItem<String>(
+                            value: option.value,
+                            child: Text(option.label),
+                          ),
+                        )
+                        .toList(),
                 onChanged: (val) {
                   if (val != null) onChanged(val);
                 },
@@ -312,7 +338,11 @@ class JobCard extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.star, color: colorScheme.secondary, size: 16),
+                        Icon(
+                          Icons.star,
+                          color: colorScheme.secondary,
+                          size: 16,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           s.jobFeaturedBadge,

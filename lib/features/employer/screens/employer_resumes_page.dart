@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
@@ -14,6 +16,7 @@ import 'package:work_hub/features/employer/widgets/employer_resume_hero_card.dar
 import 'package:work_hub/features/employer/widgets/employer_resume_info_badge.dart';
 import 'package:work_hub/features/employer/widgets/employer_resume_search_field.dart';
 import 'package:work_hub/features/employer/widgets/employer_resume_section_card.dart';
+import 'package:work_hub/features/employer/screens/employer_notifications_page.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
@@ -93,6 +96,7 @@ class EmployerResumesPageState extends State<EmployerResumesPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final uid = FirebaseAuth.instance.currentUser?.uid;
     final s = S.of(context);
     final timeOptions = [
       s.employerResumesTime24h,
@@ -117,17 +121,38 @@ class EmployerResumesPageState extends State<EmployerResumesPage> {
       backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
-          CustomHeader(
-            title: '',
-            titleWidget: const SizedBox.shrink(),
-            backgroundColor: AppColors.purple,
-            backgroundImage: AppAssets.headerLogo,
-            showMenuButton: true,
-            showNotificationButton: true,
-            showSearchBar: false,
-            overlayChild: const EmployerResumeSearchField(),
-            overlayHeight: 70,
-            height: 160,
+          StreamBuilder<int>(
+            stream: uid == null
+                ? const Stream.empty()
+                : FirebaseFirestore.instance
+                    .collection('employer_notifications')
+                    .where('employer_id', isEqualTo: uid)
+                    .where('seen', isEqualTo: false)
+                    .snapshots()
+                    .map((snap) => snap.size),
+            builder: (context, snapshot) {
+              final count = snapshot.data ?? 0;
+              return CustomHeader(
+                title: '',
+                titleWidget: const SizedBox.shrink(),
+                backgroundColor: AppColors.purple,
+                backgroundImage: AppAssets.headerLogo,
+                showMenuButton: true,
+                showNotificationButton: true,
+                notificationCount: count > 0 ? count : null,
+                onNotificationPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const EmployerNotificationsPage(),
+                    ),
+                  );
+                },
+                showSearchBar: false,
+                overlayChild: const EmployerResumeSearchField(),
+                overlayHeight: 70,
+                height: 160,
+              );
+            },
           ),
           const SizedBox(height: 20),
           Expanded(
@@ -157,7 +182,8 @@ class EmployerResumesPageState extends State<EmployerResumesPage> {
                         value: selectedTime,
                         options: timeOptions,
                         onChanged: (value) {
-                          if (value != null) setState(() => selectedTime = value);
+                          if (value != null)
+                            setState(() => selectedTime = value);
                         },
                       ),
                     ),
@@ -230,8 +256,9 @@ class EmployerResumeDetailPage extends StatelessWidget {
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     String t(String ar, String en) => isArabic ? ar : en;
     final skills = List<String>.from(data['skills'] as List? ?? const []);
-    final highlights =
-        List<String>.from(data['experience_highlights'] as List? ?? const []);
+    final highlights = List<String>.from(
+      data['experience_highlights'] as List? ?? const [],
+    );
     final summary = (data['summary'] as String?)?.trim();
     final location = data['location'] as String? ?? '-';
     final experience = data['experience'] as String? ?? '-';
@@ -312,7 +339,10 @@ class EmployerResumeDetailPage extends StatelessWidget {
                     title: t('نبذة مختصرة', 'Summary'),
                     child: Text(
                       (summary == null || summary.isEmpty)
-                          ? t('لا توجد نبذة متاحة حالياً.', 'No summary provided yet.')
+                          ? t(
+                            'لا توجد نبذة متاحة حالياً.',
+                            'No summary provided yet.',
+                          )
                           : summary,
                       style: theme.textTheme.bodyMedium?.copyWith(height: 1.6),
                     ),
@@ -320,50 +350,64 @@ class EmployerResumeDetailPage extends StatelessWidget {
                   const SizedBox(height: 24),
                   EmployerResumeSectionCard(
                     title: t('المهارات الرئيسية', 'Key Skills'),
-                    child: skills.isEmpty
-                        ? Text(
-                            t('لا توجد مهارات مضافة.', 'No skills added.'),
-                            style: theme.textTheme.bodyMedium,
-                          )
-                        : Wrap(
-                            spacing: 8,
-                            runSpacing: 10,
-                            children: skills
-                                .map(
-                                  (skill) => Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                      vertical: 6,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFF2E8FF),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Text(
-                                      skill,
-                                      style: theme.textTheme.bodySmall?.copyWith(
-                                        color: AppColors.purple,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
+                    child:
+                        skills.isEmpty
+                            ? Text(
+                              t('لا توجد مهارات مضافة.', 'No skills added.'),
+                              style: theme.textTheme.bodyMedium,
+                            )
+                            : Wrap(
+                              spacing: 8,
+                              runSpacing: 10,
+                              children:
+                                  skills
+                                      .map(
+                                        (skill) => Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 6,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFF2E8FF),
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            skill,
+                                            style: theme.textTheme.bodySmall
+                                                ?.copyWith(
+                                                  color: AppColors.purple,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                            ),
                   ),
                   const SizedBox(height: 24),
                   EmployerResumeSectionCard(
                     title: t('أبرز الخبرات', 'Experience Highlights'),
-                    child: highlights.isEmpty
-                        ? Text(
-                            t('لا توجد تفاصيل خبرة مضافة.', 'No experience details added.'),
-                            style: theme.textTheme.bodyMedium,
-                          )
-                        : Column(
-                            children: highlights
-                                .map((text) => EmployerResumeBulletLine(text: text))
-                                .toList(),
-                          ),
+                    child:
+                        highlights.isEmpty
+                            ? Text(
+                              t(
+                                'لا توجد تفاصيل خبرة مضافة.',
+                                'No experience details added.',
+                              ),
+                              style: theme.textTheme.bodyMedium,
+                            )
+                            : Column(
+                              children:
+                                  highlights
+                                      .map(
+                                        (text) => EmployerResumeBulletLine(
+                                          text: text,
+                                        ),
+                                      )
+                                      .toList(),
+                            ),
                   ),
                   const SizedBox(height: 24),
                   EmployerResumeSectionCard(

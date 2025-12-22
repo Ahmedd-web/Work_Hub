@@ -5,6 +5,7 @@ import 'package:work_hub/features/home_screen/menuSheet/widgets/privacy_chip_poi
 import 'package:work_hub/features/home_screen/menuSheet/widgets/privacy_header.dart';
 import 'package:work_hub/features/home_screen/menuSheet/widgets/privacy_info_block.dart';
 import 'package:work_hub/features/home_screen/menuSheet/widgets/privacy_section_title.dart';
+import 'package:work_hub/generated/l10n.dart';
 
 class PrivacyPage extends StatelessWidget {
   const PrivacyPage({super.key});
@@ -14,6 +15,7 @@ class PrivacyPage extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final bool isDark = theme.brightness == Brightness.dark;
+    final s = S.of(context);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -27,72 +29,68 @@ class PrivacyPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const PrivacySectionTitle(title: 'سياسة الخصوصية'),
+                    PrivacySectionTitle(title: s.privacyIntroTitle),
                     const SizedBox(height: 14),
                     PrivacyInfoBlock(
-                      title: 'حماية البيانات',
-                      subtitle:
-                          'نلتزم بتأمين معلوماتك الشخصية عبر أنظمة مشفرة وضوابط وصول محددة، ولا نشاركها إلا للضرورة.',
+                      title: s.privacyDataTitle,
+                      subtitle: s.privacyDataDesc,
                       icon: Icons.lock_outline,
                       color: colorScheme.primary,
                     ),
                     const SizedBox(height: 12),
                     PrivacyInfoBlock(
-                      title: 'الامتثال القانوني',
-                      subtitle:
-                          'نلتزم بالقوانين المحلية والدولية لحماية البيانات ونوضح لك حقوقك وكيفية ممارستها في أي وقت.',
+                      title: s.privacySecurityTitle,
+                      subtitle: s.privacySecurityDesc,
                       icon: Icons.verified_user_outlined,
                       color: Colors.green.shade600,
                     ),
                     const SizedBox(height: 12),
                     PrivacyInfoBlock(
-                      title: 'التحكم في الخصوصية',
-                      subtitle:
-                          'يمكنك تحديث بياناتك أو حذفها متى شئت، كما يمكنك إيقاف الإشعارات أو إلغاء الاشتراك في أي لحظة.',
+                      title: s.privacyRetentionTitle,
+                      subtitle: s.privacyRetentionDesc,
                       icon: Icons.shield_outlined,
                       color: Colors.amber.shade700,
                     ),
                     const SizedBox(height: 24),
-                    const PrivacySectionTitle(title: 'مبادئنا'),
+                    PrivacySectionTitle(title: s.privacyPrinciplesTitle),
                     const SizedBox(height: 10),
                     Wrap(
                       spacing: 12,
                       runSpacing: 12,
-                      children: const [
-                        PrivacyChipPoint(text: 'أمان عالي'),
-                        PrivacyChipPoint(text: 'شفافية كاملة'),
-                        PrivacyChipPoint(text: 'لا نبيع بياناتك'),
-                        PrivacyChipPoint(text: 'تمكين تحكمك ببياناتك'),
+                      children: [
+                        PrivacyChipPoint(text: s.privacyPrinciple1),
+                        PrivacyChipPoint(text: s.privacyPrinciple2),
+                        PrivacyChipPoint(text: s.privacyPrinciple3),
+                        PrivacyChipPoint(text: s.privacyPrinciple4),
                       ],
                     ),
                     const SizedBox(height: 26),
-                    const PrivacySectionTitle(title: 'ما نجمعه'),
+                    PrivacySectionTitle(title: s.privacyUseTitle),
                     const SizedBox(height: 10),
                     PrivacyBulletCard(
-                      items: const [
-                        'بيانات حساب أساسية (الاسم، البريد، رقم الهاتف).',
-                        'معلومات الشركة/الجهة المعلنة عند التسجيل.',
-                        'بيانات استخدام تطبيق عامة لتحسين الأداء (بدون أي بيع لبياناتك).',
+                      items: [
+                        s.privacyUseItem1,
+                        s.privacyUseItem2,
+                        s.privacyUseItem3,
                       ],
                       color: isDark ? Colors.green.shade500 : colorScheme.primary,
                     ),
                     const SizedBox(height: 20),
-                    const PrivacySectionTitle(title: 'كيف نستخدمها'),
+                    PrivacySectionTitle(title: s.privacyNotTitle),
                     const SizedBox(height: 10),
                     PrivacyBulletCard(
-                      items: const [
-                        'تشغيل خدمات التطبيق وعرض المحتوى المناسب.',
-                        'إرسال تنبيهات مهمة أو تحديثات متعلقة بحسابك.',
-                        'تحليل الاستخدام لتحسين التجربة دون مشاركة معلوماتك مع أطراف تسويقية.',
+                      items: [
+                        s.privacyNotItem1,
+                        s.privacyNotItem2,
+                        s.privacyNotItem3,
                       ],
                       color: Colors.blue.shade500,
                     ),
                     const SizedBox(height: 26),
                     PrivacyActionCard(
-                      title: 'كيف تتواصل معنا',
-                      description:
-                          'إذا احتجت أي مساعدة أو استفسار حول خصوصيتك، تواصل معنا لنساعدك فوراً.',
-                      buttonText: 'العودة',
+                      title: s.privacyActionTitle,
+                      description: s.privacyActionDesc,
+                      buttonText: s.privacyActionButton,
                       onPressed: () => Navigator.of(context).maybePop(),
                     ),
                   ],

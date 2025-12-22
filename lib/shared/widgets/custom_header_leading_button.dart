@@ -77,6 +77,7 @@ class CustomHeaderLeadingButton extends StatelessWidget {
     final isDarkMode =
         (appState?.themeMode ?? ThemeMode.light) == ThemeMode.dark;
     final isEmployerUser = await EmployerSession.isEmployer();
+    if (!context.mounted) return;
     final membershipTile =
         isEmployerUser
             ? MembershipTileData(
@@ -162,8 +163,15 @@ class CustomHeaderLeadingButton extends StatelessWidget {
           title: s.menuLogout,
           onTap: () async {
             final navigator = Navigator.of(context);
-            await FirebaseAuth.instance.signOut();
-            navigator.pushNamedAndRemoveUntil("login", (route) => false);
+            try {
+              await EmployerSession.setMode(false);
+              await FirebaseAuth.instance.signOut();
+              if (!navigator.mounted) return;
+              navigator.pushNamedAndRemoveUntil("login", (route) => false);
+            } catch (_) {
+              if (!navigator.mounted) return;
+              navigator.pushNamedAndRemoveUntil("login", (route) => false);
+            }
           },
           iconColor: WorkHubColors.green,
           textColor: WorkHubColors.green,

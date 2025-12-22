@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
+import 'package:work_hub/generated/l10n.dart';
 
 class ContactUsPage extends StatelessWidget {
   const ContactUsPage({super.key});
@@ -9,66 +10,71 @@ class ContactUsPage extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
+    final s = S.of(context);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
-            Header(colorScheme: colorScheme),
+            Header(
+              colorScheme: colorScheme,
+              title: s.contactHeaderTitle,
+              subtitle: s.contactHeaderSubtitle,
+            ),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SectionTitle('طرق التواصل'),
+                    SectionTitle(s.contactSectionContact),
                     const SizedBox(height: 12),
                     InfoCard(
-                      title: 'البريد الإلكتروني',
-                      subtitle: 'support@mhnty.com',
+                      title: s.contactEmailTitle,
+                      subtitle: s.contactEmailValue,
                       icon: Icons.email_outlined,
                       color: colorScheme.primary,
                     ),
                     const SizedBox(height: 10),
                     InfoCard(
-                      title: 'رقم الهاتف',
-                      subtitle: '+218 91 234 5678',
+                      title: s.contactPhoneTitle,
+                      subtitle: s.contactPhoneValue,
                       icon: Icons.phone_outlined,
                       color: Colors.green.shade600,
                     ),
                     const SizedBox(height: 10),
                     InfoCard(
-                      title: 'الموقع',
-                      subtitle: 'طرابلس، ليبيا',
+                      title: s.contactAddressTitle,
+                      subtitle: s.contactAddressValue,
                       icon: Icons.place_outlined,
                       color: Colors.amber.shade700,
                     ),
                     const SizedBox(height: 24),
-                    SectionTitle('أرسل رسالة'),
+                    SectionTitle(s.contactFormTitle),
                     const SizedBox(height: 12),
-                    const TextFieldPill(
-                      label: 'الاسم',
-                      hint: 'أدخل اسمك الكامل',
+                    TextFieldPill(
+                      label: s.contactNameLabel,
+                      hint: s.contactNameHint,
                       icon: Icons.person_outline,
                     ),
                     const SizedBox(height: 12),
-                    const TextFieldPill(
-                      label: 'البريد الإلكتروني',
-                      hint: 'example@email.com',
+                    TextFieldPill(
+                      label: s.contactEmailLabel,
+                      hint: s.contactEmailHint,
                       icon: Icons.email_outlined,
                       keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 12),
-                    const TextFieldPill(
-                      label: 'الموضوع',
-                      hint: 'ما هو سبب تواصلك؟',
+                    TextFieldPill(
+                      label: s.contactSubjectLabel,
+                      hint: s.contactSubjectHint,
                       icon: Icons.subject_outlined,
                     ),
                     const SizedBox(height: 12),
-                    const TextFieldPill(
-                      label: 'الرسالة',
-                      hint: 'اكتب رسالتك هنا...',
+                    TextFieldPill(
+                      label: s.contactMessageLabel,
+                      hint: s.contactMessageHint,
                       icon: Icons.chat_bubble_outline,
                       maxLines: 5,
                     ),
@@ -84,9 +90,9 @@ class ContactUsPage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {},
-                        child: const Text(
-                          'إرسال',
-                          style: TextStyle(
+                        child: Text(
+                          s.contactSendButton,
+                          style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
                           ),
@@ -94,19 +100,19 @@ class ContactUsPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 18),
-                    SectionTitle('ساعات العمل'),
+                    SectionTitle(s.contactScheduleTitle),
                     const SizedBox(height: 8),
                     ScheduleRow(
-                      title: 'الأحد - الخميس',
-                      time: '9:00 صباحاً - 6:00 مساءً',
+                      title: s.contactWorkdaysTitle,
+                      time: s.contactWorkdaysTime,
                       color: isDark
                           ? Colors.green.shade500
                           : colorScheme.primary,
                     ),
                     const SizedBox(height: 6),
                     ScheduleRow(
-                      title: 'الجمعة - السبت',
-                      time: 'دعم طارئ عبر البريد فقط',
+                      title: s.contactWeekendTitle,
+                      time: s.contactWeekendTime,
                       color: Colors.orange.shade600,
                     ),
                   ],
@@ -121,9 +127,16 @@ class ContactUsPage extends StatelessWidget {
 }
 
 class Header extends StatelessWidget {
-  const Header({required this.colorScheme});
+  const Header({
+    super.key,
+    required this.colorScheme,
+    required this.title,
+    required this.subtitle,
+  });
 
   final ColorScheme colorScheme;
+  final String title;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +198,7 @@ class Header extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'تواصل معنا',
+                        title,
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w800,
                           color: colorScheme.primary,
@@ -193,7 +206,7 @@ class Header extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'نحن هنا للرد على استفساراتك ومساعدتك في أسرع وقت.',
+                        subtitle,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           height: 1.3,
                         ),
@@ -212,6 +225,7 @@ class Header extends StatelessWidget {
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
+    super.key,
     required this.title,
     required this.subtitle,
     required this.icon,
@@ -278,6 +292,7 @@ class InfoCard extends StatelessWidget {
 
 class TextFieldPill extends StatelessWidget {
   const TextFieldPill({
+    super.key,
     required this.label,
     required this.hint,
     required this.icon,
@@ -342,7 +357,7 @@ class TextFieldPill extends StatelessWidget {
 }
 
 class SectionTitle extends StatelessWidget {
-  const SectionTitle(this.title);
+  const SectionTitle(this.title, {super.key});
 
   final String title;
 
@@ -361,6 +376,7 @@ class SectionTitle extends StatelessWidget {
 
 class ScheduleRow extends StatelessWidget {
   const ScheduleRow({
+    super.key,
     required this.title,
     required this.time,
     required this.color,

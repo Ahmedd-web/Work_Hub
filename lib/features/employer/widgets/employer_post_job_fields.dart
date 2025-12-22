@@ -1,5 +1,6 @@
 // Reusable form field wrappers used in EmployerPostJobPage steps.
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 
 class EmployerFormFieldCard extends StatelessWidget {
@@ -68,6 +69,7 @@ class EmployerPlainTextField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.textDirection = TextDirection.rtl,
+    this.inputFormatters,
   });
 
   final TextEditingController controller;
@@ -77,6 +79,7 @@ class EmployerPlainTextField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final TextDirection textDirection;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +92,7 @@ class EmployerPlainTextField extends StatelessWidget {
       textDirection: textDirection,
       textAlign:
           textDirection == TextDirection.rtl ? TextAlign.right : TextAlign.left,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         hintText: hint,
         hintTextDirection: textDirection,
@@ -105,12 +109,14 @@ class EmployerDropdownCard extends StatelessWidget {
     required this.value,
     required this.items,
     required this.onChanged,
+    this.hint,
   });
 
   final String label;
   final String? value;
   final List<String> items;
   final ValueChanged<String?> onChanged;
+  final String? hint;
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +160,7 @@ class EmployerDropdownCard extends StatelessWidget {
               value: value,
               onChanged: onChanged,
               decoration: const InputDecoration(border: InputBorder.none),
-              hint: Text('حدد $label'),
+              hint: hint != null ? Text(hint!) : null,
               icon: const Icon(
                 Icons.keyboard_arrow_down_rounded,
                 color: AppColors.purple,

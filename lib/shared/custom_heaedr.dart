@@ -20,6 +20,7 @@ class CustomHeader extends StatelessWidget {
   final bool showMenuButton;
   final bool showNotificationButton;
   final bool showSearchBar;
+  final int? notificationCount;
   final VoidCallback? onBackPressed;
   final VoidCallback? onMenuPressed;
   final VoidCallback? onNotificationPressed;
@@ -44,6 +45,7 @@ class CustomHeader extends StatelessWidget {
     this.showMenuButton = false,
     this.showNotificationButton = false,
     this.showSearchBar = false,
+    this.notificationCount,
     this.onBackPressed,
     this.onMenuPressed,
     this.onNotificationPressed,
@@ -111,6 +113,7 @@ class CustomHeader extends StatelessWidget {
           if (showNotificationButton)
             CustomHeaderNotificationButton(
               color: effectiveTextColor,
+              badgeCount: notificationCount,
               onPressed: onNotificationPressed,
             ),
           CustomHeaderTitle(

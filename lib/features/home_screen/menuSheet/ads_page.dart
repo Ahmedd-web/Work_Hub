@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
+import 'package:work_hub/generated/l10n.dart';
 
 class AdsPage extends StatefulWidget {
   const AdsPage({super.key});
@@ -10,110 +11,123 @@ class AdsPage extends StatefulWidget {
 
 class AdsPageState extends State<AdsPage> {
   int selectedIndex = 1;
+  late final List<AdPackage> packages;
 
-  final List<AdPackage> packages = const [
-    AdPackage(
-      title: 'باقة 50 دينار',
-      price: '50 دينار',
-      perks: [
-        'إعلان واحد لمدة 7 أيام',
-        'شارة تمييز بسيطة',
-        'دعم عبر البريد',
-      ],
-    ),
-    AdPackage(
-      title: 'باقة 100 دينار',
-      price: '100 دينار',
-      perks: [
-        '3 إعلانات لمدة 14 يوماً',
-        'شارة تمييز + تنبيه بالبحث',
-        'نشر على القنوات الاجتماعية',
-      ],
-    ),
-    AdPackage(
-      title: 'باقة 150 دينار',
-      price: '150 دينار',
-      perks: [
-        '5 إعلانات لمدة 21 يوماً',
-        'تصميم إعلان مخصص',
-        'أولوية في نتائج البحث',
-      ],
-    ),
-    AdPackage(
-      title: 'باقة 200 دينار',
-      price: '200 دينار',
-      perks: [
-        '8 إعلانات لمدة شهر',
-        'مدير حساب لمتابعة الأداء',
-        'تقارير أسبوعية مفصلة',
-      ],
-    ),
-    AdPackage(
-      title: 'باقة 250 دينار',
-      price: '250 دينار',
-      perks: [
-        '12 إعلان لمدة شهر',
-        'تعزيز تنبيهات ورسائل للمستخدمين',
-        'دعم VIP عبر الهاتف',
-      ],
-    ),
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final s = S.of(context);
+    packages = [
+      AdPackage(
+        title: s.servicesPkg50Title,
+        price: s.servicesPkg50Price,
+        perks: [
+          s.servicesPerkVis7,
+          s.servicesPerkResume20,
+          s.servicesPerkEdits1,
+        ],
+      ),
+      AdPackage(
+        title: s.servicesPkg100Title,
+        price: s.servicesPkg100Price,
+        perks: [
+          s.servicesPerkPosts3,
+          s.servicesPerkFeatured3,
+          s.servicesPerkResume25,
+        ],
+      ),
+      AdPackage(
+        title: s.servicesPkg150Title,
+        price: s.servicesPkg150Price,
+        perks: [
+          s.servicesPerkPosts5,
+          s.servicesPerkBoosted,
+          s.servicesPerkSupport,
+        ],
+      ),
+      AdPackage(
+        title: s.servicesPkg200Title,
+        price: s.servicesPkg200Price,
+        perks: [
+          s.servicesPerkPosts8,
+          s.servicesPerkFeaturedBoost,
+          s.servicesPerkResumeViews,
+        ],
+      ),
+      AdPackage(
+        title: s.servicesPkg250Title,
+        price: s.servicesPkg250Price,
+        perks: [
+          s.servicesPerkPosts12,
+          s.servicesPerkDedicatedMgr,
+          s.servicesPerkVip,
+        ],
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final bool isDark = theme.brightness == Brightness.dark;
+    final s = S.of(context);
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
-            Header(colorScheme: colorScheme),
+            Header(
+              colorScheme: colorScheme,
+              title: s.servicesHeaderTitle,
+              subtitle: s.servicesHeaderSubtitle,
+            ),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SectionTitle('خدماتنا الإعلانية'),
+                    SectionTitle(s.servicesSectionTitle),
                     const SizedBox(height: 12),
                     InfoCard(
-                      title: 'إعلان وظيفة مميز',
-                      subtitle:
-                          'يظهر في أعلى نتائج البحث مع شارة تمييز جذابة لجذب أفضل المرشحين.',
+                      title: s.servicesInfo1Title,
+                      subtitle: s.servicesInfo1Desc,
                       icon: Icons.workspace_premium_outlined,
                       color: colorScheme.primary,
                     ),
                     const SizedBox(height: 12),
                     InfoCard(
-                      title: 'حزمة تعزيز الانتشار',
-                      subtitle:
-                          'مشاركة الإعلان في القنوات التسويقية والتنبيهات للوصول لأكبر عدد من الباحثين.',
+                      title: s.servicesInfo2Title,
+                      subtitle: s.servicesInfo2Desc,
                       icon: Icons.campaign_outlined,
                       color: Colors.green.shade600,
                     ),
                     const SizedBox(height: 12),
                     InfoCard(
-                      title: 'دعم إنشاء إعلان احترافي',
-                      subtitle:
-                          'فريقنا يساعدك في صياغة وصف الوظيفة وتنسيقها بصرياً لتحقيق أعلى تفاعل.',
+                      title: s.servicesInfo3Title,
+                      subtitle: s.servicesInfo3Desc,
                       icon: Icons.design_services_outlined,
                       color: Colors.amber.shade700,
                     ),
                     const SizedBox(height: 24),
-                    SectionTitle('الباقات الإعلانية'),
+                    SectionTitle(s.servicesPackagesTitle),
                     const SizedBox(height: 12),
                     ...List.generate(packages.length, (index) {
                       final pack = packages[index];
                       final isSelected = selectedIndex == index;
-                      final baseAccent = isDark ? Colors.green.shade500 : colorScheme.primary;
+                      final baseAccent =
+                          isDark ? Colors.green.shade500 : colorScheme.primary;
                       final accent = isSelected
                           ? baseAccent
-                          : (isDark ? Colors.green.shade400 : colorScheme.primary.withValues(alpha: 0.6));
+                          : (isDark
+                              ? Colors.green.shade400
+                              : colorScheme.primary.withValues(alpha: 0.6));
                       return Padding(
-                        padding: EdgeInsets.only(bottom: index == packages.length - 1 ? 0 : 12),
+                        padding: EdgeInsets.only(
+                          bottom: index == packages.length - 1 ? 0 : 12,
+                        ),
                         child: PackageCard(
                           title: pack.title,
                           price: pack.price,
@@ -136,9 +150,9 @@ class AdsPageState extends State<AdsPage> {
                           ),
                         ),
                         onPressed: () => Navigator.of(context).maybePop(),
-                        child: const Text(
-                          'ابدأ الإعلان الآن',
-                          style: TextStyle(fontWeight: FontWeight.w700),
+                        child: Text(
+                          s.servicesChoosePlan,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
                         ),
                       ),
                     ),
@@ -154,9 +168,16 @@ class AdsPageState extends State<AdsPage> {
 }
 
 class Header extends StatelessWidget {
-  const Header({required this.colorScheme});
+  const Header({
+    super.key,
+    required this.colorScheme,
+    required this.title,
+    required this.subtitle,
+  });
 
   final ColorScheme colorScheme;
+  final String title;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -218,7 +239,7 @@ class Header extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'الخدمات الإعلانية',
+                        title,
                         style: theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w800,
                           color: colorScheme.primary,
@@ -226,7 +247,7 @@ class Header extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'حلول متكاملة لترويج إعلانات الوظائف وجذب أفضل المرشحين بسرعة.',
+                        subtitle,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           height: 1.3,
                         ),
@@ -245,6 +266,7 @@ class Header extends StatelessWidget {
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
+    super.key,
     required this.title,
     required this.subtitle,
     required this.icon,
@@ -311,6 +333,7 @@ class InfoCard extends StatelessWidget {
 
 class PackageCard extends StatelessWidget {
   const PackageCard({
+    super.key,
     required this.title,
     required this.price,
     required this.perks,
@@ -336,10 +359,9 @@ class PackageCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: theme.cardColor,
           borderRadius: BorderRadius.circular(18),
-          border:
-              highlight
-                  ? Border.all(color: accent, width: 1.5)
-                  : Border.all(color: theme.dividerColor.withValues(alpha: 0.2)),
+          border: highlight
+              ? Border.all(color: accent, width: 1.5)
+              : Border.all(color: theme.dividerColor.withValues(alpha: 0.2)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.06),
@@ -362,7 +384,10 @@ class PackageCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: accent.withValues(alpha: highlight ? 0.2 : 0.12),
                     borderRadius: BorderRadius.circular(14),
@@ -407,7 +432,7 @@ class PackageCard extends StatelessWidget {
 }
 
 class SectionTitle extends StatelessWidget {
-  const SectionTitle(this.title);
+  const SectionTitle(this.title, {super.key});
 
   final String title;
 

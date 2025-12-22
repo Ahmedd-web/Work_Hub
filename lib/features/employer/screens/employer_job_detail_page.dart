@@ -1,7 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
-import 'package:work_hub/features/employer/screens/employer_membership_page.dart';
+import 'package:work_hub/features/employer/screens/employer_post_job_page.dart';
 import 'package:work_hub/features/employer/widgets/employer_job_action_button.dart';
 import 'package:work_hub/features/employer/widgets/employer_job_info_card.dart';
 import 'package:work_hub/features/employer/widgets/employer_job_metric_chip.dart';
@@ -23,9 +24,25 @@ class EmployerJobDetailPage extends StatefulWidget {
 
 class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
   int sectionIndex = 0;
-  bool isStopping = false;
+  bool isUpdating = false;
 
   Map<String, dynamic> get job => widget.jobData;
+
+  Duration get usedDuration {
+    final createdAt = job['created_at'] as Timestamp?;
+    if (createdAt == null) return Duration.zero;
+    final pausedAt = job['paused_at'] as Timestamp?;
+    final end = pausedAt?.toDate() ?? DateTime.now();
+    return end.difference(createdAt.toDate());
+  }
+
+  Duration get remainingDuration {
+    final stored = job['paused_remaining_seconds'] as int?;
+    if (stored != null) return Duration(seconds: stored);
+    final spent = usedDuration;
+    final remaining = const Duration(hours: 24) - spent;
+    return remaining.isNegative ? Duration.zero : remaining;
+  }
 
   String get salaryText {
     final from = (job['salary_from'] as String?) ?? '';
@@ -42,11 +59,16 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final titleAr = (job['arabic_title'] as String?) ?? 'وظيفة';
+    final titleAr = (job['arabic_title'] as String?) ?? 'إعلان وظيفة';
     final titleEn = (job['english_title'] as String?) ?? '';
     final experience = (job['experience_years'] as String?) ?? '-';
-    final education = (job['education_level'] as String?) ?? '-';
     final country = (job['country'] as String?) ?? '-';
+    final status = (job['status'] as String?) ?? 'active';
+    final isDeleted = status == 'deleted';
+    final isPaused = status == 'archived';
+    final actionLabel = isPaused ? 'إعادة النشر' : 'إيقاف مؤقت';
+    final actionColor =
+        isPaused ? AppColors.bannerGreen : const Color(0xFFCB1F31);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F7),
@@ -59,7 +81,20 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
         ),
         actions: [
           IconButton(icon: const Icon(Icons.share_outlined), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.edit_outlined), onPressed: () {}),
+          if (isPaused && !isDeleted)
+            IconButton(
+              icon: const Icon(Icons.edit_outlined),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => EmployerPostJobPage(
+                      initialData: job,
+                      jobId: widget.jobId,
+                    ),
+                  ),
+                );
+              },
+            ),
         ],
       ),
       body: Column(
@@ -131,7 +166,7 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                         ),
                         EmployerJobMetricChip(
                           icon: Icons.location_on_outlined,
-                          label: 'الموقع',
+                          label: 'الدولة',
                           value: country,
                         ),
                       ],
@@ -139,15 +174,15 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
                   ),
                   const SizedBox(height: 18),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
                       EmployerJobActionButton(
-                        text: 'تمييز الإعلان',
+                        text: 'تعزيز الإعلان',
                         icon: Icons.star_border,
                         onTap: () {},
                       ),
                       EmployerJobActionButton(
-                        text: 'إظهار المتقدمين',
+                        text: 'عرض الزيارات',
                         icon: Icons.visibility_outlined,
                         onTap: () {},
                       ),
@@ -167,26 +202,27 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-            child: SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: isStopping ? null : showStopDialog,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFCB1F31),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+          if (!isDeleted)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+              child: SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: isUpdating ? null : () => toggleStatus(isPaused),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: actionColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'إيقاف الإعلان',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  child: Text(
+                    actionLabel,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
@@ -207,12 +243,12 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
               value: job['experience_years'] ?? '-',
             ),
             EmployerJobInfoRow(
-              label: 'مستوى التعليم',
+              label: 'المستوى التعليمي',
               value: job['education_level'] ?? '-',
             ),
             EmployerJobInfoRow(label: 'القسم', value: job['department'] ?? '-'),
             EmployerJobInfoRow(label: 'الجنسية', value: job['nationality'] ?? '-'),
-            EmployerJobInfoRow(label: 'مكان العمل', value: job['country'] ?? '-'),
+            EmployerJobInfoRow(label: 'الدولة', value: job['country'] ?? '-'),
             EmployerJobInfoRow(label: 'المدينة', value: job['city'] ?? '-'),
           ],
         );
@@ -221,30 +257,101 @@ class EmployerJobDetailPageState extends State<EmployerJobDetailPage> {
           title: 'وصف الوظيفة',
           description:
               (job['description'] as String?)?.trim().isEmpty ?? true
-                  ? 'لا يوجد وصف مرتب'
+                  ? 'لا يوجد وصف بعد'
                   : job['description'],
         );
       default:
         return EmployerJobInfoCard(
-          title: 'صورة الإعلان',
-          description: 'لم يتم تحميل صورة للإعلان حتى الآن.',
+          title: 'تفاصيل الإعلان',
+          description: 'لا يوجد تفاصيل أخرى متاحة.',
         );
     }
   }
 
-  Future<void> showStopDialog() async {
-    await AwesomeDialog(
-      context: context,
-      dialogType: DialogType.warning,
-      animType: AnimType.bottomSlide,
-      title: 'عذرًا، اشتراكك الحالي قد لا يسمح لك باستخدام هذه الخدمة',
-      btnOkText: 'إشترك الآن',
-      btnOkOnPress: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const EmployerMembershipPage()),
+  Future<void> toggleStatus(bool currentlyPaused) async {
+    setState(() => isUpdating = true);
+    try {
+      if (currentlyPaused) {
+        final remaining = remainingDuration;
+        final spent = const Duration(hours: 24) - remaining;
+        final adjustedSpent = spent.isNegative ? Duration.zero : spent;
+        final newCreatedAt = Timestamp.fromDate(
+          DateTime.now().subtract(adjustedSpent),
         );
-      },
-      btnOkColor: AppColors.bannerGreen,
-    ).show();
+
+        await FirebaseFirestore.instance
+            .collection('job_posts')
+            .doc(widget.jobId)
+            .update({
+          'status': 'active',
+          'created_at': newCreatedAt,
+          'paused_at': FieldValue.delete(),
+          'paused_remaining_seconds': FieldValue.delete(),
+          'expiry_warning_sent': false,
+        });
+
+        job['status'] = 'active';
+        job['created_at'] = newCreatedAt;
+        job.remove('paused_at');
+        job.remove('paused_remaining_seconds');
+
+        if (mounted) {
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.success,
+            animType: AnimType.bottomSlide,
+            title: 'تم إعادة نشر الإعلان.',
+            desc: 'سيستكمل الإعلان المدة المتبقية قبل الانتهاء.',
+            btnOkOnPress: () {},
+            btnOkColor: AppColors.bannerGreen,
+          ).show();
+          setState(() {});
+        }
+      } else {
+        final remaining = remainingDuration;
+        final pausedAt = Timestamp.now();
+
+        await FirebaseFirestore.instance
+            .collection('job_posts')
+            .doc(widget.jobId)
+            .update({
+          'status': 'archived',
+          'paused_at': pausedAt,
+          'paused_remaining_seconds': remaining.inSeconds,
+        });
+
+        job['status'] = 'archived';
+        job['paused_at'] = pausedAt;
+        job['paused_remaining_seconds'] = remaining.inSeconds;
+
+        if (mounted) {
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.bottomSlide,
+            title: 'تم إيقاف الإعلان مؤقتاً.',
+            desc: 'يمكنك تعديل الإعلان ثم إعادة نشره ليكمل المدة المتبقية.',
+            btnOkOnPress: () {},
+            btnOkColor: AppColors.bannerGreen,
+          ).show();
+          setState(() {});
+        }
+      }
+    } catch (_) {
+      if (mounted) {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.bottomSlide,
+          title: 'تعذر تحديث حالة الإعلان',
+          desc: 'حاول مرة أخرى.',
+          btnOkOnPress: () {},
+          btnOkColor: Colors.red,
+        ).show();
+      }
+    } finally {
+      if (mounted) setState(() => isUpdating = false);
+    }
   }
 }
+

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/home_screen/models/job_post.dart';
+import 'package:work_hub/features/home_screen/pages/applicant_notifications_page.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
 
@@ -30,6 +31,13 @@ class SavedTab extends StatelessWidget {
           showBackButton: false,
           showMenuButton: true,
           showNotificationButton: true,
+          onNotificationPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const ApplicantNotificationsPage(),
+              ),
+            );
+          },
           showSearchBar: false,
         ),
         Expanded(

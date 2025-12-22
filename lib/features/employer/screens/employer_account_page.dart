@@ -8,6 +8,7 @@ import 'package:work_hub/features/employer/screens/employer_jobs_page.dart';
 import 'package:work_hub/features/employer/screens/employer_resumes_page.dart';
 import 'package:work_hub/features/employer/screens/employer_edit_info_page.dart';
 import 'package:work_hub/features/employer/screens/employer_edit_about_page.dart';
+import 'package:work_hub/features/employer/screens/employer_notifications_page.dart';
 import 'package:work_hub/features/employer/widgets/employer_bottom_nav.dart';
 import 'package:work_hub/features/employer/widgets/employer_account_about_section.dart';
 import 'package:work_hub/features/employer/widgets/employer_account_identity_card.dart';
@@ -85,6 +86,7 @@ class EmployerAccountPageState extends State<EmployerAccountPage> {
     final s = S.of(context);
     final theme = Theme.of(context);
     final background = theme.scaffoldBackgroundColor;
+    final uid = FirebaseAuth.instance.currentUser?.uid;
     if (profileStream == null) {
       return Scaffold(
         backgroundColor: background,
@@ -131,20 +133,41 @@ class EmployerAccountPageState extends State<EmployerAccountPage> {
 
           return Column(
             children: [
-              CustomHeader(
-                title: s.employerAccountTitle,
-                titleWidget: const SizedBox.shrink(),
-                backgroundColor: AppColors.purple,
-                backgroundImage: AppAssets.headerLogo,
-                showMenuButton: true,
-                showNotificationButton: true,
-                showSearchBar: false,
-                overlayChild: EmployerIdentityCard(
-                  name: displayCompanyName,
-                  subtitle: displayIndustry,
-                ),
-                overlayHeight: 90,
-                height: 190,
+              StreamBuilder<int>(
+                stream: uid == null
+                    ? const Stream.empty()
+                    : FirebaseFirestore.instance
+                        .collection('employer_notifications')
+                        .where('employer_id', isEqualTo: uid)
+                        .where('seen', isEqualTo: false)
+                        .snapshots()
+                        .map((snap) => snap.size),
+                builder: (context, snap) {
+                  final count = snap.data ?? 0;
+                  return CustomHeader(
+                    title: s.employerAccountTitle,
+                    titleWidget: const SizedBox.shrink(),
+                    backgroundColor: AppColors.purple,
+                    backgroundImage: AppAssets.headerLogo,
+                    showMenuButton: true,
+                    showNotificationButton: true,
+                    notificationCount: count > 0 ? count : null,
+                    onNotificationPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const EmployerNotificationsPage(),
+                        ),
+                      );
+                    },
+                    showSearchBar: false,
+                    overlayChild: EmployerIdentityCard(
+                      name: displayCompanyName,
+                      subtitle: displayIndustry,
+                    ),
+                    overlayHeight: 115,
+                    height: 205,
+                  );
+                },
               ),
               const SizedBox(height: 70),
               Expanded(

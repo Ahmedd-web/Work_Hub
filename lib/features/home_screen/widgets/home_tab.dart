@@ -3,6 +3,7 @@ import 'package:work_hub/core/constants/app_assets.dart';
 import 'package:work_hub/core/theme/app_theme.dart';
 import 'package:work_hub/features/auth/screens/register.dart';
 import 'package:work_hub/features/home_screen/models/featured_offer.dart';
+import 'package:work_hub/features/home_screen/pages/applicant_notifications_page.dart';
 import 'package:work_hub/features/home_screen/pages/categories_page.dart';
 import 'package:work_hub/features/home_screen/widgets/header_sliver_delegate.dart';
 import 'package:work_hub/shared/custom_heaedr.dart';
@@ -30,9 +31,9 @@ class HomeTab extends StatelessWidget {
   final List<FeaturedOffer> featuredOffers;
   final bool showCallToActions;
 
-  static const double _headerBaseHeight = 130;
-  static const double _searchOverlap = 28;
-  static const double _headerExtent = _headerBaseHeight + _searchOverlap;
+  static const double headerBaseHeight = 130;
+  static const double searchOverlap = 28;
+  static const double headerExtent = headerBaseHeight + searchOverlap;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +46,8 @@ class HomeTab extends StatelessWidget {
         SliverPersistentHeader(
           pinned: true,
           delegate: HeaderSliverDelegate(
-            minHeight: _headerExtent,
-            maxHeight: _headerExtent,
+            minHeight: headerExtent,
+            maxHeight: headerExtent,
             builder: (context, shrinkOffset, overlapsContent) {
               return SizedBox.expand(
                 child: CustomHeader(
@@ -55,12 +56,19 @@ class HomeTab extends StatelessWidget {
                   showBackButton: false,
                   showMenuButton: true,
                   showNotificationButton: true,
+                  onNotificationPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const ApplicantNotificationsPage(),
+                      ),
+                    );
+                  },
                   showSearchBar: true,
                   searchController: searchController,
                   backgroundColor: AppColors.purple,
                   backgroundImage: AppAssets.headerLogo,
                   searchHint: s.searchHint,
-                  height: _headerBaseHeight,
+                  height: headerBaseHeight,
                 ),
               );
             },
@@ -82,7 +90,7 @@ class HomeTab extends StatelessWidget {
                       final path = displayedImages[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: _GalleryImageCard(imagePath: path),
+                        child: GalleryImageCard(imagePath: path),
                       );
                     },
                   ),
@@ -112,7 +120,7 @@ class HomeTab extends StatelessWidget {
                 child: Column(
                   children: [
                     if (showCallToActions) ...[
-                      _GradientActionButton(
+                      GradientActionButton(
                         label: s.actionCreateResume,
                         icon: Icons.add,
                         onPressed: () {
@@ -129,7 +137,7 @@ class HomeTab extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      _GradientActionButton(
+                      GradientActionButton(
                         label: s.actionPostJob,
                         icon: Icons.work_outline,
                         onPressed: () {
@@ -172,13 +180,13 @@ class HomeTab extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: _CategoryCard(title: categories[i]),
+                                child: CategoryCard(title: categories[i]),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
                                 child:
                                     i + 1 < categories.length
-                                        ? _CategoryCard(
+                                        ? CategoryCard(
                                           title: categories[i + 1],
                                         )
                                         : const SizedBox.shrink(),
@@ -211,7 +219,7 @@ class HomeTab extends StatelessWidget {
                               (context, index) => const SizedBox(width: 16),
                           itemBuilder: (context, index) {
                             final offer = featuredOffers[index];
-                            return _FeaturedOfferCard(offer: offer);
+                            return FeaturedOfferCard(offer: offer);
                           },
                         ),
                       ),
@@ -228,8 +236,8 @@ class HomeTab extends StatelessWidget {
   }
 }
 
-class _GradientActionButton extends StatelessWidget {
-  const _GradientActionButton({
+class GradientActionButton extends StatelessWidget {
+  const GradientActionButton({
     required this.label,
     required this.icon,
     this.colors = const [AppColors.purple, AppColors.bannerGreen],
@@ -278,8 +286,8 @@ class _GradientActionButton extends StatelessWidget {
   }
 }
 
-class _GalleryImageCard extends StatelessWidget {
-  const _GalleryImageCard({required this.imagePath});
+class GalleryImageCard extends StatelessWidget {
+  const GalleryImageCard({required this.imagePath});
 
   final String imagePath;
 
@@ -311,8 +319,8 @@ class _GalleryImageCard extends StatelessWidget {
   }
 }
 
-class _CategoryCard extends StatelessWidget {
-  const _CategoryCard({required this.title});
+class CategoryCard extends StatelessWidget {
+  const CategoryCard({required this.title});
 
   final String title;
 
@@ -345,8 +353,8 @@ class _CategoryCard extends StatelessWidget {
   }
 }
 
-class _FeaturedOfferCard extends StatelessWidget {
-  const _FeaturedOfferCard({required this.offer});
+class FeaturedOfferCard extends StatelessWidget {
+  const FeaturedOfferCard({required this.offer});
 
   final FeaturedOffer offer;
 
