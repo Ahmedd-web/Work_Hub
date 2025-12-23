@@ -446,6 +446,28 @@ class ApplyJobPageState extends State<ApplyJobPage> {
     final isArabic = locale.languageCode == 'ar';
 
     try {
+      // Prevent duplicate applications for the same job by the same user.
+      final existing = await FirebaseFirestore.instance
+          .collection('job_applications')
+          .where('job_id', isEqualTo: widget.job.id)
+          .where('applicant_uid', isEqualTo: user.uid)
+          .limit(1)
+          .get();
+      if (existing.docs.isNotEmpty) {
+        await AwesomeDialog(
+          context: context,
+          dialogType: DialogType.warning,
+          animType: AnimType.bottomSlide,
+          title: s.dialogWarningTitle,
+          desc: isArabic
+              ? 'لقد قدمت على هذه الوظيفة بالفعل.'
+              : 'You already applied for this job.',
+          btnOkText: s.dialogOk,
+          btnOkOnPress: () {},
+        ).show();
+        return;
+      }
+
       if (cvBytes != null && cvFileName != null) {
         final jobIdSafe = (widget.job.id.isNotEmpty ? widget.job.id : user.uid)
             .replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
