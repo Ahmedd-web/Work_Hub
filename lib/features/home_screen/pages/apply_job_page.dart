@@ -1,9 +1,6 @@
-﻿import 'dart:typed_data';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:work_hub/features/home_screen/models/job_post.dart';
 import 'package:work_hub/features/home_screen/widgets/apply_job_helpers.dart';
@@ -25,9 +22,6 @@ class ApplyJobPageState extends State<ApplyJobPage> {
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
   String phoneCode = '+218';
-  Uint8List? cvBytes;
-  String? cvFileName;
-  bool isPickingCv = false;
 
   @override
   void dispose() {
@@ -60,9 +54,7 @@ class ApplyJobPageState extends State<ApplyJobPage> {
     final phoneLabel = s.applyPhoneLabel;
     final phoneHint = s.applyPhoneHint;
     final phoneRequired = s.fieldRequired;
-    final cvLabel = s.applyCvLabel;
-    final cvButtonText = s.applyCvButton;
-    final cvRequired = s.applyCvRequired;
+
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -276,65 +268,6 @@ class ApplyJobPageState extends State<ApplyJobPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: 18),
-                LabeledField(
-                  label: cvLabel,
-                  alignment: CrossAxisAlignment.center,
-                  labelAlign: TextAlign.center,
-                  child: Column(
-                    children: [
-                      OutlinedButton.icon(
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 14,
-                            horizontal: 12,
-                          ),
-                          side: BorderSide(
-                            color: colorScheme.primary,
-                            width: 1.4,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                        ),
-                        onPressed:
-                            isPickingCv ? null : () => pickCv(cvRequired),
-                        icon:
-                            isPickingCv
-                                ? SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: colorScheme.primary,
-                                  ),
-                                )
-                                : Icon(
-                                  Icons.upload_outlined,
-                                  color: colorScheme.primary,
-                                ),
-                        label: Text(
-                          cvFileName ?? cvButtonText,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: colorScheme.primary,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      if (cvFileName != null) ...[
-                        const SizedBox(height: 8),
-                        Text(
-                          cvFileName!,
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurface.withValues(alpha: 0.7),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
                 const SizedBox(height: 24),
                 SizedBox(
                   width: double.infinity,
@@ -365,49 +298,8 @@ class ApplyJobPageState extends State<ApplyJobPage> {
     );
   }
 
-  Future<void> pickCv(String errorText) async {
-    setState(() => isPickingCv = true);
-    try {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf'],
-        withData: true,
-      );
-      if (result != null && result.files.single.bytes != null) {
-        final file = result.files.single;
-        setState(() {
-          cvBytes = file.bytes;
-          cvFileName = file.name;
-        });
-      } else if (result != null) {
-        AwesomeDialog(
-          context: context,
-          dialogType: DialogType.warning,
-          animType: AnimType.bottomSlide,
-          title: S.of(context).dialogWarningTitle,
-          desc: errorText,
-          btnOkText: S.of(context).dialogOk,
-          btnOkOnPress: () {},
-        ).show();
-      }
-    } catch (_) {
-      AwesomeDialog(
-        context: context,
-        dialogType: DialogType.error,
-        animType: AnimType.bottomSlide,
-        title: S.of(context).dialogErrorTitle,
-        desc: errorText,
-        btnOkText: S.of(context).dialogClose,
-        btnOkOnPress: () {},
-      ).show();
-    } finally {
-      if (mounted) setState(() => isPickingCv = false);
-    }
-  }
-
   void submit() {
     if (!formKey.currentState!.validate()) return;
-    // PDF optional (temporarily disabled)
     FocusScope.of(context).unfocus();
     submitApplication();
   }
@@ -428,6 +320,52 @@ class ApplyJobPageState extends State<ApplyJobPage> {
       return;
     }
 
+    // Prevent duplicate applications for the same job by the same user.
+    final existing =
+        await FirebaseFirestore.instance
+            .collection('job_applications')
+            .where('job_id', isEqualTo: widget.job.id)
+            .where('applicant_uid', isEqualTo: user.uid)
+            .limit(1)
+            .get();
+    final locale = Localizations.localeOf(context);
+    final isArabic = locale.languageCode == 'ar';
+    if (existing.docs.isNotEmpty) {
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.warning,
+        animType: AnimType.bottomSlide,
+        title: s.dialogWarningTitle,
+        desc:
+            isArabic
+                ? 'لقد تقدمت لهذه الوظيفة مسبقاً.'
+                : 'You already applied for this job.',
+        btnOkText: s.dialogOk,
+        btnOkOnPress: () {},
+      ).show();
+      return;
+    }
+
+    // Require completed CV/profile before applying.
+    final profileDoc = await FirebaseFirestore.instance
+        .collection('Profile')
+        .doc(user.uid)
+        .get();
+    final profile = profileDoc.data() ?? {};
+    final cvUrl = (profile['cv_url'] as String?)?.trim() ?? '';
+    if (cvUrl.isEmpty) {
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.warning,
+        animType: AnimType.bottomSlide,
+        title: s.dialogWarningTitle,
+        desc: s.profileNoData,
+        btnOkText: s.dialogOk,
+        btnOkOnPress: () {},
+      ).show();
+      return;
+    }
+
     final data = {
       'job_id': widget.job.id,
       'employer_id': widget.job.ownerId,
@@ -437,94 +375,12 @@ class ApplyJobPageState extends State<ApplyJobPage> {
       'phone_code': phoneCode,
       'phone': phoneController.text.trim(),
       'email': emailController.text.trim(),
-      'cv_file_name': cvFileName,
+      'cv_url': cvUrl,
       'status': 'pending',
       'sent_at': FieldValue.serverTimestamp(),
     };
 
-    final locale = Localizations.localeOf(context);
-    final isArabic = locale.languageCode == 'ar';
-
     try {
-      // Prevent duplicate applications for the same job by the same user.
-      final existing = await FirebaseFirestore.instance
-          .collection('job_applications')
-          .where('job_id', isEqualTo: widget.job.id)
-          .where('applicant_uid', isEqualTo: user.uid)
-          .limit(1)
-          .get();
-      if (existing.docs.isNotEmpty) {
-        await AwesomeDialog(
-          context: context,
-          dialogType: DialogType.warning,
-          animType: AnimType.bottomSlide,
-          title: s.dialogWarningTitle,
-          desc: isArabic
-              ? 'لقد قدمت على هذه الوظيفة بالفعل.'
-              : 'You already applied for this job.',
-          btnOkText: s.dialogOk,
-          btnOkOnPress: () {},
-        ).show();
-        return;
-      }
-
-      if (cvBytes != null && cvFileName != null) {
-        final jobIdSafe = (widget.job.id.isNotEmpty ? widget.job.id : user.uid)
-            .replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
-        final safeName = (cvFileName!.trim().isEmpty ? 'resume' : cvFileName!)
-            .replaceAll(RegExp(r'[^A-Za-z0-9._-]'), '_');
-        if (cvBytes!.isEmpty) {
-          await AwesomeDialog(
-            context: context,
-            dialogType: DialogType.warning,
-            animType: AnimType.bottomSlide,
-            title: s.dialogWarningTitle,
-            desc: s.applyCvRequired,
-            btnOkText: s.dialogOk,
-            btnOkOnPress: () {},
-          ).show();
-          return;
-        }
-
-        final storageRef = FirebaseStorage.instance.ref().child(
-          'applications/$jobIdSafe/${user.uid}/${DateTime.now().millisecondsSinceEpoch}_$safeName.pdf',
-        );
-        debugPrint('Uploading CV to: ${storageRef.fullPath}');
-        try {
-          await storageRef.putData(
-            cvBytes!,
-            SettableMetadata(contentType: 'application/pdf'),
-          );
-          try {
-            final cvUrl = await storageRef.getDownloadURL();
-            data['cv_url'] = cvUrl;
-            data['cv_path'] = storageRef.fullPath;
-          } on FirebaseException catch (e) {
-            await AwesomeDialog(
-              context: context,
-              dialogType: DialogType.error,
-              animType: AnimType.bottomSlide,
-              title: s.dialogErrorTitle,
-              desc: s.applyCvRequired,
-              btnOkText: s.dialogClose,
-              btnOkOnPress: () {},
-            ).show();
-            return;
-          }
-        } on FirebaseException catch (e) {
-          await AwesomeDialog(
-            context: context,
-            dialogType: DialogType.error,
-            animType: AnimType.bottomSlide,
-            title: s.dialogErrorTitle,
-            desc: s.applyCvRequired,
-            btnOkText: s.dialogClose,
-            btnOkOnPress: () {},
-          ).show();
-          return;
-        }
-      }
-
       final apps = FirebaseFirestore.instance.collection('job_applications');
       final notif = FirebaseFirestore.instance.collection(
         'employer_notifications',

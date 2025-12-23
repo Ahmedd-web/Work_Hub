@@ -24,8 +24,10 @@ class JobInfoSection extends StatelessWidget {
         value: job.educationLevel ?? '-',
       ),
       DetailItem(label: s.jobDetailDepartment, value: job.department ?? '-'),
-      DetailItem(label: s.jobDetailNationality, value: job.nationality ?? '-'),
-      DetailItem(label: s.jobDetailWorkLocation, value: job.location),
+      // nationality removed per new requirements
+      // City is the predefined option (طرابلس/بنغازي/مصراتة), location is company address.
+      // موقع الشركة (عنوان حر)
+      DetailItem(label: 'موقع الشركة', value: job.location),
       DetailItem(label: s.jobDetailCity, value: job.city ?? '-'),
       DetailItem(label: s.jobDetailSalaryLabel, value: job.salary ?? '-'),
       DetailItem(label: s.jobDetailDeadline, value: job.deadline ?? '-'),

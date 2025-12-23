@@ -437,7 +437,7 @@
   "applyCvLabel": "السيرة الذاتية (PDF)",
   "applyCvButton": "رفع السيرة الذاتية",
   "applyCvRequired": "يرجى إرفاق ملف PDF للسيرة الذاتية",
-  "menuMembershipStatusFree": "??????",
+  "menuMembershipStatusFree": "مجانية",
   "employerResumesTitle": "استكشف السير الذاتية",
   "employerResumesSubtitle": "اختر المرشح المثالي لفرصتك من خلال تصفية السير الذاتية حسب الوقت والتخصص.",
   "employerResumesTimeLabel": "التوقيت",
@@ -467,8 +467,8 @@
   "jobPostPublishSuccess": "تم نشر الوظيفة بنجاح",
   "jobPostSaveError": "??? ??? ????? ??? ????????: {error}",
   "notifTitle": "الإشعارات",
-  "notifLoginRequired": "الرجاء تسجيل الدخول للوصول إلى الإشعارات.",
-  "notifError": "خطأ: {error}",
+  "notifLoginRequired": "يرجى تسجيل الدخول لعرض الإشعارات.",
+  "notifError": "حدث خطأ: {error}",
   "@notifError": {
     "placeholders": {
       "error": {
@@ -476,19 +476,19 @@
       }
     }
   },
-  "notifEmpty": "لا توجد إشعارات حالياً",
-  "notifNewApplication": "طلب تقدم جديد",
-  "notifUntitledJob": "بدون عنوان وظيفة",
-  "notifApplicantNotFound": "لم يتم العثور على الطلب",
-  "notifCvMissing": "لا توجد سيرة ذاتية محفوظة لهذا المستخدم.",
+  "notifEmpty": "لا يوجد إشعارات حالياً",
+  "notifNewApplication": "طلب تقديم جديد",
+  "notifUntitledJob": "وظيفة بدون عنوان",
+  "notifApplicantNotFound": "لم يتم العثور على المتقدم",
+  "notifCvMissing": "لا توجد سيرة ذاتية مرفقة لهذا المتقدم.",
   "notifAccept": "قبول",
   "notifReject": "رفض",
-  "notifSuccessAccept": "تم قبول الطلب بنجاح",
-  "notifSuccessReject": "تم رفض الطلب بنجاح",
+  "notifSuccessAccept": "تم قبول الطلب",
+  "notifSuccessReject": "تم رفض الطلب",
   "notifCopyCv": "نسخ الرابط",
-  "notifOpenCv": "فتح الملف",
+  "notifOpenCv": "فتح السيرة",
   "notifPhone": "الهاتف",
-  "notifEmail": "?????? ??????????",
+  "notifEmail": "البريد الإلكتروني",
   "employerCompanyLoginTitle": "تسجيل دخول الشركات",
   "commonBack": "السابق",
   "commonNext": "التالي",
@@ -617,5 +617,6 @@
   "privacyHeaderTitle": "سياسة الخصوصية",
   "privacyHeaderSubtitle": "نوضح لك كيف نحافظ على بياناتك داخل منصة مهنتي.",
   "contactHeaderTitle": "اتصل بنا",
-  "employerLoginIntro": "أدخل بيانات شركتك للوصول إلى لوحة التحكم."
+  "employerLoginIntro": "أدخل بيانات شركتك للوصول إلى لوحة التحكم.",
+  "menuMembershipTitle": "عضويتك الحالية"
 }

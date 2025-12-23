@@ -11,6 +11,7 @@ import 'package:work_hub/features/home_screen/menuSheet/menu_sheet.dart';
 import 'package:work_hub/features/home_screen/menuSheet/privacy_page.dart';
 import 'package:work_hub/generated/l10n.dart';
 import 'package:work_hub/main.dart';
+import 'package:work_hub/networking/notification_service.dart';
 
 class CustomHeaderLeadingButton extends StatelessWidget {
   final bool showBackButton;
@@ -128,9 +129,9 @@ class CustomHeaderLeadingButton extends StatelessWidget {
           icon: Icons.campaign_outlined,
           title: s.menuServicesAds,
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const AdsPage()),
-            );
+            Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (context) => const AdsPage()));
           },
         ),
         MenuEntry(
@@ -162,16 +163,16 @@ class CustomHeaderLeadingButton extends StatelessWidget {
           icon: Icons.logout,
           title: s.menuLogout,
           onTap: () async {
-            final navigator = Navigator.of(context);
+            final navigator = Navigator.of(context, rootNavigator: true);
+            try {
+              await NotificationService.instance.disposeListener();
+            } catch (_) {}
             try {
               await EmployerSession.setMode(false);
               await FirebaseAuth.instance.signOut();
-              if (!navigator.mounted) return;
-              navigator.pushNamedAndRemoveUntil("login", (route) => false);
-            } catch (_) {
-              if (!navigator.mounted) return;
-              navigator.pushNamedAndRemoveUntil("login", (route) => false);
-            }
+            } catch (_) {}
+            if (!context.mounted) return;
+            navigator.pushNamedAndRemoveUntil("login", (route) => false);
           },
           iconColor: WorkHubColors.green,
           textColor: WorkHubColors.green,
