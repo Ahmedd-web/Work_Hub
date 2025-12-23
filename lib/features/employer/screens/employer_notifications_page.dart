@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element
+﻿// ignore_for_file: unused_element
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,26 +17,6 @@ import 'package:work_hub/shared/custom_heaedr.dart';
 import 'package:work_hub/networking/notification_service.dart';
 
 // ignore_for_file: use_build_context_synchronously
-
-// Temporary fallbacks until l10n is regenerated with notif keys.
-extension NotifStrings on S {
-  String get notifLoginRequired => 'الرجاء تسجيل الدخول للوصول إلى الإشعارات.';
-  String get notifTitle => 'الإشعارات';
-  String notifError(String error) => 'خطأ: $error';
-  String get notifEmpty => 'لا توجد إشعارات حالياً';
-  String get notifNewApplication => 'طلب تقدم جديد';
-  String get notifUntitledJob => 'بدون عنوان وظيفة';
-  String get notifApplicantNotFound => 'لم يتم العثور على الطلب';
-  String get notifCvMissing => 'لا توجد سيرة ذاتية محفوظة لهذا المستخدم.';
-  String get notifAccept => 'قبول';
-  String get notifReject => 'رفض';
-  String get notifSuccessAccept => 'تم قبول الطلب بنجاح';
-  String get notifSuccessReject => 'تم رفض الطلب بنجاح';
-  String get notifCopyCv => 'نسخ الرابط';
-  String get notifOpenCv => 'فتح الملف';
-  String get notifPhone => 'الهاتف';
-  String get notifEmail => 'البريد الإلكتروني';
-}
 
 class EmployerNotificationsPage extends StatelessWidget {
   const EmployerNotificationsPage({super.key});

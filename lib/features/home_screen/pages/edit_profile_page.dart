@@ -98,61 +98,53 @@ class EditProfilePageState extends State<EditProfilePage> {
       final storagePath =
           'cvs/${user.uid}/${DateTime.now().millisecondsSinceEpoch}_$filename';
 
+      // استخدم البكت الافتراضي المعرّف في google-services (firebasestorage.app)
       final ref = FirebaseStorage.instanceFor(
-        bucket: 'workhub-a9727.appspot.com',
+        bucket: 'workhub-a9727.firebasestorage.app',
       ).ref(storagePath);
-      debugPrint(
-        'Uploading profile CV to: $storagePath (bucket: workhub-a9727.appspot.com)',
-      );
-
-      final bytes = picked.bytes;
       TaskSnapshot snapshot;
-      try {
-        if (bytes != null && bytes.isNotEmpty) {
-          snapshot = await ref.putData(
-            bytes,
-            SettableMetadata(contentType: contentType),
-          );
-        } else {
-          final path = picked.path;
-          if (path == null) throw Exception('no-bytes-no-path');
-          final file = io.File(path);
-          if (!await file.exists() || await file.length() == 0) {
-            throw Exception('empty-file');
-          }
-          snapshot = await ref.putFile(
-            file,
-            SettableMetadata(contentType: contentType),
-          );
-        }
-        debugPrint('Upload success: ${snapshot.metadata?.fullPath}');
-
-        final url = await ref.getDownloadURL();
-        if (!mounted) return;
-        setState(() => cvController.text = url);
-        await AwesomeDialog(
-          context: context,
-          dialogType: DialogType.success,
-          animType: AnimType.bottomSlide,
-          title: s.dialogSuccessTitle,
-          desc: s.editProfileUpload,
-          btnOkText: s.commonOk,
-          btnOkOnPress: () {},
-        ).show();
-        return;
-      } on FirebaseException catch (e) {
-        if (!mounted) return;
-        await AwesomeDialog(
-          context: context,
-          dialogType: DialogType.error,
-          animType: AnimType.bottomSlide,
-          title: s.dialogErrorTitle,
-          desc: '${s.editProfileUpload} (${e.code})',
-          btnOkText: s.commonOk,
-          btnOkOnPress: () {},
-        ).show();
-        return;
+      if (picked.bytes != null && picked.bytes!.isNotEmpty) {
+        snapshot = await ref.putData(
+          picked.bytes!,
+          SettableMetadata(contentType: contentType),
+        );
+      } else if (picked.path != null) {
+        final file = io.File(picked.path!);
+        snapshot = await ref.putFile(
+          file,
+          SettableMetadata(contentType: contentType),
+        );
+      } else {
+        throw Exception('no-file-data');
       }
+
+      final url = await ref.getDownloadURL();
+      if (!mounted) return;
+      setState(() => cvController.text = url);
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.success,
+        animType: AnimType.bottomSlide,
+        title: s.dialogSuccessTitle,
+        desc: s.editProfileUpload,
+        btnOkText: s.commonOk,
+        btnOkOnPress: () {},
+      ).show();
+    } on FirebaseException catch (e) {
+      if (!mounted) return;
+      final isNotFound = e.code == 'object-not-found';
+      await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.bottomSlide,
+        title: s.dialogErrorTitle,
+        desc:
+            isNotFound
+                ? 'تعذر رفع الملف بسبب إعدادات التخزين. الرجاء إدخال رابط السيرة الذاتية يدوياً في الحقل أو إعادة المحاولة لاحقاً.'
+                : '${s.editProfileUpload} (${e.code})',
+        btnOkText: s.commonOk,
+        btnOkOnPress: () {},
+      ).show();
     } catch (e) {
       if (!mounted) return;
       await AwesomeDialog(

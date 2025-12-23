@@ -186,9 +186,7 @@ class HomeTab extends StatelessWidget {
                               Expanded(
                                 child:
                                     i + 1 < categories.length
-                                        ? CategoryCard(
-                                          title: categories[i + 1],
-                                        )
+                                        ? CategoryCard(title: categories[i + 1])
                                         : const SizedBox.shrink(),
                               ),
                             ],
@@ -361,9 +359,9 @@ class FeaturedOfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 220,
+      width: 240,
       child: Container(
-        height: double.infinity,
+        height: 170,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: offer.gradient,
@@ -383,21 +381,38 @@ class FeaturedOfferCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: Text(
-                offer.badge,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Text(
+                    offer.badge,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
-              ),
+                const Spacer(),
+                Container(
+                  width: 38,
+                  height: 38,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(offer.icon, color: AppColors.purple),
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
             Text(
               offer.title,
               style: const TextStyle(
@@ -406,23 +421,26 @@ class FeaturedOfferCard extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             Expanded(
               child: Text(
                 offer.subtitle,
-                style: const TextStyle(color: Colors.white70, fontSize: 14),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                width: 38,
-                height: 38,
-                decoration: const BoxDecoration(
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style: const TextStyle(
                   color: Colors.white,
-                  shape: BoxShape.circle,
+                  fontSize: 15,
+                  height: 1.35,
+                  fontWeight: FontWeight.w700,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black54,
+                      offset: Offset(0, 1),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
-                child: Icon(offer.icon, color: AppColors.purple),
               ),
             ),
           ],

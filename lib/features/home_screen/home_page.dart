@@ -60,9 +60,10 @@ class HomePageState extends State<HomePage> {
             final titleEn = (data['english_title'] as String?)?.trim();
             final title =
                 isArabic ? (titleAr ?? titleEn ?? '') : (titleEn ?? titleAr ?? '');
-            final location = (data['city'] as String?)?.trim() ??
-                (data['country'] as String?)?.trim() ??
-                '';
+            // company location (free text) stored in "cityController" -> backend field "city"
+            final location = (data['city'] as String?)?.trim() ?? '';
+            // predefined city option (طرابلس/بنغازي/مصراتة) stored in "country"
+            final selectedCity = (data['country'] as String?)?.trim();
             final department = (data['department'] as String?)?.trim();
             final description = (data['description'] as String?)?.trim();
             final companyLabel = s.jobCompanyConfidential;
@@ -79,7 +80,7 @@ class HomePageState extends State<HomePage> {
               department: department,
               educationLevel: (data['education_level'] as String?)?.trim(),
               nationality: (data['nationality'] as String?)?.trim(),
-              city: (data['city'] as String?)?.trim(),
+              city: selectedCity,
               deadline: (data['deadline'] as String?)?.trim(),
               description: description,
               companySummary: description,

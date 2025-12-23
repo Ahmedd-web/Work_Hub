@@ -53,7 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m15(days) => "تاريخ النشر: منذ ${days} يوم";
 
-  static String m16(error) => "خطأ: ${error}";
+  static String m16(error) => "حدث خطأ: ${error}";
 
   static String m17(tab) => "تبويب ${tab} متاح قريباً";
 
@@ -778,7 +778,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "menuDeleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
     "menuLogin": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "menuLogout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
-    "menuMembershipStatusFree": MessageLookupByLibrary.simpleMessage("??????"),
+    "menuMembershipStatusFree": MessageLookupByLibrary.simpleMessage("مجانية"),
+    "menuMembershipTitle": MessageLookupByLibrary.simpleMessage(
+      "عضويتك الحالية",
+    ),
     "menuPrivacy": MessageLookupByLibrary.simpleMessage(
       "سياسة الخصوصية وشروط الاستخدام",
     ),
@@ -789,35 +792,31 @@ class MessageLookup extends MessageLookupByLibrary {
     "navSaved": MessageLookupByLibrary.simpleMessage("المحفوظات"),
     "notifAccept": MessageLookupByLibrary.simpleMessage("قبول"),
     "notifApplicantNotFound": MessageLookupByLibrary.simpleMessage(
-      "لم يتم العثور على الطلب",
+      "لم يتم العثور على المتقدم",
     ),
     "notifCopyCv": MessageLookupByLibrary.simpleMessage("نسخ الرابط"),
     "notifCvMissing": MessageLookupByLibrary.simpleMessage(
-      "لا توجد سيرة ذاتية محفوظة لهذا المستخدم.",
+      "لا توجد سيرة ذاتية مرفقة لهذا المتقدم.",
     ),
-    "notifEmail": MessageLookupByLibrary.simpleMessage("?????? ??????????"),
+    "notifEmail": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "notifEmpty": MessageLookupByLibrary.simpleMessage(
-      "لا توجد إشعارات حالياً",
+      "لا يوجد إشعارات حالياً",
     ),
     "notifError": m16,
     "notifLoginRequired": MessageLookupByLibrary.simpleMessage(
-      "الرجاء تسجيل الدخول للوصول إلى الإشعارات.",
+      "يرجى تسجيل الدخول لعرض الإشعارات.",
     ),
     "notifNewApplication": MessageLookupByLibrary.simpleMessage(
-      "طلب تقدم جديد",
+      "طلب تقديم جديد",
     ),
-    "notifOpenCv": MessageLookupByLibrary.simpleMessage("فتح الملف"),
+    "notifOpenCv": MessageLookupByLibrary.simpleMessage("فتح السيرة"),
     "notifPhone": MessageLookupByLibrary.simpleMessage("الهاتف"),
     "notifReject": MessageLookupByLibrary.simpleMessage("رفض"),
-    "notifSuccessAccept": MessageLookupByLibrary.simpleMessage(
-      "تم قبول الطلب بنجاح",
-    ),
-    "notifSuccessReject": MessageLookupByLibrary.simpleMessage(
-      "تم رفض الطلب بنجاح",
-    ),
+    "notifSuccessAccept": MessageLookupByLibrary.simpleMessage("تم قبول الطلب"),
+    "notifSuccessReject": MessageLookupByLibrary.simpleMessage("تم رفض الطلب"),
     "notifTitle": MessageLookupByLibrary.simpleMessage("الإشعارات"),
     "notifUntitledJob": MessageLookupByLibrary.simpleMessage(
-      "بدون عنوان وظيفة",
+      "وظيفة بدون عنوان",
     ),
     "offerBoostedBadge": MessageLookupByLibrary.simpleMessage("مميز"),
     "offerBoostedSubtitle": MessageLookupByLibrary.simpleMessage(

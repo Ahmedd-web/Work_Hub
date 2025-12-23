@@ -20,7 +20,9 @@ class NotificationService {
 
   Future<void> initLocalNotifications() async {
     if (localInitialized) return;
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     const initSettings = InitializationSettings(android: androidSettings);
     await local.initialize(initSettings);
     localInitialized = true;
@@ -67,7 +69,6 @@ class NotificationService {
     startListeningForUser(uid);
   }
 
-  /// Enqueue a remote push notification to be sent by backend/Cloud Function.
   Future<void> enqueueStatusNotification({
     required String targetUid,
     required String title,
@@ -98,6 +99,7 @@ class NotificationService {
       'Test Notifications',
       importance: Importance.high,
       priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
     );
     const details = NotificationDetails(android: androidDetails);
     await local.show(0, title, body, details);
@@ -113,9 +115,9 @@ class NotificationService {
         'owner_uid': ownerUid,
         'job_id': jobId,
         'type': 'job_expiry',
-        'title_ar': 'سينتهي نشر وظيفتك قريباً',
+        'title_ar': 'سينتهي نشر الإعلان قريباً',
         'title_en': 'Your job post will expire soon',
-        'body_ar': 'إعلان "$jobTitle" سيُزال خلال أقل من ساعة.',
+        'body_ar': 'سيتم حذف إعلان "$jobTitle" بعد أقل من ساعة.',
         'body_en': 'Job "$jobTitle" will be removed in less than an hour.',
         'created_at': FieldValue.serverTimestamp(),
         'read': false,
@@ -128,14 +130,14 @@ class NotificationService {
     final notification = message.notification;
     final android = message.notification?.android;
     final title = notification?.title ?? 'إشعار';
-    final body = notification?.body ?? '';
+    final body = notification?.body ?? message.data['body'] ?? '';
 
     final androidDetails = AndroidNotificationDetails(
       android?.channelId ?? defaultChannelId,
       defaultChannelName,
       importance: Importance.high,
       priority: Priority.high,
-      icon: android?.smallIcon,
+      icon: android?.smallIcon ?? '@mipmap/ic_launcher',
     );
     final details = NotificationDetails(android: androidDetails);
     await local.show(
@@ -147,7 +149,6 @@ class NotificationService {
     );
   }
 
-  /// استمع لإشعارات المستخدم (مثل قبول/رفض الطلبات) واعرض إشعاراً محلياً عند وصولها.
   void startListeningForUser(String uid) {
     _notifSub?.cancel();
     _notifSub = firestore
@@ -156,25 +157,26 @@ class NotificationService {
         .where('read', isEqualTo: false)
         .snapshots()
         .listen((snap) async {
-      for (final doc in snap.docs) {
-        final data = doc.data();
-        final status = (data['status'] as String?) ?? '';
-        final jobTitle = (data['job_title'] as String?) ?? '';
-        final title = status == 'accepted'
-            ? 'تم قبول طلبك'
-            : status == 'rejected'
-                ? 'تم رفض طلبك'
-                : (data['title'] as String?) ?? 'إشعار';
-        final body = status == 'accepted'
-            ? 'تم قبول طلبك لوظيفة $jobTitle'
-            : status == 'rejected'
-                ? 'تم رفض طلبك لوظيفة $jobTitle'
-                : (data['body'] as String?) ?? jobTitle;
+          for (final doc in snap.docs) {
+            final data = doc.data();
+            final status = (data['status'] as String?) ?? '';
+            final jobTitle = (data['job_title'] as String?) ?? '';
+            final title =
+                status == 'accepted'
+                    ? 'تم قبول طلبك'
+                    : status == 'rejected'
+                    ? 'تم رفض طلبك'
+                    : (data['title'] as String?) ?? 'إشعار';
+            final body =
+                status == 'accepted'
+                    ? 'تم قبول طلبك لوظيفة $jobTitle'
+                    : status == 'rejected'
+                    ? 'تم رفض طلبك لوظيفة $jobTitle'
+                    : (data['body'] as String?) ?? jobTitle;
 
-        await showLocalTestNotification(title: title, body: body);
-        // نترك علامة القراءة للواجهة (قائمة الإشعارات) كي لا يختفي التنبيه مباشرة.
-      }
-    });
+            await showLocalTestNotification(title: title, body: body);
+          }
+        });
   }
 
   Future<void> disposeListener() async {

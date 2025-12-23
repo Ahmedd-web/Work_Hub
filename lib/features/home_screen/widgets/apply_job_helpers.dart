@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Common labeled wrapper used in ApplyJobPage.
 class LabeledField extends StatelessWidget {
@@ -100,7 +101,8 @@ class PhoneNumberField extends StatelessWidget {
       textDirection: textDirection,
       child: TextFormField(
         controller: controller,
-        keyboardType: TextInputType.phone,
+        keyboardType: TextInputType.number,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         textAlign: textAlign,
         decoration: InputDecoration(
           labelText: labelText,
