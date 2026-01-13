@@ -14,19 +14,19 @@ class ProfilePersonalSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Column(
         children: [
-          _InfoRow(label: s.profileNameLabel, value: data.fullName),
+          InfoRow(label: s.profileNameLabel, value: data.fullName),
           const Divider(height: 24),
-          _InfoRow(label: s.profilePhone, value: data.phone),
+          InfoRow(label: s.profilePhone, value: data.phone),
           const Divider(height: 24),
-          _InfoRow(label: s.profileEmail, value: data.email),
+          InfoRow(label: s.profileEmail, value: data.email),
         ],
       ),
     );
   }
 }
 
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.label, required this.value});
+class InfoRow extends StatelessWidget {
+  const InfoRow({required this.label, required this.value});
 
   final String label;
   final String value;

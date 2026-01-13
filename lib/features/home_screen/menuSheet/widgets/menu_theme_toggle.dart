@@ -8,10 +8,13 @@ class MenuThemeToggle extends StatelessWidget {
     super.key,
     required this.isDarkMode,
     required this.onChanged,
+    this.rootContext,
   });
 
   final bool isDarkMode;
   final ValueChanged<bool> onChanged;
+  /// Pass a stable ancestor context (e.g., the screen context) so we pop safely.
+  final BuildContext? rootContext;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,10 @@ class MenuThemeToggle extends StatelessWidget {
             value: isDarkMode,
             activeColor: colorScheme.primary,
             onChanged: (val) {
-              Navigator.of(context).pop();
+              // Use a safe navigator context to avoid using a disposed sheet context.
+              final navigator =
+                  rootContext != null ? Navigator.of(rootContext!) : Navigator.of(context);
+              navigator.maybePop();
               onChanged(val);
             },
           ),

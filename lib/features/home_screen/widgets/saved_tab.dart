@@ -55,7 +55,7 @@ class SavedTab extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(20, 24, 20, 32),
                     itemBuilder: (context, index) {
                       final job = favoriteJobs[index];
-                      return _SavedJobCard(
+                      return SavedJobCard(
                         job: job,
                         onTap: () => onJobSelected(job),
                       );
@@ -69,8 +69,8 @@ class SavedTab extends StatelessWidget {
   }
 }
 
-class _SavedJobCard extends StatelessWidget {
-  const _SavedJobCard({required this.job, required this.onTap});
+class SavedJobCard extends StatelessWidget {
+  const SavedJobCard({required this.job, required this.onTap});
 
   final JobPost job;
   final VoidCallback onTap;

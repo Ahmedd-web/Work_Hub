@@ -35,7 +35,9 @@ class HeaderSliverDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant HeaderSliverDelegate oldDelegate) {
+    // Rebuild whenever any input might have changed (e.g., localization text).
     return minHeight != oldDelegate.minHeight ||
-        maxHeight != oldDelegate.maxHeight;
+        maxHeight != oldDelegate.maxHeight ||
+        builder != oldDelegate.builder;
   }
 }

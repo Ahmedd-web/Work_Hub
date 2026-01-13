@@ -210,7 +210,7 @@ class LoginState extends State<Login> {
                   MaterialPageRoute(builder: (_) => const EmployerLoginPage()),
                 );
               },
-              child: const Text('تسجيل دخول الشركات'),
+              child: Text(s.employerCompanyLoginTitle),
             ),
           ],
         ),

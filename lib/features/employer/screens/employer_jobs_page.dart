@@ -98,14 +98,15 @@ class EmployerJobsPageState extends State<EmployerJobsPage> {
       body: Column(
         children: [
           StreamBuilder<int>(
-            stream: uid == null
-                ? const Stream.empty()
-                : FirebaseFirestore.instance
-                    .collection('employer_notifications')
-                    .where('employer_id', isEqualTo: uid)
-                    .where('seen', isEqualTo: false)
-                    .snapshots()
-                    .map((snap) => snap.size),
+            stream:
+                uid == null
+                    ? const Stream.empty()
+                    : FirebaseFirestore.instance
+                        .collection('employer_notifications')
+                        .where('employer_id', isEqualTo: uid)
+                        .where('seen', isEqualTo: false)
+                        .snapshots()
+                        .map((snap) => snap.size),
             builder: (context, snapshot) {
               final count = snapshot.data ?? 0;
               return CustomHeader(
@@ -130,7 +131,7 @@ class EmployerJobsPageState extends State<EmployerJobsPage> {
                   hintText: s.employerJobsSearchHint,
                   onChanged: (value) => setState(() => searchQuery = value),
                 ),
-                overlayHeight: 70,
+                overlayHeight: 56,
                 height: 160,
               );
             },
@@ -155,7 +156,7 @@ class EmployerJobsPageState extends State<EmployerJobsPage> {
                                 ConnectionState.waiting &&
                             !snapshot.hasData) {
                           return ListView.builder(
-                            padding: const EdgeInsets.fromLTRB(20, 56, 20, 120),
+                            padding: const EdgeInsets.fromLTRB(20, 40, 20, 120),
                             itemCount: 3,
                             itemBuilder:
                                 (context, index) => const Padding(
@@ -247,7 +248,7 @@ class EmployerJobsPageState extends State<EmployerJobsPage> {
                         }
 
                         return ListView(
-                          padding: const EdgeInsets.fromLTRB(20, 56, 20, 120),
+                          padding: const EdgeInsets.fromLTRB(20, 30, 20, 120),
                           children: [
                             EmployerJobsTabs(
                               currentIndex: statusIndex,

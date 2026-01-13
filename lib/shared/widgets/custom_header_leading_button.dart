@@ -45,12 +45,12 @@ class CustomHeaderLeadingButton extends StatelessWidget {
                   child: const BackButtonIcon(),
                 )
                 : Icon(Icons.menu, color: effectiveTextColor),
-        onPressed: () => _handlePress(context),
+        onPressed: () => handlePress(context),
       ),
     );
   }
 
-  Future<void> _handlePress(BuildContext context) async {
+  Future<void> handlePress(BuildContext context) async {
     if (showBackButton) {
       if (onBackPressed != null) {
         onBackPressed!();

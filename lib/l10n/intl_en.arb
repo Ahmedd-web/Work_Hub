@@ -294,6 +294,7 @@
   "cvDownloadGoldDesc": "Premium template with advanced styling.",
   "cvDownloadComingSoon": "Coming soon",
   "cvDownloadToast": "Download options will be available soon.",
+  "cvSavedToast": "Your CV has been saved successfully.",
   "cvSectionMainInfo": "Main information",
   "cvSectionContact": "Contact information",
   "cvSectionContactPhones": "Phone numbers",

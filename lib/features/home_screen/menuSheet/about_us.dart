@@ -264,7 +264,7 @@ class ChipPoint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final label = _resolveText(context, text);
+    final label = resolveText(context, text);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
@@ -287,7 +287,7 @@ class ChipPoint extends StatelessWidget {
     );
   }
 
-  String _resolveText(BuildContext context, String key) {
+  String resolveText(BuildContext context, String key) {
     final s = S.of(context);
     switch (key) {
       case 'why_point_1':

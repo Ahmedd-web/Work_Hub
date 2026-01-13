@@ -9,7 +9,7 @@ import 'package:work_hub/generated/l10n.dart';
 class WorkHubColors {
   static const purple = AppColors.purple;
   static const green = AppColors.secondary;
-  static const pillBg = AppColors.pillBackground; 
+  static const pillBg = AppColors.pillBackground;
 }
 
 class MenuEntry {
@@ -75,9 +75,10 @@ Future<void> showWorkHubMenuSheet(
           ? currentLanguage
           : fallbackLanguage;
   final effectiveBackground = backgroundColor ?? colorScheme.surface;
-  final pillColor = theme.brightness == Brightness.dark
-      ? colorScheme.surface.withValues(alpha: 0.2)
-      : AppColors.pillBackground;
+  final pillColor =
+      theme.brightness == Brightness.dark
+          ? colorScheme.surface.withValues(alpha: 0.2)
+          : AppColors.pillBackground;
   final defaultIconColor = colorScheme.primary;
   final defaultTextColor =
       theme.textTheme.bodyLarge?.color ?? colorScheme.onSurface;
@@ -95,7 +96,9 @@ Future<void> showWorkHubMenuSheet(
             margin: EdgeInsets.only(top: media.size.height * 0.08),
             decoration: BoxDecoration(
               color: effectiveBackground,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(28),
+              ),
               boxShadow: const [
                 BoxShadow(
                   color: Color(0x33000000),
@@ -127,6 +130,7 @@ Future<void> showWorkHubMenuSheet(
                 MenuThemeToggle(
                   isDarkMode: isDarkMode,
                   onChanged: onThemeModeChanged,
+                  rootContext: context,
                 ),
 
                 const SizedBox(height: 14),
@@ -164,7 +168,6 @@ Future<void> showWorkHubMenuSheet(
   );
 }
 
-
 class ThemeModeToggle extends StatelessWidget {
   const ThemeModeToggle({required this.isDarkMode, required this.onChanged});
 
@@ -178,9 +181,10 @@ class ThemeModeToggle extends StatelessWidget {
     final textTheme = theme.textTheme;
     final s = S.of(context);
 
-    final backgroundColor = theme.brightness == Brightness.dark
-        ? AppColors.darkSurface
-        : AppColors.pillBackground;
+    final backgroundColor =
+        theme.brightness == Brightness.dark
+            ? AppColors.darkSurface
+            : AppColors.pillBackground;
 
     return Container(
       decoration: BoxDecoration(
@@ -243,11 +247,9 @@ class PillTile extends StatelessWidget {
     final borderRadius = BorderRadius.circular(32);
     final Color appliedBackground =
         backgroundColor ??
-        (
-          theme.brightness == Brightness.dark
-              ? theme.colorScheme.surface.withValues(alpha: 0.2)
-              : AppColors.pillBackground
-        );
+        (theme.brightness == Brightness.dark
+            ? theme.colorScheme.surface.withValues(alpha: 0.2)
+            : AppColors.pillBackground);
 
     return Material(
       color: appliedBackground,
@@ -270,10 +272,12 @@ class PillTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: style ?? const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style:
+                      style ??
+                      const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
               const SizedBox(width: 8),
@@ -284,7 +288,6 @@ class PillTile extends StatelessWidget {
     );
   }
 }
-
 
 class MembershipTile extends StatelessWidget {
   const MembershipTile({required this.data});
@@ -317,12 +320,12 @@ class MembershipTile extends StatelessWidget {
               isDark
                   ? null
                   : [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.05),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(28),
@@ -377,7 +380,6 @@ class MembershipTile extends StatelessWidget {
   }
 }
 
-
 class LanguagePill extends StatelessWidget {
   final String value;
   final List<String> options;
@@ -398,9 +400,10 @@ class LanguagePill extends StatelessWidget {
       fontWeight: FontWeight.w600,
       color: theme.textTheme.bodyMedium?.color ?? colorScheme.onSurface,
     );
-    final pillBackground = theme.brightness == Brightness.dark
-        ? colorScheme.surface.withValues(alpha: 0.2)
-        : AppColors.pillBackground;
+    final pillBackground =
+        theme.brightness == Brightness.dark
+            ? colorScheme.surface.withValues(alpha: 0.2)
+            : AppColors.pillBackground;
     final borderColor = theme.dividerColor.withValues(alpha: 0.6);
 
     return Container(
@@ -425,7 +428,8 @@ class LanguagePill extends StatelessWidget {
                   children: [
                     Text(
                       value,
-                      style: textStyle ??
+                      style:
+                          textStyle ??
                           const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -457,92 +461,101 @@ class LanguagePill extends StatelessWidget {
     final selected = await showModalBottomSheet<String>(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (_) => SafeArea(
-        child: Container(
-          margin: EdgeInsets.only(top: media.size.height * 0.15),
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-          decoration: BoxDecoration(
-            color: theme.cardColor,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(26)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.25),
-                blurRadius: 18,
-                offset: const Offset(0, -6),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 56,
-                height: 6,
-                margin: const EdgeInsets.only(bottom: 14),
-                decoration: BoxDecoration(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(3),
+      builder:
+          (_) => SafeArea(
+            child: Container(
+              margin: EdgeInsets.only(top: media.size.height * 0.15),
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+              decoration: BoxDecoration(
+                color: theme.cardColor,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(26),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.25),
+                    blurRadius: 18,
+                    offset: const Offset(0, -6),
+                  ),
+                ],
               ),
-              Text(
-                s.languageArabic == value ? 'اختيار اللغة' : 'Choose language',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 12),
-              ...options.map(
-                (lang) => Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Material(
-                    color: theme.cardColor,
-                    borderRadius: BorderRadius.circular(16),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () => Navigator.of(context).pop(lang),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 12,
-                        ),
-                        decoration: BoxDecoration(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 56,
+                    height: 6,
+                    margin: const EdgeInsets.only(bottom: 14),
+                    decoration: BoxDecoration(
+                      color: colorScheme.outlineVariant.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                  ),
+                  Text(
+                    s.languageArabic == value
+                        ? 'اختيار اللغة'
+                        : 'Choose language',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ...options.map(
+                    (lang) => Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Material(
+                        color: theme.cardColor,
+                        borderRadius: BorderRadius.circular(16),
+                        child: InkWell(
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: lang == value
-                                ? colorScheme.primary
-                                : colorScheme.outline.withValues(alpha: 0.2),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              lang == value
-                                  ? Icons.check_circle
-                                  : Icons.language,
-                              color: lang == value
-                                  ? colorScheme.primary
-                                  : colorScheme.outline,
+                          onTap: () => Navigator.of(context).pop(lang),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 12,
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                lang,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color:
+                                    lang == value
+                                        ? colorScheme.primary
+                                        : colorScheme.outline.withValues(
+                                          alpha: 0.2,
+                                        ),
                               ),
                             ),
-                          ],
+                            child: Row(
+                              children: [
+                                Icon(
+                                  lang == value
+                                      ? Icons.check_circle
+                                      : Icons.language,
+                                  color:
+                                      lang == value
+                                          ? colorScheme.primary
+                                          : colorScheme.outline,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    lang,
+                                    style: theme.textTheme.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
     );
     if (selected != null) {
       onChanged(selected);

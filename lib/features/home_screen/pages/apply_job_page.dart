@@ -1,4 +1,4 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+﻿import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -320,7 +320,6 @@ class ApplyJobPageState extends State<ApplyJobPage> {
       return;
     }
 
-    // Prevent duplicate applications for the same job by the same user.
     final existing =
         await FirebaseFirestore.instance
             .collection('job_applications')
@@ -346,7 +345,6 @@ class ApplyJobPageState extends State<ApplyJobPage> {
       return;
     }
 
-    // Require completed CV/profile before applying.
     final profileDoc = await FirebaseFirestore.instance
         .collection('Profile')
         .doc(user.uid)
