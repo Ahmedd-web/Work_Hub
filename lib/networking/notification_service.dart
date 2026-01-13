@@ -12,7 +12,7 @@ class NotificationService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FlutterLocalNotificationsPlugin local =
       FlutterLocalNotificationsPlugin();
-  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? _notifSub;
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? notifSub;
   bool localInitialized = false;
   final String defaultChannelId = 'mhnty_default_channel';
   final String defaultChannelName = 'Mhnty Notifications';
@@ -150,8 +150,8 @@ class NotificationService {
   }
 
   void startListeningForUser(String uid) {
-    _notifSub?.cancel();
-    _notifSub = firestore
+    notifSub?.cancel();
+    notifSub = firestore
         .collection('notifications')
         .where('user_uid', isEqualTo: uid)
         .where('read', isEqualTo: false)
@@ -180,7 +180,7 @@ class NotificationService {
   }
 
   Future<void> disposeListener() async {
-    await _notifSub?.cancel();
-    _notifSub = null;
+    await notifSub?.cancel();
+    notifSub = null;
   }
 }

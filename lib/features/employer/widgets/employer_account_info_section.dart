@@ -119,7 +119,7 @@ class SectionCard extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           if (fields != null)
-            ..._buildFields(theme)
+            ...buildFields(theme)
           else if (description != null)
             Text(
               description!,
@@ -130,7 +130,7 @@ class SectionCard extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildFields(ThemeData theme) {
+  List<Widget> buildFields(ThemeData theme) {
     final widgets = <Widget>[];
     final fieldList = fields ?? [];
     for (var i = 0; i < fieldList.length; i++) {

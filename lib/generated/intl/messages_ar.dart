@@ -949,11 +949,68 @@ class MessageLookup extends MessageLookupByLibrary {
     "postJobTitleEnLabel": MessageLookupByLibrary.simpleMessage(
       "المسمى الوظيفي بالإنجليزية",
     ),
+    "privacyActionButton": MessageLookupByLibrary.simpleMessage("إغلاق"),
+    "privacyActionDesc": MessageLookupByLibrary.simpleMessage(
+      "تواصل معنا عبر نموذج الدعم أو البريد الإلكتروني، سنرد بأقرب وقت.",
+    ),
+    "privacyActionTitle": MessageLookupByLibrary.simpleMessage("تحتاج مساعدة؟"),
+    "privacyDataDesc": MessageLookupByLibrary.simpleMessage(
+      "نحمي معلوماتك الشخصية ولا نطلب إلا ما نحتاجه لخدمتك.",
+    ),
+    "privacyDataTitle": MessageLookupByLibrary.simpleMessage("حماية البيانات"),
     "privacyHeaderSubtitle": MessageLookupByLibrary.simpleMessage(
       "نوضح لك كيف نحافظ على بياناتك داخل منصة مهنتي.",
     ),
     "privacyHeaderTitle": MessageLookupByLibrary.simpleMessage(
       "سياسة الخصوصية",
+    ),
+    "privacyIntroTitle": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
+    "privacyNotItem1": MessageLookupByLibrary.simpleMessage(
+      "لا مشاركة مخفية مع أطراف ثالثة.",
+    ),
+    "privacyNotItem2": MessageLookupByLibrary.simpleMessage(
+      "لا رسائل تسويقية دون موافقة.",
+    ),
+    "privacyNotItem3": MessageLookupByLibrary.simpleMessage(
+      "لا وصول إلى ملفاتك الخاصة بدون إذن.",
+    ),
+    "privacyNotTitle": MessageLookupByLibrary.simpleMessage("ما لا نقوم به"),
+    "privacyPrinciple1": MessageLookupByLibrary.simpleMessage(
+      "لن نبيع بياناتك أبداً",
+    ),
+    "privacyPrinciple2": MessageLookupByLibrary.simpleMessage(
+      "يمكنك طلب حذف بياناتك",
+    ),
+    "privacyPrinciple3": MessageLookupByLibrary.simpleMessage(
+      "نحترم خصوصية الرسائل",
+    ),
+    "privacyPrinciple4": MessageLookupByLibrary.simpleMessage(
+      "أذونات واضحة وشفافة",
+    ),
+    "privacyPrinciplesTitle": MessageLookupByLibrary.simpleMessage("المبادئ"),
+    "privacyRetentionDesc": MessageLookupByLibrary.simpleMessage(
+      "نحتفظ بالبيانات فقط للغايات الوظيفية ونستجيب لطلبات الحذف.",
+    ),
+    "privacyRetentionTitle": MessageLookupByLibrary.simpleMessage(
+      "الاحتفاظ بالبيانات",
+    ),
+    "privacySecurityDesc": MessageLookupByLibrary.simpleMessage(
+      "نراجع الحسابات ونستخدم قنوات آمنة لحماية بياناتك أثناء النقل والتخزين.",
+    ),
+    "privacySecurityTitle": MessageLookupByLibrary.simpleMessage(
+      "التحقق والأمان",
+    ),
+    "privacyUseItem1": MessageLookupByLibrary.simpleMessage(
+      "تحسين التوافق بين الوظائف والمتقدمين.",
+    ),
+    "privacyUseItem2": MessageLookupByLibrary.simpleMessage(
+      "إرسال التحديثات المهمة حول الطلبات.",
+    ),
+    "privacyUseItem3": MessageLookupByLibrary.simpleMessage(
+      "كشف إساءة الاستخدام والحفاظ على أمان المنصة.",
+    ),
+    "privacyUseTitle": MessageLookupByLibrary.simpleMessage(
+      "كيف نستخدم البيانات",
     ),
     "profileAddress": MessageLookupByLibrary.simpleMessage("العنوان"),
     "profileCity": MessageLookupByLibrary.simpleMessage("المدينة / المنطقة"),

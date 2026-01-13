@@ -2419,6 +2419,16 @@ class S {
     );
   }
 
+  /// `Your CV has been saved successfully.`
+  String get cvSavedToast {
+    return Intl.message(
+      'Your CV has been saved successfully.',
+      name: 'cvSavedToast',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Main information`
   String get cvSectionMainInfo {
     return Intl.message(

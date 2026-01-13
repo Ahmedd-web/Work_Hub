@@ -337,6 +337,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Years of experience",
     ),
     "cvNoData": MessageLookupByLibrary.simpleMessage("No data"),
+    "cvSavedToast": MessageLookupByLibrary.simpleMessage(
+      "Your CV has been saved successfully.",
+    ),
     "cvSectionContact": MessageLookupByLibrary.simpleMessage(
       "Contact information",
     ),

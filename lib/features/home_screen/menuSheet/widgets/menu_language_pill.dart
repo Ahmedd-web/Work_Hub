@@ -44,7 +44,7 @@ class MenuLanguagePill extends StatelessWidget {
           Expanded(
             child: InkWell(
               borderRadius: BorderRadius.circular(22),
-              onTap: () => _showLanguageSheet(context, options, s),
+              onTap: () => showLanguageSheet(context, options, s),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
@@ -72,7 +72,7 @@ class MenuLanguagePill extends StatelessWidget {
     );
   }
 
-  Future<void> _showLanguageSheet(
+  Future<void> showLanguageSheet(
     BuildContext context,
     List<String> options,
     S s,

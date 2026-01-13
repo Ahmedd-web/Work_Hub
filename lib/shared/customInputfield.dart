@@ -28,6 +28,16 @@ class CustomInputFieldState extends State<CustomInputField> {
   bool hideText = true;
   @override
   Widget build(BuildContext context) {
+    final fieldDirection = widget.textDirection ?? Directionality.of(context);
+    final isRtl = fieldDirection == TextDirection.rtl;
+    final mainIcon = Icon(widget.prefixIcon);
+    final toggleIcon =
+        widget.isPassword
+            ? IconButton(
+              icon: Icon(hideText ? Icons.visibility_off : Icons.visibility),
+              onPressed: () => setState(() => hideText = !hideText),
+            )
+            : null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,25 +46,15 @@ class CustomInputFieldState extends State<CustomInputField> {
           keyboardType: widget.keyboardType,
           obscureText: widget.isPassword ? hideText : false,
           validator: widget.validator,
-          textDirection: widget.textDirection,
+          textDirection: fieldDirection,
           textAlign:
-              widget.textDirection == TextDirection.rtl
+              fieldDirection == TextDirection.rtl
                   ? TextAlign.right
                   : TextAlign.left,
           decoration: InputDecoration(
             hintText: widget.hint,
-            prefixIcon: Icon(widget.prefixIcon),
-            suffixIcon:
-                widget.isPassword
-                    ? IconButton(
-                      icon: Icon(
-                        hideText ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() => hideText = !hideText);
-                      },
-                    )
-                    : null,
+            prefixIcon: isRtl ? toggleIcon : mainIcon,
+            suffixIcon: isRtl ? mainIcon : toggleIcon,
           ),
         ),
       ],

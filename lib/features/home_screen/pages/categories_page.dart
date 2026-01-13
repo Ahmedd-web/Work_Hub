@@ -11,7 +11,7 @@ class CategoriesPage extends StatelessWidget {
   final List<String> categories;
   final Map<String, int>? customCounts;
 
-  static const _extraCategories = [
+  static const extraCategories = [
     'التدريب والتطوير',
     'الإدارة',
     'الترجمة',
@@ -21,7 +21,7 @@ class CategoriesPage extends StatelessWidget {
     'أخرى',
   ];
 
-  static const Map<String, int> _defaultCounts = {
+  static const Map<String, int> defaultCounts = {
     'الهندسة': 419,
     'المنظمات الدولية': 215,
     'المبيعات': 540,
@@ -43,11 +43,11 @@ class CategoriesPage extends StatelessWidget {
 
     final mergedCounts =
         <String, int>{}
-          ..addAll(_defaultCounts)
+          ..addAll(defaultCounts)
           ..addAll(customCounts ?? {});
 
     final ordered = <String>[];
-    for (final item in [...categories, ..._extraCategories]) {
+    for (final item in [...categories, ...extraCategories]) {
       if (!ordered.contains(item)) {
         ordered.add(item);
       }
@@ -68,7 +68,7 @@ class CategoriesPage extends StatelessWidget {
           itemBuilder: (context, index) {
             final title = ordered[index];
             final count = mergedCounts[title] ?? 0;
-            return _CategoryTile(title: title, jobs: count);
+            return CategoryTile(title: title, jobs: count);
           },
         ),
       ),
@@ -76,8 +76,8 @@ class CategoriesPage extends StatelessWidget {
   }
 }
 
-class _CategoryTile extends StatelessWidget {
-  const _CategoryTile({required this.title, required this.jobs});
+class CategoryTile extends StatelessWidget {
+  const CategoryTile({required this.title, required this.jobs});
 
   final String title;
   final int jobs;

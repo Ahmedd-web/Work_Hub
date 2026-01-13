@@ -39,7 +39,7 @@ class CustomHeaderOverlay extends StatelessWidget {
                   height: overlayChildHeight,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(28),
-                    child: _CustomHeaderSearchBar(
+                    child: CustomHeaderSearchBar(
                       controller: searchController,
                       onSearchSubmitted: onSearchSubmitted,
                       searchHint: searchHint,
@@ -54,7 +54,7 @@ class CustomHeaderOverlay extends StatelessWidget {
   }
 }
 
-class _CustomHeaderSearchBar extends StatelessWidget {
+class CustomHeaderSearchBar extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onSearchSubmitted;
   final String searchHint;
@@ -62,7 +62,7 @@ class _CustomHeaderSearchBar extends StatelessWidget {
   final TextAlign textAlign;
   final Color searchFillColor;
 
-  const _CustomHeaderSearchBar({
+  const CustomHeaderSearchBar({
     required this.controller,
     required this.onSearchSubmitted,
     required this.searchHint,

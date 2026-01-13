@@ -149,7 +149,7 @@ class EmployerLoginPageState extends State<EmployerLoginPage> {
                             ),
                           ),
                         )
-                        : const Text('دخول الشركات'),
+                        : Text(s.loginButton),
               ),
             ],
           ),

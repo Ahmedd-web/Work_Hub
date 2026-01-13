@@ -6,10 +6,10 @@ class EmployerPromoBanner extends StatefulWidget {
   const EmployerPromoBanner({super.key});
 
   @override
-  State<EmployerPromoBanner> createState() => _EmployerPromoBannerState();
+  State<EmployerPromoBanner> createState() => EmployerPromoBannerState();
 }
 
-class _EmployerPromoBannerState extends State<EmployerPromoBanner> {
+class EmployerPromoBannerState extends State<EmployerPromoBanner> {
   final controller = PageController(viewportFraction: 0.95);
   int currentIndex = 0;
   Timer? autoTimer;
@@ -22,10 +22,10 @@ class _EmployerPromoBannerState extends State<EmployerPromoBanner> {
   @override
   void initState() {
     super.initState();
-    _startAutoSlide();
+    startAutoSlide();
   }
 
-  void _startAutoSlide() {
+  void startAutoSlide() {
     autoTimer?.cancel();
     autoTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       if (!mounted || !controller.hasClients) return;
